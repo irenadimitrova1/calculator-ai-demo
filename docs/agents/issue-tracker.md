@@ -9,6 +9,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 - **List issues**: `gh issue list --state open --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'` with appropriate `--label` and `--state` filters.
 - **Comment on an issue**: `gh issue comment <number> --body "..."`
 - **Apply / remove labels**: `gh issue edit <number> --add-label "..."` / `--remove-label "..."`
+- **Assign**: `gh issue edit <number> --add-assignee @me`
 - **Close**: `gh issue close <number> --comment "..."`
 
 Infer the repo from `git remote -v` — `gh` does this automatically when run inside a clone.
@@ -29,17 +30,33 @@ GitHub shares one number space across issues and PRs, so a bare `#42` may be eit
 
 | Label | Source | Implementable? |
 |-------|--------|----------------|
-| `story` | `/to-spec` parent / umbrella | No — context only |
-| `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/plan` then `/pr` |
+| `story` | `/to-spec` parent / umbrella | No — context only; close when all children ship |
+| `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/plan` claims it |
+| `in-progress` | Applied by `/plan` | Yes — on feature branch |
 
 Child issues reference the parent under `## Parent` in the body. `/plan` on a `story` issue runs `/grill-me` to pick the next unblocked child.
+
+## Branch and label lifecycle (per child ticket)
+
+1. **`/plan` start** (ticket has `ready-for-agent`):
+   - `git fetch origin main && git checkout -b issue-<N>-<slug> origin/main`
+   - `gh issue edit <N> --add-assignee @me --remove-label ready-for-agent --add-label in-progress`
+   - `gh issue comment <N> --body "Working branch: \`issue-<N>-<slug>\`"`
+2. **Build** on that branch — at end, automatically run verify checklist — no commit
+3. **`/verify`** *(optional)* — re-run checks after post-Build edits — no commit
+4. **`/pr`** — commit, push, open PR, remove `in-progress`
+5. **Merge** — `Closes #N` closes the child
+6. **Last child closed** — close parent `story` and set feature doc `Status: done`
 
 ## PR conventions
 
 - One PR per child ticket; branch name `issue-<N>-<slug>`
+- Checks run at end of **Build** (verify checklist); optional **`/verify`** to re-run — not in `/pr`
+- `/pr` commits, confirms with user, pushes, opens PR
 - Commit/PR body includes `Closes #N`
-- PR description links parent `story`, feature doc path, and test plan
+- PR description links parent `story`, feature doc path, and note that checks passed at Build
 - `/pr` comments the PR URL on the issue; issue closes on merge
+- After `/pr`, run **`/clear`** before the next ticket
 
 ## When a skill says "publish to the issue tracker"
 

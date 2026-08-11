@@ -14,4 +14,4 @@ Single-context layout — one `CONTEXT.md` and `docs/adr/` at the repo root. See
 
 ### Workflow
 
-Feature specs live in `docs/product/features/`. Engineering chain: `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/plan` → `/pr`. See `docs/agents/workflow.md`.
+Feature specs live in `docs/product/features/`. Engineering chain: `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/plan` → Build → `/pr` (optional `/verify` after post-Build edits). See `docs/agents/workflow.md`.

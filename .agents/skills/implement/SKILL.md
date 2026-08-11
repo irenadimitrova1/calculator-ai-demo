@@ -8,8 +8,9 @@ disable-model-invocation: true
 
 Per ticket:
 
-1. **`/plan #N`** — Plan mode + grill-me rounds; produces a Cursor plan (no code, no git)
-2. **Build** — Execute the plan in Cursor (Build or Agent); fine-tune locally
-3. **`/pr #N`** — Verify, review, update docs, commit, push, open PR
+1. **`/plan #N`** — Branch from main, claim issue, Plan mode + grill-me (no commit)
+2. **Build** — Execute the plan; verify checklist runs automatically at end (no commit)
+3. **`/verify #N`** *(optional)* — Re-validate after post-Build edits
+4. **`/pr #N`** — Commit, push, open PR, `/clear`
 
 See [`docs/agents/workflow.md`](../../docs/agents/workflow.md).
