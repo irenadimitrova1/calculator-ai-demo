@@ -9,15 +9,21 @@ Proof-of-concept for a calculator app — validate the React/TypeScript stack an
 
 ## Problem
 
-<!-- TODO: What user need does this address? -->
+We need to prove the chosen frontend stack works in this repo before investing in a full calculator. Without a thin vertical slice — app scaffold, linting, component library, Storybook, and working `+ - * /` — we risk discovering tooling or integration issues late in v1 or v2.
 
 ## Users
 
-<!-- TODO: Who benefits from this feature? -->
+- **Engineering** — establishes the baseline project structure and patterns for all later calculator work
+- **PM / PO and stakeholders** — need a runnable demo to confirm direction before scoping v1 and v2
+- **Design / QA** — use Storybook to review the initial calculator UI in isolation
 
 ## Success metrics
 
-<!-- TODO: Measurable outcomes -->
+- React + TypeScript app runs locally in the existing repository
+- ESLint passes with the agreed strict configuration
+- Storybook runs and includes at least one calculator story with working arithmetic
+- Tailwind CSS and Shadcn are wired up and used by the calculator UI
+- Manual smoke test: `a op b =` works for `+`, `-`, `*`, `/` with integer operands (e.g. `3 + 4 =` → `7`)
 
 ## Scope
 
