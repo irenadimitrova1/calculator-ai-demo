@@ -1,0 +1,36 @@
+site_name: Calculator AI Demo
+site_url: https://irenadimitrova1.github.io/calculator-ai-demo/
+repo_url: https://github.com/irenadimitrova1/calculator-ai-demo
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - content.action.edit
+
+nav:
+  - Home: index.md
+  - Product:
+      - Vision: product/vision.md
+      - Roadmap: product/roadmap.md
+      - Features:
+          - Calculator v2: product/features/calculator-v2.md
+  - Process:
+      - How we plan: process/how-we-plan.md
+      - Definition of Ready: process/definition-of-ready.md
+  - Engineering:
+      - Overview: engineering/index.md
+      - ADRs: adr/index.md
+      - Agent configuration:
+          - Issue tracker: agents/issue-tracker.md
+          - Triage labels: agents/triage-labels.md
+          - Domain docs: agents/domain.md
+  - Contributing: contributing.md
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
