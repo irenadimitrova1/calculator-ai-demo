@@ -1,7 +1,7 @@
 # Calculator v1
 
 **Owner:** PM / PO  
-**Last updated:** <!-- TODO: YYYY-MM-DD -->
+**Last updated:** 2026-08-11
 
 ## Purpose
 
@@ -22,7 +22,8 @@ The PoC shows that math works, but it doesn't feel like a real calculator yet. I
 - A new user can add, subtract, multiply, and divide — including decimals — without instructions
 - Clear and memory buttons work the way users expect from other calculators
 - Mistakes (like dividing by zero) show a friendly message instead of breaking the app
-- Internal QA signs off that behavior matches a standard pocket calculator
+- Internal QA signs off that behavior matches a standard pocket calculator (including the built-in macOS/iOS calculator display and keyboard shortcuts)
+- Users can complete a calculation using only the keyboard, without clicking buttons
 - We're ready to discuss [Calculator v2](calculator-v2.md) without redoing the basics
 
 ## Scope
@@ -52,17 +53,18 @@ The PoC shows that math works, but it doesn't feel like a real calculator yet. I
 
 **What users see**
 
-- The number they're typing and the running result stay visible
+- **Two-line display (macOS/iOS calculator behavior)** — top line shows the current expression as it builds (e.g. `5 + 3`); bottom line shows the number being typed or the running result; both lines stay visible and update as the user works
 - When something isn't allowed (like dividing by zero), show a clear error instead of a blank screen or crash
 
-**Nice to have for power users**
+**Keyboard input**
 
-- Keyboard: number keys, operators, Enter, Escape, Backspace where it makes sense
+- Number keys (`0`–`9`), decimal point, operators (`+`, `-`, `*`, `/`), Enter (=), Escape (clear), and Backspace (clear entry or delete last digit) — same behavior as clicking the on-screen buttons
+- Keyboard shortcuts work when the calculator has focus; no separate "keyboard mode" toggle
 
 ### Out of scope
 
 - Scientific functions (sine, cosine, logarithms, etc.) — [Calculator v2](calculator-v2.md)
-- A history of past calculations you can scroll through
+- A scrollable log of **past** completed calculations (the live expression on the top display line is in scope; a separate history panel is not)
 - Different color themes or skins
 - Memory still clears when you refresh the page (we can revisit later)
 
