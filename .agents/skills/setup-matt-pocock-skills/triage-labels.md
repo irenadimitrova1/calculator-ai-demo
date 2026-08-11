@@ -6,7 +6,7 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 | -------------------------- | -------------------- | ---------------------------------------- |
 | `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue  |
 | `needs-info`               | `needs-info`         | Waiting on reporter for more information |
-| `ready-for-agent`          | `ready-for-agent`    | Tracer-bullet ticket ready for `/implement` |
+| `ready-for-agent`          | `ready-for-agent`    | Tracer-bullet ticket ready for `/plan` |
 | `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
 | `wontfix`                  | `wontfix`            | Will not be actioned                     |
 | _(repo extension)_         | `story`              | Parent / umbrella spec from `/to-spec`   |

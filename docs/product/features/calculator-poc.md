@@ -67,9 +67,21 @@ This is intentionally bare-bones. Everything below waits for a later release.
 ## Engineering specification
 
 **Owner:** Engineering  
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-11  
+**Status:** in-progress
 
 _Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this section._
+
+### Ticket progress
+
+| Issue | Title | Status |
+|-------|-------|--------|
+| [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | pending |
+| [#4](https://github.com/irenadimitrova1/calculator-ai-demo/issues/4) | Calculation module with tests | pending |
+| [#5](https://github.com/irenadimitrova1/calculator-ai-demo/issues/5) | Browser calculator (full PoC behavior) | pending |
+| [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | pending |
+
+Set **Status:** to `done` when all rows are `shipped`.
 
 ### Stack
 

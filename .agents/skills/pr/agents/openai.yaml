@@ -1,0 +1,5 @@
+interface:
+  display_name: "PR"
+  short_description: "Commit, push, open PR, update docs for one ticket"
+policy:
+  allow_implicit_invocation: false

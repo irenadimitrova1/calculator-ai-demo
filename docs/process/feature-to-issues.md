@@ -31,7 +31,7 @@ Use [TEMPLATE.md](../product/features/TEMPLATE.md) for new features, or the exis
 
 ## Engineering step: the skill chain
 
-Run in **one Cursor session** through ticket creation, then implement per ticket in fresh sessions.
+Run in **one Cursor session** through ticket creation, then **plan → build → pr** per ticket in separate sessions.
 
 ### 1. `/grill-with-docs`
 
@@ -61,13 +61,19 @@ Review the proposed breakdown (granularity, blockers) before approving. Child is
 
 **Do not** run `/triage` on these tickets — they are already agent-ready.
 
-### 4. `/implement`
+### 4. `/plan` → Build → `/pr` (per child ticket)
 
-Build **one child ticket** at a time (`ready-for-agent`). If you pass a parent **`story`** issue (e.g. `#2`), `/implement` runs `/grill-me` to choose the next unblocked child, then builds that ticket. Use `/clear` between tickets so each starts with fresh context.
+For each **`ready-for-agent`** child ticket:
+
+1. **`/plan #N`** — Plan mode + grill-me; produces a Cursor plan (no git). Pointing at a **`story`** parent runs grill-me to pick the next unblocked child.
+2. **Build** — execute the plan; fine-tune locally.
+3. **`/pr #N`** — verify, review, update docs (`### Ticket progress`, engineering spec), commit, push, open PR.
+
+Use `/clear` between tickets.
 
 ## Context hygiene
 
-Keep `/grill-with-docs` → `/to-spec` → `/to-tickets` in a single context window. Only split after tickets are published.
+Keep `/grill-with-docs` → `/to-spec` → `/to-tickets` in a single context window. Split after tickets are published — one `/plan` + Build + `/pr` cycle per child ticket.
 
 ## Example: calculator features
 
@@ -77,7 +83,7 @@ Work in dependency order:
 2. [Calculator v1](../product/features/calculator-v1.md) — memory, clear, standard UX
 3. [Calculator v2](../product/features/calculator-v2.md) — scientific mode
 
-Each gets its own grill → spec → tickets → implement cycle.
+Each gets its own grill → spec → tickets → plan/pr cycle.
 
 ## Related
 

@@ -12,13 +12,13 @@ A **flow** is a path through the skills. Most paths run along one **main flow**,
 
 ## This repo
 
-For **calculator-ai-demo**, read [`docs/agents/workflow.md`](../../docs/agents/workflow.md) first. When a feature spec already lives in `docs/product/features/`, use the **docs-first on-ramp** below — it runs the full chain through `/to-tickets` before `/implement`.
+For **calculator-ai-demo**, read [`docs/agents/workflow.md`](../../docs/agents/workflow.md) first. When a feature spec already lives in `docs/product/features/`, use the **docs-first on-ramp** below — it runs the full chain through `/to-tickets` before `/plan` and `/pr`.
 
 ## The main flow: idea → ship
 
 The route most work travels. You have an idea and want it built.
 
-When **no feature doc exists yet**, start here. When a PM doc already exists in `docs/product/features/`, use the **docs-first on-ramp** under On-ramps instead — both paths share the same grill → spec → tickets → implement chain.
+When **no feature doc exists yet**, start here. When a PM doc already exists in `docs/product/features/`, use the **docs-first on-ramp** under On-ramps instead — both paths share the same grill → spec → tickets → plan → pr chain.
 
 1. **`/grill-with-docs`** — sharpen the idea by interview. Start here whenever you are **working in a working directory**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No working directory? Use `/grill-me` — see Standalone. Both run the same `/grilling` primitive; `grill-with-docs` is the one that leaves a paper trail, which makes it the better of the two whenever a repo is there to leave it in.)
 2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`/handoff`** in both directions (a prototype lives in its own directory, which is exactly what `/handoff` is for — see Phase boundaries):
@@ -26,14 +26,14 @@ When **no feature doc exists yet**, start here. When a PM doc already exists in 
    - **`/prototype`** to answer the question with throwaway code,
    - **`/handoff`** back what you learned, and reference it from the original idea thread.
 3. **Branch — is this a multi-session build?**
-   - **Yes** → **`/to-spec`** (turn the thread into a spec), then **`/to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/implement`** per ticket, **`/clear`ing context between each one**. Each ticket is self-contained, so the last one's context is disposable.
-   - **No** → **`/implement`** right here, in the same context window.
+   - **Yes** → **`/to-spec`** (turn the thread into a spec), then **`/to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/plan`** per ticket, **Build**, then **`/pr`**, **`/clear`ing context between each one**.
+   - **No** → **`/plan`** then Build then **`/pr`** in sequence.
 
-   Either way, **`/implement`** builds each issue by driving **`/tdd`** internally — one red-green slice at a time — then closes out by running **`/code-review`**, a two-axis review (Standards + Spec) of the diff, before committing. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   Per ticket: **`/plan`** (Plan mode + grill-me, no git) → **Build** (execute + fine-tune) → **`/pr`** (verify, `/code-review`, docs, commit, push, open PR). Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
 
 ### Context hygiene
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/to-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each `/implement` then starts fresh, working from the ticket.
+Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/to-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each **`/plan`** then starts fresh for the next ticket.
 
 The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: the window (~150k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before `/to-tickets`, don't push on degraded — `/compact` at the nearest phase boundary and carry on (see Phase boundaries).
 
@@ -41,15 +41,15 @@ The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-diction
 
 A starting situation that generates work, then merges onto the main flow.
 
-- **Feature doc already written** (`docs/product/features/`) → run the full chain, then merge onto `/implement`:
+- **Feature doc already written** (`docs/product/features/`) → run the full chain, then merge onto `/plan` and `/pr`:
   1. **`/grill-with-docs`** — sharpen the idea against the PM sections; append or update `## Engineering specification` and `CONTEXT.md` (do not edit PM content)
   2. **`/to-spec`** — one parent spec issue on GitHub (`story` label — umbrella, not implementable)
   3. **`/to-tickets`** — split into tracer-bullet child tickets (`ready-for-agent`)
-  4. **`/implement`** per child ticket (fresh context each time). Pointing `/implement` at a **`story`** parent runs `/grill-me` first to pick the next unblocked child.
+  4. **`/plan`** → **Build** → **`/pr`** per child ticket (fresh context each cycle). Pointing `/plan` at a **`story`** parent runs `/grill-me` first to pick the next unblocked child.
 
   Keep steps 1–3 in one unbroken context window (same hygiene as main flow). See [`docs/agents/workflow.md`](../../docs/agents/workflow.md).
 
-- **Bugs and requests piling up** → **`/triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/implement`** later picks up.
+- **Bugs and requests piling up** → **`/triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/plan`** and **`/pr`** later pick up.
 
   Triage is only for issues **you didn't create** — bug reports, incoming feature requests, anything that arrives raw. Tickets that `/to-tickets` produced are already agent-ready, so **don't triage them**.
 
@@ -57,7 +57,7 @@ A starting situation that generates work, then merges onto the main flow.
 
 - **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
 
-  When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable plan, then `/to-tickets` and `/implement` as usual. Looping the map straight into `/implement` skips that collapse and throws the linked detail away — go straight to `/implement` only when the effort turned out genuinely small.
+  When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable plan, then `/to-tickets` and `/plan` → `/pr` as usual. Looping the map straight into `/plan` skips that collapse and throws the linked detail away — go straight to `/plan` only when the effort turned out genuinely small.
 
 ## Codebase health
 
@@ -84,12 +84,14 @@ A **phase** is a chunk of work inside a session — the grilling, the implementa
 
 Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree — the five questions, the reasoning behind each branch, and why the primary-source cost makes **Continue** the one to rule out first. Make the decision **at** a boundary; mid-phase, continue or split the rest into subagents.
 
-## Publish
+## Publish and ship
 
-Skills that turn thinking into tracker artifacts. Both sit in the main flow and the docs-first on-ramp.
+Skills that turn thinking into tracker artifacts and ship code.
 
-- **`/to-spec`** — synthesize the current thread into one spec issue on GitHub (user stories + implementation/testing decisions). No interview — publish what you already know.
+- **`/to-spec`** — synthesize the current thread into one spec issue on GitHub (user stories + implementation/testing decisions). No interview — publish what you already know. Applies **`story`** label.
 - **`/to-tickets`** — break a plan, spec, feature doc path, or issue into tracer-bullet tickets with blocking edges. Quiz the user before publishing.
+- **`/plan`** — Plan mode + grill-me for one child ticket; produces a Cursor plan (no code, no git).
+- **`/pr`** — verify, review, update docs, commit, push, open PR for one child ticket.
 
 ## Standalone
 

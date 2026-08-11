@@ -20,7 +20,7 @@ Describe how the team plans work — cadence, ceremonies, and where decisions ar
 | Architecture decisions | [ADRs](../adr/index.md) |
 | Domain glossary | [`CONTEXT.md`](https://github.com/irenadimitrova1/calculator-ai-demo/blob/main/CONTEXT.md) at repo root |
 
-**Handoff:** PM writes feature docs in the wiki. Engineering runs `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/implement` to turn an approved doc into issues and code. See [Feature doc → issues](feature-to-issues.md).
+**Handoff:** PM writes feature docs in the wiki. Engineering runs `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/plan` → `/pr` to turn an approved doc into issues and code. See [Feature doc → issues](feature-to-issues.md).
 
 ## Ceremonies
 

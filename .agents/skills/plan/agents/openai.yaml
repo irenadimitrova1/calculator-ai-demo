@@ -1,0 +1,5 @@
+interface:
+  display_name: "Plan"
+  short_description: "Plan one ticket in Plan mode with grill-me"
+policy:
+  allow_implicit_invocation: false

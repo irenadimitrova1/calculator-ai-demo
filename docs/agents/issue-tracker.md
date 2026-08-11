@@ -30,9 +30,16 @@ GitHub shares one number space across issues and PRs, so a bare `#42` may be eit
 | Label | Source | Implementable? |
 |-------|--------|----------------|
 | `story` | `/to-spec` parent / umbrella | No — context only |
-| `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/implement` target |
+| `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/plan` then `/pr` |
 
-Child issues reference the parent under `## Parent` in the body. `/implement` on a `story` issue runs `/grill-me` to pick the next unblocked child.
+Child issues reference the parent under `## Parent` in the body. `/plan` on a `story` issue runs `/grill-me` to pick the next unblocked child.
+
+## PR conventions
+
+- One PR per child ticket; branch name `issue-<N>-<slug>`
+- Commit/PR body includes `Closes #N`
+- PR description links parent `story`, feature doc path, and test plan
+- `/pr` comments the PR URL on the issue; issue closes on merge
 
 ## When a skill says "publish to the issue tracker"
 

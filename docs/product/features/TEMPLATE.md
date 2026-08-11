@@ -51,11 +51,20 @@
 ## Engineering specification
 
 **Owner:** Engineering  
-**Last updated:** <!-- YYYY-MM-DD — filled in by /grill-with-docs -->
+**Last updated:** <!-- YYYY-MM-DD — filled in by /grill-with-docs -->  
+**Status:** not-started | in-progress | done
 
 _Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this section._
 
 > PM/PO: leave this section for engineering. Do not edit below this line unless you are running `/grill-with-docs`.
+
+### Ticket progress
+
+| Issue | Title | Status |
+|-------|-------|--------|
+| #N | <!-- ticket title --> | planned / in-review / shipped |
+
+`/plan` may set a row to `planned`. `/pr` sets `in-review` then `shipped`. Set **Status:** to `done` when all child tickets are shipped.
 
 ### Stack
 

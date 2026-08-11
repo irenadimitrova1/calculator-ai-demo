@@ -16,15 +16,27 @@ Run in order:
 
 3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply **`ready-for-agent`** to child tickets only — do **not** run `/triage` on these tickets.
 
-4. **`/implement`** — build **one child ticket** at a time (`ready-for-agent`). If pointed at a parent **`story`** issue, `/implement` runs `/grill-me` to pick the next unblocked child, then builds that ticket. Start each ticket in a fresh context window (`/clear` between tickets). `/implement` drives `/tdd` internally and runs `/code-review` before commit.
+4. **Per child ticket** (repeat until all children ship):
+   - **`/plan #N`** — Plan mode + grill-me rounds; produces a Cursor plan (no code, no git). If pointed at a **`story`** parent, runs grill-me to pick the next unblocked child first.
+   - **Build** — execute the plan in Cursor (Build or Agent); fine-tune locally.
+   - **`/pr #N`** — verify, code-review, update docs, commit, push, open PR.
+
+Use **`/clear`** between tickets so each `/plan` starts fresh.
 
 ## Context hygiene
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/to-tickets`. Each `/implement` starts fresh, working from the ticket.
+| Session | Skills | Clear after? |
+|---------|--------|--------------|
+| Spec chain | grill-with-docs → to-spec → to-tickets | No until tickets published |
+| Plan | `/plan #N` | After plan approved (optional `/clear` before Build) |
+| Build | Manual / Cursor Build | — |
+| Ship | `/pr #N` | Yes — fresh `/plan` for next ticket |
+
+Keep steps 1–3 in **one unbroken context window**. Each `/plan` starts fresh for the next ticket.
 
 ## Incoming work (different path)
 
-**`/triage`** is only for raw external issues and bugs — things you did not create via `/to-tickets`. Tickets published by `/to-tickets` are already agent-ready.
+**`/triage`** is only for raw external issues and bugs — things you did not create via `/to-tickets`. Triaged issues that become `ready-for-agent` also use **`/plan` → Build → `/pr`**.
 
 ## Skill reinstall note
 
