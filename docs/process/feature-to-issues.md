@@ -31,7 +31,7 @@ Use [TEMPLATE.md](../product/features/TEMPLATE.md) for new features, or the exis
 
 ## Engineering step: the skill chain
 
-Run in **one Cursor session** through ticket creation, then **plan → build → pr** per ticket in separate sessions.
+Run in **one Cursor session** through ticket creation, then **plan → build → pr** per ticket in separate sessions (optional `/verify` after post-Build edits).
 
 ### 1. `/grill-with-docs`
 
@@ -65,9 +65,12 @@ Review the proposed breakdown (granularity, blockers) before approving. Child is
 
 For each **`ready-for-agent`** child ticket:
 
-1. **`/plan #N`** — Plan mode + grill-me; produces a Cursor plan (no git). Pointing at a **`story`** parent runs grill-me to pick the next unblocked child.
-2. **Build** — execute the plan; fine-tune locally.
-3. **`/pr #N`** — verify, review, update docs (`### Ticket progress`, engineering spec), commit, push, open PR.
+1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
+2. **Build** — execute the plan on the feature branch; **automatically run verify checklist** at the end (lint, tests, Storybook, docs). **No commit.**
+3. **`/verify #N`** *(optional)* — re-validate after post-Build edits.
+4. **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`. Then **`/clear`**.
+
+When the last child merges and closes, the parent **`story`** issue closes too.
 
 Use `/clear` between tickets.
 

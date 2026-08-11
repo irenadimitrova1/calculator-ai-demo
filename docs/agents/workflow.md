@@ -17,26 +17,44 @@ Run in order:
 3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply **`ready-for-agent`** to child tickets only — do **not** run `/triage` on these tickets.
 
 4. **Per child ticket** (repeat until all children ship):
-   - **`/plan #N`** — Plan mode + grill-me rounds; produces a Cursor plan (no code, no git). If pointed at a **`story`** parent, runs grill-me to pick the next unblocked child first.
-   - **Build** — execute the plan in Cursor (Build or Agent); fine-tune locally.
-   - **`/pr #N`** — verify, code-review, update docs, commit, push, open PR.
+   - **`/plan #N`** — branch from `main` (`issue-<N>-<slug>`), assign `@me`, swap `ready-for-agent` → `in-progress`, link branch on issue; Plan mode + grill-me; Cursor plan. **No commit.**
+   - **Build** — see [Build](#build) below. **No commit.**
+   - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
+   - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, **`/clear`**.
 
-Use **`/clear`** between tickets so each `/plan` starts fresh.
+Use **`/clear`** after each `/pr` so the next `/plan` starts fresh.
+
+## Build
+
+Cursor **Build** runs on the feature branch after the plan is approved. It is **two phases in one session** — verify is not a separate mandatory step:
+
+| Phase | What runs | When |
+|-------|-----------|------|
+| **1. Implement** | Write code, tests, and Storybook stories per the approved plan | First |
+| **2. Verify** | Full verify checklist: typecheck, lint, tests, production build, Storybook build, docs (`mkdocs`), `/code-review`, update feature doc ticket progress | **Automatically, when implementation finishes** |
+
+Phase 2 uses the same checklist as the optional [`/verify`](../../.agents/skills/verify/SKILL.md) skill. You do **not** need to invoke `/verify` after a normal Build — only if you edit code or docs **after** Build and want to re-validate before `/pr`.
+
+**Do not commit** during either phase. Commits happen only in `/pr`.
 
 ## Context hygiene
 
 | Session | Skills | Clear after? |
 |---------|--------|--------------|
 | Spec chain | grill-with-docs → to-spec → to-tickets | No until tickets published |
-| Plan | `/plan #N` | After plan approved (optional `/clear` before Build) |
-| Build | Manual / Cursor Build | — |
-| Ship | `/pr #N` | Yes — fresh `/plan` for next ticket |
+| Plan | `/plan #N` | Optional before Build |
+| Build + verify | Build (verify runs at end) | — |
+| Ship | `/pr #N` | **Yes** — `/clear` before next ticket |
 
 Keep steps 1–3 in **one unbroken context window**. Each `/plan` starts fresh for the next ticket.
 
+## Parent story closure
+
+When the **last** child issue is merged and closed (`Closes #N` on its PR), close the parent **`story`** issue and set the feature doc **`Status:`** to `done`. `/pr` handles this when all siblings are closed (including after re-invoke post-merge).
+
 ## Incoming work (different path)
 
-**`/triage`** is only for raw external issues and bugs — things you did not create via `/to-tickets`. Triaged issues that become `ready-for-agent` also use **`/plan` → Build → `/pr`**.
+**`/triage`** is only for raw external issues and bugs — things you did not create via `/to-tickets`. Triaged issues that become `ready-for-agent` also use **`/plan` → Build → `/pr`** (optional `/verify` after edits).
 
 ## Skill reinstall note
 

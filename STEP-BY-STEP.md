@@ -20,5 +20,6 @@
     - Improving to-spec and to-issues to generation.
         - **to-spec** - creates and publishes a parent issue (story) with description and link to proper feature docs, dev specs, etc. Applies **`story`** label only (not `ready-for-agent`).
         - **to-tickets** - makes a plan of how many issues it will create and their title & content. Asks multiple questions - should we get more granular or more generic, are blocking edges correct, etc. (might run multiple iterations here) and if all is ok, publishes child tickets with **`ready-for-agent`**.
-        - **plan** - builds one child ticket at a time. If pointed at a parent **`story`** issue, runs **`/grill-me`** to pick the next unblocked child first. This is a plan-mode process. The developer still actively and iteratively participates in the feature implementation. Later, when the entire flow is polished, we could try automating it up to PR for simple features.
-        - **pr** - pushes and creates a PR. PR is necessary in case someone else from the team, different from the assignee needs to review some changes, *e.g. FE changed BE and needs a BE dev to review*
+        - **plan** - checks if issue has blockers. Creates branch from main, assigns user, swaps `ready-for-agent` → `in-progress`, links branch to issue; plan-mode grill + Cursor plan. **No commit.** Build on same branch — also **no commit**.
+        - **Build** - runs verify checklist automatically at end (lint, tests, Storybook, docs). **No commit.** Optional **`/verify`** after post-Build edits.
+        - **pr** - commit, confirm, push, open PR, remove `in-progress`, close parent story when last child done. Then **`/clear`**.

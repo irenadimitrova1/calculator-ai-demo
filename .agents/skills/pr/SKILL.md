@@ -1,71 +1,128 @@
 ---
 name: pr
-description: Ship one child ticket — verify, review, update docs, commit, push, open PR.
+description: Commit, push, and open PR for one child ticket — after Build verify passed. Confirm, then /clear.
 disable-model-invocation: true
 ---
 
-Ship **one child ticket** after local build and fine-tuning. This is the explicit git/PR gate — do **not** push unless the user invoked `/pr`.
+Ship **one child ticket** after verification passed (automatic at end of Build, or optional `/verify` after post-Build edits). Commit all changes, push, open PR. **Do not** run build/lint/tests here.
 
 ## Resolve the target issue
 
-Fetch the issue the user pointed at. Read labels, body, and `## Parent`.
-
 | Label | Role | Action |
 |-------|------|--------|
-| `story` | Parent / umbrella spec | **Stop.** Tell the user to `/pr` a child ticket, or `/plan` from the story to pick one. |
-| `ready-for-agent` | Tracer-bullet ticket | Ship this issue. |
-| Other | Untriaged | Stop — triage or pick a `ready-for-agent` child. |
+| `story` | Parent spec | **Stop** — `/pr` a child ticket. |
+| `in-progress` | Active ticket on feature branch | Ship this issue. |
+| `ready-for-agent` | Not started | **Stop** — run `/plan` then Build first. |
+| Other | Untriaged | Stop. |
+
+### Already merged
+
+If issue `#N` is **closed** and all sibling children (same `## Parent`) are closed, close the parent **`story`** issue and update feature **`Status:`** to `done`. Then tell the user to **`/clear`**. Do not open another PR.
 
 ## Preconditions
 
-- Working tree has changes for this ticket
-- User explicitly invoked `/pr` (this skill is the ship gate)
+- On branch `issue-<N>-<slug>`
+- Verify checklist passed (during Build, or via optional `/verify` if you edited after Build)
+- Docs updated in working tree
+- User explicitly invoked `/pr`
 
-## Process
+If code changed since the last verify run, tell the user to run **`/verify #N`** first.
 
-### 1. Verify
+---
 
-Run the project's test suite and typecheck. **Stop if red** — fix or tell the user what's failing.
+## Phase 1 — Prepare commit
 
-### 2. Code review
+1. Confirm branch: `issue-<N>-<slug>`
+2. Stage all changes (code, tests, Storybook, docs)
+3. Draft commit message — subject + body with `Closes #N`
+4. Draft PR title and body:
+   - Summary
+   - `Closes #N`
+   - Parent `story` #M
+   - Feature doc path
+   - Note: checks passed at Build (or re-verified)
 
-Run `/code-review` against the ticket's acceptance criteria (Spec axis). Address blocking findings or note them for the user before proceeding.
+Do **not** commit yet.
 
-### 3. Update docs (`/domain-modeling`)
+---
 
-**Engineering section only** — do not edit PM/PO content in feature docs.
+## Phase 2 — Ship report
 
-In the linked feature doc `## Engineering specification`:
+```md
+## Ship report — #N <title>
 
-- Record any **new decisions** made during the build (under the relevant subsection or a brief `### Decisions this ticket` note)
-- Update **`### Ticket progress`**: set this ticket's row to `in-review` before PR, `shipped` after PR is opened
-- Set **`Status:`** to `in-progress` if not already; set to `done` only when **all** child tickets for the parent story are closed/shipped
+### Branch
+`issue-<N>-<slug>`
 
-Update `CONTEXT.md` or add ADRs only when the domain-modeling skill's three ADR criteria all apply.
+### Commit
+**Subject:** …
+**Body:** Closes #N
 
-### 4. Git + GitHub
+### PR
+**Title:** …
+**Files:** N files (summary)
 
-Follow the user's git/PR rules:
+### Labels
+- Remove `in-progress` from #N after PR opened
+```
 
-1. Branch if needed: `issue-<N>-<slug>`
-2. Stage relevant changes (code + doc updates from step 3)
-3. Commit with message referencing the issue; body includes `Closes #N`
-4. `git push -u origin HEAD`
-5. `gh pr create` with:
-   - Title summarizing the ticket
-   - Body: Summary, `Closes #N`, parent `story` link, feature doc path, test plan checklist
-6. Comment the PR URL on issue `#N`
+---
 
-Do **not** manually close `#N` — `Closes #N` in the PR handles it on merge.
+## Phase 3 — Confirm before push
 
-### 5. After PR
+Use **`AskQuestion`**:
 
-Set the ticket row in `### Ticket progress` to `shipped` if not already done in step 3.
+- **`id`** — `pr-confirm`
+- **`prompt`** — *"Commit, push, and open PR?"*
+- **`options`** —
+  - `Commit, push, and open PR (Recommended)`
+  - `Revise commit or PR message (I'll type feedback)`
+  - `Cancel — I'll keep working locally`
 
-If all sibling child tickets are now shipped/closed, set feature **`Status:`** to `done`.
+**Do not** push until user picks **Commit, push, and open PR**.
+
+---
+
+## Phase 4 — Push and open PR
+
+1. Commit with agreed message (`Closes #N` in body)
+2. `git push -u origin HEAD`
+3. `gh pr create` with agreed title and body
+4. `gh issue comment <N> --body "PR: <url>"`
+5. `gh issue edit <N> --remove-label in-progress`
+6. Update **`### Ticket progress`** row to `shipped`
+
+Do **not** manually close `#N` — `Closes #N` closes it on merge.
+
+---
+
+## Phase 5 — Close parent story (when last child done)
+
+After PR is opened, check **sibling** child issues (same `## Parent` in body):
+
+- If **all** siblings are closed, **or** all except `#N` are closed and this PR will close `#N` on merge — comment on parent **`story`**: *"Last child PR opened — close this story when #N merges."*
+
+When **all** child issues are **closed** (after merge — user may re-invoke `/pr #N` or you detect via `gh issue view`):
+
+1. `gh issue close <story> --comment "All child tickets shipped."`
+2. Set feature doc **`Status:`** to `done`
+
+If all siblings closed now (e.g. re-run after merge), close story immediately.
+
+---
+
+## Phase 6 — Clear
+
+Tell the user explicitly:
+
+> **`/clear`** — start fresh for the next ticket (`/plan #M` on a new branch).
+
+Do not start the next ticket in the same context.
+
+---
 
 ## Out of scope
 
+- Build, lint, tests (verify checklist — runs at end of Build, or optional `/verify`)
 - Planning (`/plan`)
-- Building code (dev does that before `/pr`)
-- Closing the parent `story` issue (closes when all children ship, or manually by PM)
+- Committing during Plan Build

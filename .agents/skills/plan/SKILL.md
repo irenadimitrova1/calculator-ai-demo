@@ -1,10 +1,10 @@
 ---
 name: plan
-description: Plan one child ticket in Plan mode — grill-me rounds, then a Cursor plan. No code, no git.
+description: Plan one child ticket in Plan mode — branch from main, grill-me, Cursor plan. No commit.
 disable-model-invocation: true
 ---
 
-Plan how to build **one child ticket** before any code is written. Run `/grilling` per `/grill-me`. Do **not** write code, commit, push, or run `/code-review`.
+Plan how to build **one child ticket** on a feature branch. Run `/grilling` per `/grill-me`. Do **not** commit, push, or open a PR.
 
 ## Resolve the target issue first
 
@@ -14,91 +14,83 @@ Fetch the issue the user pointed at (number, URL, or title). Read labels, body, 
 |-------|------|--------|
 | `story` | Parent / umbrella spec from `/to-spec` | **Do not plan the parent.** Go to [Parent `story` issues](#parent-story-issues). |
 | `ready-for-agent` | Tracer-bullet ticket from `/to-tickets` | Plan this issue (if blockers are clear). |
+| `in-progress` | Ticket already claimed | Continue on the linked branch — skip branch setup unless branch is missing. |
 | Other | Untriaged or human-only | Stop — tell the user to triage or pick a `ready-for-agent` child ticket. |
 
-**Never** plan a `story` issue directly — it holds user stories and cross-cutting decisions, not a single shippable slice.
+**Never** plan a `story` issue directly.
 
 ### Parent `story` issues
 
 When the target has the `story` label, run `/grilling` per `/grill-me`:
 
-1. Gather **child tickets** — open issues whose body references this parent under `## Parent`. Read each child's title, acceptance criteria, and `## Blocked by`.
-2. Compute the **frontier** — children labeled `ready-for-agent` whose blockers are all closed (or `Blocked by: None`).
-3. **Grill** the user on which frontier ticket to plan now via `AskQuestion`. Wait for confirmation.
-4. Plan the **chosen child ticket** — not the parent.
+1. Gather **child tickets** whose body references this parent under `## Parent`.
+2. Compute the **frontier** — children labeled `ready-for-agent` whose blockers are all closed.
+3. **Grill** the user on which frontier ticket to plan now via `AskQuestion`.
+4. Plan the **chosen child ticket**.
 
 ### Blockers
 
-Before planning, verify the target ticket's blockers are satisfied. If `## Blocked by` references open issues, stop and point the user at the blocking ticket.
+Before planning, verify blockers are satisfied. Stop if `## Blocked by` references open issues.
+
+## Start — branch and issue (before Plan mode)
+
+Run **once** when the ticket has `ready-for-agent` (skip if already `in-progress` on the correct branch):
+
+1. **Fetch latest `main`:** `git fetch origin main`
+2. **Create branch from `main`:** `git checkout -b issue-<N>-<slug> origin/main`  
+   Slug from ticket title (lowercase, hyphenated).
+3. **Assign and label the issue:**
+   - `gh issue edit <N> --add-assignee @me`
+   - `gh issue edit <N> --remove-label ready-for-agent --add-label in-progress`
+4. **Link branch to issue:** `gh issue comment <N> --body "Working branch: \`issue-<N>-<slug>\`"`
+
+Planning and **Build** both happen on this branch. **Do not commit** during `/plan` or during Plan **Build**.
+
+If already on `issue-<N>-<slug>` with `in-progress`, confirm and continue.
+
+Create the **`in-progress`** label on GitHub if it does not exist yet.
 
 ## What to read first
 
-Look up facts yourself — do not ask the user to point you at files:
-
 | Material | Path | Why |
 |----------|------|-----|
-| Target ticket | GitHub issue `#N` | Acceptance criteria, what to build |
-| Parent story | `## Parent` in ticket body | Cross-cutting context (read only) |
-| Feature doc | `docs/product/features/*.md` → `## Engineering specification` | Stack, behavior, constraints |
-| Parent spec | Linked `story` issue body | Seams, testing decisions |
-| Domain glossary | `CONTEXT.md` | Ubiquitous language |
-| ADRs | `docs/adr/` | Hard decisions already made |
-| Codebase | `src/`, `package.json`, etc. | What exists vs what the ticket assumes |
+| Target ticket | GitHub issue `#N` | Acceptance criteria |
+| Parent story | `## Parent` in ticket body | Context (read only) |
+| Feature doc | `## Engineering specification` | Stack, behavior, constraints |
+| `CONTEXT.md`, ADRs, codebase | repo root | Facts and vocabulary |
 
 ## Enter Plan mode
 
 Call `SwitchMode` with `target_mode_id: "plan"` before grilling and plan authoring.
 
-If `SwitchMode` is unavailable, tell the user to switch to Plan mode manually and continue.
+If `SwitchMode` is unavailable, tell the user to switch to Plan mode manually.
 
 ## Grill-me rounds — plan-mode UI
 
-Work the **design tree** in rounds for *this ticket only*: seams, module boundaries, test approach, risky decisions.
+Work the **design tree** in rounds for *this ticket only*.
 
-Present each round's **frontier** with `AskQuestion` — same interactive picker UI as `/grill-with-docs`. **Do not** dump numbered markdown question lists in chat.
+Present each frontier with `AskQuestion`. **Between-round gate** every round (`round-additions`). Do **not** skip the gate.
 
-**One `AskQuestion` call per round** for the frontier. Wait for answers before the between-round gate.
-
-### Per-question shape
-
-- **`id`** — stable slug (`q1-seam`, `q2-modules`, …).
-- **`prompt`** — short title, then 1–3 sentences of context.
-- **`options`** — 2–5 concrete choices. Put your recommendation **first** and suffix with `(Recommended)`.
-- **`allow_multiple`** — `false` unless the decision genuinely allows multiple picks.
-
-### Between-round gate — always
-
-After each frontier round, run a **second** `AskQuestion`:
-
-- **`id`** — `round-additions`
-- **`prompt`** — *"Anything this round didn't cover? Add constraints or preferences before the next round."*
-- **`options`** — `Nothing to add — continue (Recommended)` / `I have requirements to add (I'll type them)`
-
-Do **not** skip the gate.
-
-### When grilling is done
-
-Stop when the frontier is empty and the user confirms shared understanding. Do **not** start coding.
+Do **not** write code, **commit**, or run checks during grilling.
 
 ## Produce the plan
 
-Call `CreatePlan` with:
+Call `CreatePlan` with issue `#N`, parent `story`, feature doc path, acceptance criteria, testing seams, and out-of-scope.
 
-- Linked issue `#N`, parent `story` `#M` (if any), feature doc path
-- Acceptance criteria mapped to concrete steps
-- Testing seams (from parent spec or engineering spec)
-- Explicit out-of-scope for this ticket
+Optionally save under `.scratch/plans/<issue>-<slug>.md`.
 
-Optionally save a copy under `.scratch/plans/<issue>-<slug>.md` for traceability.
-
-Update the feature doc **`## Engineering specification` → `### Ticket progress`** only: set this ticket's row to `planned`. Do **not** edit PM sections.
+Update feature doc **`### Ticket progress`**: set row to `planned`. Do **not** edit PM sections.
 
 ## Handoff
 
 Tell the dev:
 
 1. Review and approve the plan in Cursor
-2. Execute with **Build** (Plan mode) or Agent mode — fine-tune locally
-3. Run **`/pr #N`** when ready to commit, open a PR, and update docs
+2. **Build** on branch `issue-<N>-<slug>` — two phases in one session ([Build](../../docs/agents/workflow.md#build)):
+   - **Implement** the plan
+   - **Verify** — run the full checklist from [`/verify` skill](../verify/SKILL.md) **automatically when implementation finishes**
+3. Run **`/pr #N`** — commit, push, open PR (only after verify passes)
 
-Do **not** commit or push — `/pr` is the explicit ship gate.
+If you change anything after Build, run optional **`/verify #N`** to re-validate before `/pr`.
+
+**Never commit during Plan Build.** Commits happen only in `/pr`.

@@ -65,6 +65,11 @@
       "sourceType": "local",
       "skillPath": ".agents/skills/pr/SKILL.md"
     },
+    "verify": {
+      "source": "calculator-ai-demo",
+      "sourceType": "local",
+      "skillPath": ".agents/skills/verify/SKILL.md"
+    },
     "improve-codebase-architecture": {
       "source": "mattpocock/skills",
       "sourceType": "github",
