@@ -79,7 +79,7 @@ _Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this sec
 | [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | shipped |
 | [#4](https://github.com/irenadimitrova1/calculator-ai-demo/issues/4) | Calculation module with tests | shipped |
 | [#5](https://github.com/irenadimitrova1/calculator-ai-demo/issues/5) | Browser calculator (full PoC behavior) | shipped |
-| [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | pending |
+| [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | in-review |
 
 Set **Status:** to `done` when all rows are `shipped`.
 
@@ -89,6 +89,8 @@ Set **Status:** to `done` when all rows are `shipped`.
 - **shadcn preset:** radix-nova, neutral base color, CSS variables; Button added to prove wiring.
 - **Vitest config:** Separate `vitest.config.ts` from `vite.config.ts` to avoid Vite 8 / Vitest plugin type conflicts.
 - **ESLint:** Flat config with `typescript-eslint` recommended + `jsx-a11y` recommended.
+- **Storybook stories:** Co-located under `src/**/*.stories.tsx`.
+- **Storybook theme:** `@storybook/addon-themes` with `.dark` class (matches shadcn); shared `src/index.css`; Tailwind via `viteFinal` in `.storybook/main.ts`.
 
 ### Stack
 
