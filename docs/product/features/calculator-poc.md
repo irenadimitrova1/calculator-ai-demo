@@ -76,7 +76,7 @@ _Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this sec
 
 | Issue | Title | Status |
 |-------|-------|--------|
-| [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | pending |
+| [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | shipped |
 | [#4](https://github.com/irenadimitrova1/calculator-ai-demo/issues/4) | Calculation module with tests | pending |
 | [#5](https://github.com/irenadimitrova1/calculator-ai-demo/issues/5) | Browser calculator (full PoC behavior) | pending |
 | [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | pending |
