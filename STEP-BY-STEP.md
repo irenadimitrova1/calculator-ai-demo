@@ -17,3 +17,7 @@
         - Where to write the tech spec?
             - It adds a new section called **Engineering specification** that will later be used to generate GitHub issues/tasks
         - Give the tech person a chance to add additional information after each round of questions, which might lead to another round of questions. *E.g. while it was grilling me for the initial setup it asked only whether I want React + Vite or something else. Didn't ask about TypeScript, ESLint, styling library, etc.*
+    - Improving to-spec and to-issues to generation.
+        - **to-spec** - creates and publishes a parent issue (story) with description and link to proper feature docs, dev specs, etc. Applies **`story`** label only (not `ready-for-agent`).
+        - **to-tickets** - makes a plan of how many issues it will create and their title & content. Asks multiple questions - should we get more granular or more generic, are blocking edges correct, etc. (might run multiple iterations here) and if all is ok, publishes child tickets with **`ready-for-agent`**.
+        - **implement** - builds one child ticket at a time. If pointed at a parent **`story`** issue, runs **`/grill-me`** to pick the next unblocked child first.

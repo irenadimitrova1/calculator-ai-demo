@@ -41,11 +41,13 @@ Sharpen the idea against the PM sections of the feature doc. **Do not edit PM/PO
 
 ### 2. `/to-spec`
 
-Publish **one parent spec issue** on GitHub. The issue links back to the feature doc and synthesizes from `## Engineering specification` (plus `CONTEXT.md`, ADRs, and codebase exploration):
+Publish **one parent spec issue** on GitHub with the **`story`** label (umbrella — not directly implementable). The issue links back to the feature doc and synthesizes from `## Engineering specification` (plus `CONTEXT.md`, ADRs, and codebase exploration):
 
 - User stories
 - Implementation decisions (modules, seams, architecture)
 - Testing decisions
+
+Do **not** apply `ready-for-agent` to the parent issue.
 
 ### 3. `/to-tickets`
 
@@ -55,13 +57,13 @@ Split into **tracer-bullet tickets** with blocking edges. Pass the spec issue nu
 /to-tickets docs/product/features/calculator-poc.md
 ```
 
-Review the proposed breakdown (granularity, blockers) before approving. Issues are created on GitHub with `ready-for-agent`.
+Review the proposed breakdown (granularity, blockers) before approving. Child issues are created on GitHub with **`ready-for-agent`** only.
 
 **Do not** run `/triage` on these tickets — they are already agent-ready.
 
 ### 4. `/implement`
 
-Build **one ticket at a time**. Use `/clear` between tickets so each starts with fresh context.
+Build **one child ticket** at a time (`ready-for-agent`). If you pass a parent **`story`** issue (e.g. `#2`), `/implement` runs `/grill-me` to choose the next unblocked child, then builds that ticket. Use `/clear` between tickets so each starts with fresh context.
 
 ## Context hygiene
 

@@ -18,7 +18,7 @@ The issue tracker and triage label vocabulary should have been provided to you â
 
 Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. Write the spec using the template below, then publish it to the project issue tracker. Apply the **`story`** label â€” this is a parent / umbrella issue, **not** directly implementable. Do **not** apply `ready-for-agent` to parent specs.
 
 <spec-template>
 

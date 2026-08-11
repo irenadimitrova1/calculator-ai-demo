@@ -25,6 +25,15 @@ When set to `yes`, PRs run through the same labels and states as issues, using t
 
 GitHub shares one number space across issues and PRs, so a bare `#42` may be either — resolve with `gh pr view 42` and fall back to `gh issue view 42`.
 
+## Parent vs child issues
+
+| Label | Source | Implementable? |
+|-------|--------|----------------|
+| `story` | `/to-spec` parent / umbrella | No — context only |
+| `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/implement` target |
+
+Child issues reference the parent under `## Parent` in the body. `/implement` on a `story` issue runs `/grill-me` to pick the next unblocked child.
+
 ## When a skill says "publish to the issue tracker"
 
 Create a GitHub issue.

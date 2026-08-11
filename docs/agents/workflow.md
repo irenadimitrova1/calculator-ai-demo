@@ -12,11 +12,11 @@ Run in order:
 
 1. **`/grill-with-docs`** — sharpen the idea against the feature doc; append or update `## Engineering specification` in the same file and `CONTEXT.md`. **Do not edit PM/PO sections.** Shorten or skip if the wiki doc is already complete and passes [Definition of Ready](../process/definition-of-ready.md).
 
-2. **`/to-spec`** — publish one parent spec issue on GitHub. The issue body must link to the feature doc path. Synthesize from `## Engineering specification` only (plus `CONTEXT.md`, ADRs, and codebase) — not the PM sections above it.
+2. **`/to-spec`** — publish one **parent** spec issue on GitHub with the **`story`** label (not `ready-for-agent`). The issue body must link to the feature doc path. Synthesize from `## Engineering specification` only (plus `CONTEXT.md`, ADRs, and codebase) — not the PM sections above it.
 
-3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply `ready-for-agent` — do **not** run `/triage` on these tickets.
+3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply **`ready-for-agent`** to child tickets only — do **not** run `/triage` on these tickets.
 
-4. **`/implement`** — build one ticket at a time. Start each ticket in a fresh context window (`/clear` between tickets). `/implement` drives `/tdd` internally and runs `/code-review` before commit.
+4. **`/implement`** — build **one child ticket** at a time (`ready-for-agent`). If pointed at a parent **`story`** issue, `/implement` runs `/grill-me` to pick the next unblocked child, then builds that ticket. Start each ticket in a fresh context window (`/clear` between tickets). `/implement` drives `/tdd` internally and runs `/code-review` before commit.
 
 ## Context hygiene
 
