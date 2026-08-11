@@ -17,7 +17,7 @@ Run in order:
 3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply **`ready-for-agent`** to child tickets only — do **not** run `/triage` on these tickets.
 
 4. **Per child ticket** (repeat until all children ship):
-   - **`/plan #N`** — branch from `main` (`issue-<N>-<slug>`), assign `@me`, swap `ready-for-agent` → `in-progress`, link branch on issue; Plan mode + grill-me; Cursor plan. **No commit.**
+   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
    - **Build** — see [Build](#build) below. **No commit.**
    - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
    - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, **`/clear`**.

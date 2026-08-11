@@ -10,6 +10,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 - **Comment on an issue**: `gh issue comment <number> --body "..."`
 - **Apply / remove labels**: `gh issue edit <number> --add-label "..."` / `--remove-label "..."`
 - **Assign**: `gh issue edit <number> --add-assignee @me`
+- **Link a development branch**: `gh issue develop <number> --name issue-<N>-<slug> --base main --checkout` — shows under the issue **Development** sidebar (not a comment). List linked branches: `gh issue develop --list <number>`
 - **Close**: `gh issue close <number> --comment "..."`
 
 Infer the repo from `git remote -v` — `gh` does this automatically when run inside a clone.
@@ -39,9 +40,10 @@ Child issues reference the parent under `## Parent` in the body. `/plan` on a `s
 ## Branch and label lifecycle (per child ticket)
 
 1. **`/plan` start** (ticket has `ready-for-agent`):
-   - `git fetch origin main && git checkout -b issue-<N>-<slug> origin/main`
+   - `git fetch origin main`
+   - `gh issue develop <N> --name issue-<N>-<slug> --base main --checkout` — creates remote branch from `main` and links it in the issue **Development** sidebar
+   - `gh issue develop --list <N>` — confirm the branch appears
    - `gh issue edit <N> --add-assignee @me --remove-label ready-for-agent --add-label in-progress`
-   - `gh issue comment <N> --body "Working branch: \`issue-<N>-<slug>\`"`
 2. **Build** on that branch — at end, automatically run verify checklist — no commit
 3. **`/verify`** *(optional)* — re-run checks after post-Build edits — no commit
 4. **`/pr`** — commit, push, open PR, remove `in-progress`

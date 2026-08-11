@@ -34,19 +34,28 @@ Before planning, verify blockers are satisfied. Stop if `## Blocked by` referenc
 
 ## Start — branch and issue (before Plan mode)
 
-Run **once** when the ticket has `ready-for-agent` (skip if already `in-progress` on the correct branch):
+Run **once** when the ticket has `ready-for-agent` (skip branch setup if already `in-progress` with a linked branch — see below).
 
 1. **Fetch latest `main`:** `git fetch origin main`
-2. **Create branch from `main`:** `git checkout -b issue-<N>-<slug> origin/main`  
-   Slug from ticket title (lowercase, hyphenated).
-3. **Assign and label the issue:**
+2. **Create and link branch** (GitHub **Development** sidebar — not a comment):
+   ```bash
+   gh issue develop <N> --name issue-<N>-<slug> --base main --checkout
+   ```
+   Slug from ticket title (lowercase, hyphenated). This creates the branch on the remote from `main`, **links it to the issue**, and checks it out locally.
+3. **Confirm link:** `gh issue develop --list <N>` — must show `issue-<N>-<slug>`.
+4. **Assign and label the issue:**
    - `gh issue edit <N> --add-assignee @me`
    - `gh issue edit <N> --remove-label ready-for-agent --add-label in-progress`
-4. **Link branch to issue:** `gh issue comment <N> --body "Working branch: \`issue-<N>-<slug>\`"`
+
+Do **not** use `gh issue comment` for branch linking — comments do not appear under **Development**.
 
 Planning and **Build** both happen on this branch. **Do not commit** during `/plan` or during Plan **Build**.
 
-If already on `issue-<N>-<slug>` with `in-progress`, confirm and continue.
+### Already `in-progress`
+
+- **Linked branch exists** (`gh issue develop --list <N>` shows it): `git checkout issue-<N>-<slug>` and continue.
+- **Branch exists but not linked** (old workflow): run step 2 again with the same `--name` — `gh` links the existing branch.
+- **Wrong branch / no branch:** run step 2 from a clean `main` fetch.
 
 Create the **`in-progress`** label on GitHub if it does not exist yet.
 
