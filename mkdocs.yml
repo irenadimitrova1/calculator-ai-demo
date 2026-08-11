@@ -17,6 +17,8 @@ nav:
       - Vision: product/vision.md
       - Roadmap: product/roadmap.md
       - Features:
+          - Calculator PoC: product/features/calculator-poc.md
+          - Calculator v1: product/features/calculator-v1.md
           - Calculator v2: product/features/calculator-v2.md
   - Process:
       - How we plan: process/how-we-plan.md
