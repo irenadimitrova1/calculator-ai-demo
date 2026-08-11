@@ -83,6 +83,13 @@ _Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this sec
 
 Set **Status:** to `done` when all rows are `shipped`.
 
+### Decisions this ticket
+
+- **App location:** Vite app at repo root (`src/` alongside `docs/` wiki) — no monorepo subfolder.
+- **shadcn preset:** radix-nova, neutral base color, CSS variables; Button added to prove wiring.
+- **Vitest config:** Separate `vitest.config.ts` from `vite.config.ts` to avoid Vite 8 / Vitest plugin type conflicts.
+- **ESLint:** Flat config with `typescript-eslint` recommended + `jsx-a11y` recommended.
+
 ### Stack
 
 - **React + Vite + TypeScript** — greenfield app; calculator is the entire application (single page)
