@@ -6,7 +6,8 @@ How PM-written feature specs become GitHub Issues and shipped code.
 
 | Stage | Who | Where |
 |-------|-----|--------|
-| Product intent | PM / PO | Wiki — `docs/product/features/*.md` |
+| Product intent | PM / PO | Wiki — `docs/product/features/*.md` (sections above `## Engineering specification`) |
+| Engineering spec | Engineering | Same file — `## Engineering specification` (via `/grill-with-docs`) |
 | Spec + tickets | Engineering | GitHub Issues (via agent skills in Cursor) |
 | Code | Engineering | Pull requests linked to issues |
 
@@ -20,7 +21,7 @@ Before engineering picks it up, the doc should pass [Definition of Ready](defini
 - Out of scope is explicit
 - Linked to roadmap or vision where relevant
 
-Use the existing templates under [Features](../product/features/calculator-poc.md) (PoC, v1, v2) as a guide.
+Use [TEMPLATE.md](../product/features/TEMPLATE.md) for new features, or the existing calculator docs (PoC, v1, v2) as examples.
 
 ## PM step: write the spec
 
@@ -34,11 +35,13 @@ Run in **one Cursor session** through ticket creation, then implement per ticket
 
 ### 1. `/grill-with-docs`
 
-Sharpen the idea against the feature doc. Update `docs/product/features/<name>.md` and `CONTEXT.md` as decisions land. Skip or shorten if the doc is already complete.
+Sharpen the idea against the PM sections of the feature doc. **Do not edit PM/PO content.** Append or update `## Engineering specification` at the bottom of the same file, plus `CONTEXT.md` and ADRs as decisions land. Skip or shorten if the PM doc is already complete.
+
+`/to-spec` and `/to-tickets` read **only** `## Engineering specification` from the feature doc when generating issues.
 
 ### 2. `/to-spec`
 
-Publish **one parent spec issue** on GitHub. The issue links back to the feature doc and adds:
+Publish **one parent spec issue** on GitHub. The issue links back to the feature doc and synthesizes from `## Engineering specification` (plus `CONTEXT.md`, ADRs, and codebase exploration):
 
 - User stories
 - Implementation decisions (modules, seams, architecture)

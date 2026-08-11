@@ -6,7 +6,12 @@ ADRs record significant technical decisions and their context.
 
 Files use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
 
-ADRs are created lazily — only when a decision is actually made. There are no ADRs yet.
+ADRs are created lazily — only when a decision is actually made.
+
+| ADR | Title |
+|-----|-------|
+| [0001](0001-react-vite-typescript.md) | React + Vite + TypeScript for the calculator app |
+| [0002](0002-tailwind-shadcn-storybook.md) | Tailwind, shadcn/ui, and Storybook for UI development |
 
 ## Template
 

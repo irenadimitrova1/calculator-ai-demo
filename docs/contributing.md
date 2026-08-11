@@ -16,7 +16,8 @@ This wiki is built from Markdown files in the `docs/` folder and published autom
 
 | Section | Typical owner | Examples |
 |---------|---------------|----------|
-| `docs/product/` | PM / PO | Vision, roadmap, feature specs |
+| `docs/product/` | PM / PO | Vision, roadmap, feature specs (sections above `## Engineering specification`) |
+| `docs/product/features/*.md` → `## Engineering specification` | Engineering | Technical spec appended by `/grill-with-docs`; read by `/to-spec` and `/to-tickets` |
 | `docs/process/` | PM / PO / team lead | Planning rituals, Definition of Ready |
 | `docs/engineering/` | Engineering | Engineering overview, links to technical docs |
 | `docs/adr/` | Engineering | Architecture decision records |
@@ -29,7 +30,16 @@ PM writes feature specs in `docs/product/features/`. Engineering converts approv
 
 ## Adding a new page
 
-1. Create a new `.md` file under the right folder (e.g. `docs/product/features/my-feature.md`).
+### New feature spec
+
+1. Copy [`docs/product/features/TEMPLATE.md`](product/features/TEMPLATE.md) to `docs/product/features/<your-feature-slug>.md`.
+2. Fill in the PM sections (through `## Related`). Leave `## Engineering specification` for engineering (`/grill-with-docs`).
+3. Add a nav entry in [`mkdocs.yml`](https://github.com/irenadimitrova1/calculator-ai-demo/blob/main/mkdocs.yml) under **Product → Features**.
+4. Open a PR with both changes.
+
+### Other pages
+
+1. Create a new `.md` file under the right folder (e.g. `docs/process/my-process.md`).
 2. Add an entry to the `nav` section in [`mkdocs.yml`](https://github.com/irenadimitrova1/calculator-ai-demo/blob/main/mkdocs.yml) at the repo root.
 3. Open a PR with both changes.
 

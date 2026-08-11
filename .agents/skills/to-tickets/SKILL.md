@@ -14,7 +14,9 @@ The issue tracker and triage label vocabulary should have been provided to you â
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments.
+Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL, or a feature doc path) as an argument, fetch it and read its full body and comments.
+
+When the source is a feature doc at `docs/product/features/<name>.md`, read **only** `## Engineering specification` from that file for feature requirements â€” not the PM sections above it. Also use `CONTEXT.md`, relevant ADRs, and the codebase.
 
 ### 2. Explore the codebase (optional)
 

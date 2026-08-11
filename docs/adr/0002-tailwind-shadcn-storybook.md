@@ -1,0 +1,3 @@
+# Tailwind, shadcn/ui, and Storybook for UI development
+
+The PoC needs a styling system, reusable components, and a preview surface for design/QA (per PM scope). We chose Tailwind CSS + shadcn/ui over plain CSS or a different component library — shadcn gives copy-paste components that work well with Tailwind and scale into v1/v2. Storybook is the preview vehicle PM asked for; we apply the same Tailwind theme in Storybook and wire a11y and theme-switch addons so QA can review accessibility and light/dark early. Alternatives considered: plain Tailwind without shadcn (more bespoke UI work), and skipping Storybook (worse design/QA loop).

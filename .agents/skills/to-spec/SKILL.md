@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.
 
+When the source is a feature doc at `docs/product/features/<name>.md`, read **only** `## Engineering specification` from that file for feature requirements — not the PM sections above it. Also use `CONTEXT.md`, relevant ADRs, and the codebase. The published issue should still link to the full feature doc path for traceability.
+
 The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
 
 ## Process

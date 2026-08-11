@@ -63,3 +63,47 @@ This is intentionally bare-bones. Everything below waits for a later release.
 - [Vision](../vision.md)
 - [Roadmap](../roadmap.md)
 - [GitHub Issues](https://github.com/irenadimitrova1/calculator-ai-demo/issues)
+
+## Engineering specification
+
+**Owner:** Engineering  
+**Last updated:** 2026-08-11
+
+_Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this section._
+
+### Stack
+
+- **React + Vite + TypeScript** — greenfield app; calculator is the entire application (single page)
+- **TypeScript** — strict mode enabled project-wide
+- **ESLint** — full plugin set including accessibility (`eslint-plugin-jsx-a11y` or equivalent); strict rules enabled
+- **Tailwind CSS + shadcn/ui** — component library and styling system
+- **Storybook** — component preview and design QA; Tailwind theme applied in Storybook
+  - Storybook addons: **a11y**, **theme switch** (light/dark), and other plugins relevant to the project
+- **Testing utilities** — Vitest + React Testing Library (Vite-native); Storybook interaction/test tooling as relevant
+- See [ADR-0001](../../adr/0001-react-vite-typescript.md) for framework rationale
+- See [ADR-0002](../../adr/0002-tailwind-shadcn-storybook.md) for UI tooling rationale
+
+### Behavior
+
+- **North star:** Real product milestone — stakeholders sign off on look-and-feel, not a throwaway workflow demo
+- **Calculation model:** Strict binary — one operator per equals press (no multi-operator chaining until v1)
+- **Flow:** Operand → operator → operand → equals; after equals, the result becomes the first operand of the next calculation
+- **Operands:** Whole numbers only (no decimal input until v1)
+- **Results:** May be non-integer when division requires it (e.g. `7 ÷ 2` → `3.5`)
+- **Divide by zero:** Show raw JavaScript result (`Infinity` / `NaN`) — no friendly message until v1; must not crash
+
+### UI / UX
+
+- **Styling:** Tailwind CSS with shadcn/ui components; **shadcn/ui default theme** with phone-calculator-inspired layout
+- **Display:** Two lines — current operand on top, result below
+- **Storybook:** Primary surface for design/QA preview; a11y and theme-switch addons enabled; Tailwind theme shared with app
+- **Accessibility:** ESLint a11y rules in dev; Storybook a11y addon for visual review
+
+### Constraints
+
+- Calculator **is** the whole app for now — no separate host to wire into
+- PM out-of-scope still applies: no clear/reset, memory, keyboard, scientific functions, persistence on refresh
+
+### Open questions
+
+_None._

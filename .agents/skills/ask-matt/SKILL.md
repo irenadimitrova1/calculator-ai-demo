@@ -42,7 +42,7 @@ The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-diction
 A starting situation that generates work, then merges onto the main flow.
 
 - **Feature doc already written** (`docs/product/features/`) → run the full chain, then merge onto `/implement`:
-  1. **`/grill-with-docs`** — sharpen the idea against the doc; update the feature doc and `CONTEXT.md`
+  1. **`/grill-with-docs`** — sharpen the idea against the PM sections; append or update `## Engineering specification` and `CONTEXT.md` (do not edit PM content)
   2. **`/to-spec`** — one parent spec issue on GitHub (umbrella + implementation/testing decisions)
   3. **`/to-tickets`** — split into tracer-bullet tickets (`#<spec>` or `docs/product/features/<file>.md`)
   4. **`/implement`** per ticket (fresh context each time)
