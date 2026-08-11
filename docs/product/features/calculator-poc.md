@@ -5,60 +5,59 @@
 
 ## Purpose
 
-Proof-of-concept for a calculator app — validate the React/TypeScript stack and basic arithmetic before v1.
+Build a first working version of the calculator so we can see it, click it, and try basic math before we invest in a full product.
 
 ## Problem
 
-We need to prove the chosen frontend stack works in this repo before investing in a full calculator. Without a thin vertical slice — app scaffold, linting, component library, Storybook, and working `+ - * /` — we risk discovering tooling or integration issues late in v1 or v2.
+Right now we only have plans on paper. Stakeholders need something they can actually open and use — even if it's simple — to agree we're building the right thing. We also want to learn early if anything blocks us from shipping later versions.
 
 ## Users
 
-- **Engineering** — establishes the baseline project structure and patterns for all later calculator work
-- **PM / PO and stakeholders** — need a runnable demo to confirm direction before scoping v1 and v2
-- **Design / QA** — use Storybook to review the initial calculator UI in isolation
+- **Stakeholders and leadership** — want a quick demo to say yes/no to the direction
+- **PM / PO** — need something real to show in reviews and roadmap conversations
+- **End users (later)** — not the focus yet; this version is mainly for internal validation
 
 ## Success metrics
 
-- React + TypeScript app runs locally in the existing repository
-- ESLint passes with the agreed strict configuration
-- Storybook runs and includes at least one calculator story with working arithmetic
-- Tailwind CSS and Shadcn are wired up and used by the calculator UI
-- Manual smoke test: `a op b =` works for `+`, `-`, `*`, `/` with integer operands (e.g. `3 + 4 =` → `7`)
+- Someone on the team can open the calculator in a browser and use it without developer help
+- Adding, subtracting, multiplying, and dividing two whole numbers works and shows the right answer
+- The team agrees the look and feel is a reasonable starting point for v1
+- We have confidence to move forward with [Calculator v1](calculator-v1.md)
 
 ## Scope
 
 ### In scope
 
-**Project setup**
+**Getting started**
 
-1. Setup a React app with TypeScript in the existing repository.
-2. Setup ESLint and all relevant plugins. Use the default strict configs.
-3. Setup Storybook and relevant plugins.
-4. Use Tailwind CSS and Shadcn.
+- A calculator that lives in this project (not a separate tool or mockup)
+- A clean, modern look that we can build on later
+- A way for design and QA to preview the calculator on its own, before it's wired into everything else
 
-**Calculator functionality**
+**What the calculator should do (minimum)**
 
-Minimal UI to prove end-to-end arithmetic — enough to click buttons and see a result, not a production-ready calculator.
-
-- **Display** — show the current operand and result after `=`
-- **Digit input** — `0`–`9` via on-screen buttons
-- **Operations** — `+`, `-`, `*`, `/` between two operands (evaluate on `=`)
-- **Equals** — `=` computes the current expression
-- **Operand flow** — enter first number → operator → second number → `=` (chaining multiple operations is optional; document chosen behavior)
-- **Storybook** — at least one story showing the default calculator layout with working arithmetic
+- A screen that shows the number you're working with and the result
+- Number buttons (0–9)
+- Plus, minus, multiply, divide
+- An equals button that gives you the answer
+- Simple flow: type a number → pick an operation → type another number → press equals
 
 ### Out of scope
 
-Deferred to later versions — PoC only validates stack and basic math.
+This is intentionally bare-bones. Everything below waits for a later release.
 
-- Memory keys (`MC`, `MR`, `M+`, `M-`) — [Calculator v1](calculator-v1.md)
-- Clear / entry controls (`C`, `AC`, `CE`), decimal point, `%`, `+/-` — [Calculator v1](calculator-v1.md)
-- Keyboard support, error states (e.g. divide by zero), and polished UX — [Calculator v1](calculator-v1.md)
-- Scientific functions (trig, log, powers, parentheses) — [Calculator v2](calculator-v2.md)
-- Persistence, calculation history, themes beyond default Shadcn styling
+- Clear and reset buttons (fixing mistakes) — [Calculator v1](calculator-v1.md)
+- Memory (saving a number for later) — [Calculator v1](calculator-v1.md)
+- Decimals, percentages, switching positive/negative — [Calculator v1](calculator-v1.md)
+- Helpful messages when something goes wrong (e.g. dividing by zero) — [Calculator v1](calculator-v1.md)
+- Typing on the keyboard instead of only clicking — [Calculator v1](calculator-v1.md)
+- Scientific math (sin, cos, log, etc.) — [Calculator v2](calculator-v2.md)
+- Saving your last calculation when you refresh the page
+- Fancy themes or customization
 
 ## Related
 
+- [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator v1](calculator-v1.md)
 - [Calculator v2](calculator-v2.md)
 - [Vision](../vision.md)

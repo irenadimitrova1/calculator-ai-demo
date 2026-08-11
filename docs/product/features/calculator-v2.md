@@ -5,25 +5,25 @@
 
 ## Purpose
 
-Extend the standard calculator into a scientific calculator — advanced math for students, engineers, and power users who need trig, logarithms, powers, and expression grouping on top of the v1 baseline.
+Add a scientific mode for users who need more than everyday arithmetic — schoolwork, homework, light engineering — without making casual users wade through buttons they don't need.
 
 ## Problem
 
-v1 covers everyday arithmetic and memory, but many users need functions beyond `+`, `-`, `*`, and `/`. Without scientific capabilities, they leave the app for a dedicated scientific calculator or another tool. v2 keeps the same UI foundation while adding the operations required for coursework, technical work, and more complex expressions.
+v1 is great for grocery math and quick totals, but students and technical users still reach for another app when they need sine, cosine, powers, or parentheses. We lose those users and we can't honestly say we cover "calculator" use cases end to end. v2 should feel like the scientific calculator they already carry in their backpack or phone case.
 
 ## Users
 
-- Students working through math, science, or engineering coursework
-- Professionals who need occasional advanced functions without installing a separate app
-- Demo audiences evaluating whether the product can grow from basic to scientific tier
+- **Students** — high school and college math, science, and engineering classes
+- **Professionals** — occasional advanced math without installing a separate tool
+- **Anyone evaluating us** — wants to see that we can grow from "basic" to "serious" calculator
 
 ## Success metrics
 
-- All in-scope scientific functions return correct results for a documented test matrix (sample angles, logs, powers, nested parentheses)
-- Degree/radian mode is visible and switching modes updates trig results accordingly
-- Invalid inputs (e.g. log of zero, sqrt of negative in real mode) surface clear errors
-- Scientific keypad layout remains usable on common viewport sizes
-- Storybook covers scientific mode layout and representative function keys
+- A student can complete typical homework problems (trig, powers, logs, grouped expressions) using only our app
+- Switching between degrees and radians is obvious and changes answers correctly
+- Bad inputs (like the log of zero) show a helpful message, not a broken screen
+- The extra buttons still fit on a normal laptop or tablet screen without feeling cramped
+- v1 users who only need basic math aren't forced into a confusing layout
 
 ## Scope
 
@@ -31,49 +31,46 @@ v1 covers everyday arithmetic and memory, but many users need functions beyond `
 
 **Trigonometry**
 
-- `sin`, `cos`, `tan` (and inverse variants: `asin`, `acos`, `atan` where space allows)
-- Degree / radian mode toggle with persistent indicator in the UI
+- Sine, cosine, tangent — and the inverse versions where we have room on the keypad
+- A clear way to choose **degrees vs radians**, with a label on screen so users know which mode they're in
 
 **Powers and roots**
 
-- Square (`x²`) and square root (`√`)
-- General power (`xʸ` or `^`)
-- Reciprocal (`1/x`)
+- Square a number
+- Square root
+- Raise one number to the power of another
+- **1/x** (reciprocal)
 
-**Logarithms and constants**
+**Logs and useful constants**
 
-- Natural log (`ln`) and common log (`log`)
-- Constants: `π`, `e` (insert into current entry)
+- Natural log and base-10 log
+- Quick buttons for **π** and **e**
 
-**Expression grouping**
+**Longer expressions**
 
-- Parentheses `(` `)` for nested evaluation
-- Expression evaluation respects standard operator precedence and grouping
+- Parentheses so users can group parts of a calculation, e.g. `(2 + 3) × 4`
+- Math should follow the usual order of operations people learn in school
 
-**Carried forward from v1**
+**Everything from v1**
 
-- Basic operations, memory keys, clear controls, decimal input, sign toggle, percentage, and error handling — unless explicitly redesigned for scientific layout
+- Basic arithmetic, memory, clear buttons, decimals, percent, +/-, and error messages — unless we need to rearrange the layout for scientific mode
 
-**Layout and mode**
+**Layout**
 
-- Scientific keypad or panel (additional rows or toggle between standard and scientific views)
-- Display long expressions with horizontal scroll or truncation rules documented in implementation
-
-**Quality**
-
-- Keyboard shortcuts for common scientific keys where practical
-- Storybook stories for scientific layout and degree/radian mode
+- Either more rows of buttons or a switch between "standard" and "scientific" view — whichever keeps both modes easy to use
+- Long expressions should still be readable (scroll or shorten gracefully on small screens)
 
 ### Out of scope
 
-- Graphing equations or plotting functions
-- Unit conversion (length, temperature, currency)
-- Programmable macros or custom formulas
-- Complex numbers and matrix math
-- Exporting calculation history
+- Graphing equations or drawing charts
+- Converting units (miles to km, °F to °C, currency, etc.)
+- Letting users save their own formulas or macros
+- Advanced math (complex numbers, matrices)
+- Downloading or emailing a history of calculations
 
 ## Related
 
+- [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator PoC](calculator-poc.md)
 - [Calculator v1](calculator-v1.md)
 - [Vision](../vision.md)

@@ -23,6 +23,10 @@ This wiki is built from Markdown files in the `docs/` folder and published autom
 | `docs/agents/` | Engineering / agents setup | Issue tracker config, triage labels |
 | `CONTEXT.md` (repo root) | Engineering | Domain glossary (agents read this) |
 
+## Engineering: feature doc → issues
+
+PM writes feature specs in `docs/product/features/`. Engineering converts approved docs to GitHub Issues via the agent skill chain. See [Feature doc → issues](process/feature-to-issues.md).
+
 ## Adding a new page
 
 1. Create a new `.md` file under the right folder (e.g. `docs/product/features/my-feature.md`).

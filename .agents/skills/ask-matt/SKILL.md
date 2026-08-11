@@ -8,11 +8,17 @@ disable-model-invocation: true
 
 You don't remember every skill, so ask.
 
-A **flow** is a path through the skills. Most paths run along one **main flow**, and two **on-ramps** merge onto it. Everything else is standalone, or a vocabulary layer that runs underneath.
+A **flow** is a path through the skills. Most paths run along one **main flow**, and several **on-ramps** merge onto it. Everything else is standalone, or a vocabulary layer that runs underneath.
+
+## This repo
+
+For **calculator-ai-demo**, read [`docs/agents/workflow.md`](../../docs/agents/workflow.md) first. When a feature spec already lives in `docs/product/features/`, use the **docs-first on-ramp** below — it runs the full chain through `/to-tickets` before `/implement`.
 
 ## The main flow: idea → ship
 
 The route most work travels. You have an idea and want it built.
+
+When **no feature doc exists yet**, start here. When a PM doc already exists in `docs/product/features/`, use the **docs-first on-ramp** under On-ramps instead — both paths share the same grill → spec → tickets → implement chain.
 
 1. **`/grill-with-docs`** — sharpen the idea by interview. Start here whenever you are **working in a working directory**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No working directory? Use `/grill-me` — see Standalone. Both run the same `/grilling` primitive; `grill-with-docs` is the one that leaves a paper trail, which makes it the better of the two whenever a repo is there to leave it in.)
 2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`/handoff`** in both directions (a prototype lives in its own directory, which is exactly what `/handoff` is for — see Phase boundaries):
@@ -34,6 +40,14 @@ The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-diction
 ## On-ramps
 
 A starting situation that generates work, then merges onto the main flow.
+
+- **Feature doc already written** (`docs/product/features/`) → run the full chain, then merge onto `/implement`:
+  1. **`/grill-with-docs`** — sharpen the idea against the doc; update the feature doc and `CONTEXT.md`
+  2. **`/to-spec`** — one parent spec issue on GitHub (umbrella + implementation/testing decisions)
+  3. **`/to-tickets`** — split into tracer-bullet tickets (`#<spec>` or `docs/product/features/<file>.md`)
+  4. **`/implement`** per ticket (fresh context each time)
+
+  Keep steps 1–3 in one unbroken context window (same hygiene as main flow). See [`docs/agents/workflow.md`](../../docs/agents/workflow.md).
 
 - **Bugs and requests piling up** → **`/triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/implement`** later picks up.
 
@@ -69,6 +83,13 @@ A **phase** is a chunk of work inside a session — the grilling, the implementa
 - **`/compact`** — compress this context and seed a fresh session with it. The **default**, at the bottom of the tree rather than the first reach.
 
 Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree — the five questions, the reasoning behind each branch, and why the primary-source cost makes **Continue** the one to rule out first. Make the decision **at** a boundary; mid-phase, continue or split the rest into subagents.
+
+## Publish
+
+Skills that turn thinking into tracker artifacts. Both sit in the main flow and the docs-first on-ramp.
+
+- **`/to-spec`** — synthesize the current thread into one spec issue on GitHub (user stories + implementation/testing decisions). No interview — publish what you already know.
+- **`/to-tickets`** — break a plan, spec, feature doc path, or issue into tracer-bullet tickets with blocking edges. Quiz the user before publishing.
 
 ## Standalone
 

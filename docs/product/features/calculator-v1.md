@@ -5,69 +5,70 @@
 
 ## Purpose
 
-Evolve the PoC into a fully usable standard calculator — memory keys, clear controls, and the everyday features users expect from a basic desktop or phone calculator.
+Turn the proof-of-concept into an everyday calculator — the kind people already know from their phone or desktop — with clear buttons, memory, and the basics done right.
 
 ## Problem
 
-The PoC proves arithmetic works, but it is not yet a complete calculator. Users cannot clear a mistaken entry without starting over, store intermediate results in memory, or use common helpers like sign toggle and percentage. v1 closes that gap so the app feels familiar and dependable for daily use.
+The PoC shows that math works, but it doesn't feel like a real calculator yet. If you mistype a digit, you can't fix it easily. You can't store a number and come back to it. There's no decimal point, no percent button, no way to flip a number to negative. People will get frustrated and won't trust the app for daily use.
 
 ## Users
 
-- Anyone who needs quick arithmetic without opening a separate app or spreadsheet
-- Demo viewers evaluating whether the product can ship a polished baseline experience
+- Anyone who wants quick math without opening another app
+- People comparing us to the built-in calculator on their phone — v1 should feel familiar, not surprising
+- Demo audiences deciding whether we're ready to call this a "real" product baseline
 
 ## Success metrics
 
-- All in-scope buttons and operations work correctly in manual testing
-- Memory operations (store, recall, clear) behave consistently across chained calculations
-- Divide-by-zero and other invalid inputs show a clear error state instead of crashing
-- Calculator UI is covered by Storybook stories for primary states (idle, active input, error, memory indicator)
+- A new user can add, subtract, multiply, and divide — including decimals — without instructions
+- Clear and memory buttons work the way users expect from other calculators
+- Mistakes (like dividing by zero) show a friendly message instead of breaking the app
+- Internal QA signs off that behavior matches a standard pocket calculator
+- We're ready to discuss [Calculator v2](calculator-v2.md) without redoing the basics
 
 ## Scope
 
 ### In scope
 
-**Clear and entry controls**
+**Fixing mistakes**
 
-- `C` / `AC` — clear current entry or reset the calculator
-- `CE` — clear entry (last number being typed) without wiping the full expression
+- **Clear / All Clear** — start over or wipe what's on screen
+- **Clear entry** — fix the number you're currently typing without losing the rest of the calculation
 
 **Memory**
 
-- `MC` — memory clear
-- `MR` — memory recall
-- `M+` — add displayed value to memory
-- `M-` — subtract displayed value from memory
-- Visual indicator when memory holds a non-zero value
+- **Memory clear** — forget what's stored
+- **Memory recall** — bring back what you stored
+- **Memory add / subtract** — add or subtract the current number to/from memory
+- Some visible sign that memory has something in it (e.g. a small "M" on screen)
 
-**Standard operations and input**
+**Everyday math**
 
-- Operations: `+`, `-`, `*`, `/` (carried forward from PoC)
-- Decimal point support
-- `=` — evaluate the current expression
-- `+/-` — toggle sign of the current entry
-- `%` — percentage (apply percent to current value in context of the active operation)
-- Chained calculations (e.g. `3 + 4 * 2` following standard precedence or immediate execution — document chosen behavior in implementation)
+- Plus, minus, multiply, divide (same as PoC, but polished)
+- Decimal point — so amounts like `3.14` work
+- Equals
+- **+/-** — flip between positive and negative
+- **%** — percentage, like on a normal calculator
+- Chain several operations in a row (e.g. `5 + 3 × 2`) in a predictable way
 
-**Display and feedback**
+**What users see**
 
-- Show current input and running result
-- Show a clear error state for invalid operations (e.g. division by zero)
+- The number they're typing and the running result stay visible
+- When something isn't allowed (like dividing by zero), show a clear error instead of a blank screen or crash
 
-**Quality**
+**Nice to have for power users**
 
-- Keyboard support for digits, operators, Enter, Escape, and Backspace where applicable
-- Storybook stories for main calculator states and key interactions
+- Keyboard: number keys, operators, Enter, Escape, Backspace where it makes sense
 
 ### Out of scope
 
-- Scientific functions (trig, log, powers) — see [Calculator v2](calculator-v2.md)
-- Graphing or equation history
-- Themes beyond the existing design system setup from PoC
-- Persistence across page reloads (memory resets on refresh)
+- Scientific functions (sine, cosine, logarithms, etc.) — [Calculator v2](calculator-v2.md)
+- A history of past calculations you can scroll through
+- Different color themes or skins
+- Memory still clears when you refresh the page (we can revisit later)
 
 ## Related
 
+- [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator PoC](calculator-poc.md)
 - [Calculator v2](calculator-v2.md)
 - [Vision](../vision.md)

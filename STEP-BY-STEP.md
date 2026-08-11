@@ -9,3 +9,6 @@
 3. Docs interpretation
     - set up MkDocs Material with GitHub Pages for more PM-like experience
 4. Write a few feature documentations `/docs/product/features` that will later be used to automatically generate GitHub issues
+5. Generate GitHub issues
+    - Modify Matt protocol to create issues from PM/PO (non-tech) spec.
+    `feature definition -> grill -> spec -> tickets`

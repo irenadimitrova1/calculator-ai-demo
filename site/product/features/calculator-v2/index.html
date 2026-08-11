@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://irenadimitrova1.github.io/calculator-ai-demo/product/features/calculator-v2/">
       
       
-        <link rel="prev" href="../../roadmap/">
+        <link rel="prev" href="../calculator-v1/">
       
       
         <link rel="next" href="../../../process/how-we-plan/">
@@ -409,6 +409,62 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-poc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator PoC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -699,6 +755,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/feature-to-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature doc to issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -866,6 +950,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1142,25 +1254,73 @@
 <p><strong>Owner:</strong> PM / PO<br />
 <strong>Last updated:</strong> <!-- TODO: YYYY-MM-DD --></p>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>Feature spec for the next major version of the calculator.</p>
+<p>Extend the standard calculator into a scientific calculator — advanced math for students, engineers, and power users who need trig, logarithms, powers, and expression grouping on top of the v1 baseline.</p>
 <h2 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h2>
-<!-- TODO: What user need does this address? -->
-
+<p>v1 covers everyday arithmetic and memory, but many users need functions beyond <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code>. Without scientific capabilities, they leave the app for a dedicated scientific calculator or another tool. v2 keeps the same UI foundation while adding the operations required for coursework, technical work, and more complex expressions.</p>
 <h2 id="users">Users<a class="headerlink" href="#users" title="Permanent link">&para;</a></h2>
-<!-- TODO: Who benefits from this feature? -->
-
+<ul>
+<li>Students working through math, science, or engineering coursework</li>
+<li>Professionals who need occasional advanced functions without installing a separate app</li>
+<li>Demo audiences evaluating whether the product can grow from basic to scientific tier</li>
+</ul>
 <h2 id="success-metrics">Success metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
-<!-- TODO: Measurable outcomes -->
-
+<ul>
+<li>All in-scope scientific functions return correct results for a documented test matrix (sample angles, logs, powers, nested parentheses)</li>
+<li>Degree/radian mode is visible and switching modes updates trig results accordingly</li>
+<li>Invalid inputs (e.g. log of zero, sqrt of negative in real mode) surface clear errors</li>
+<li>Scientific keypad layout remains usable on common viewport sizes</li>
+<li>Storybook covers scientific mode layout and representative function keys</li>
+</ul>
 <h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
 <h3 id="in-scope">In scope<a class="headerlink" href="#in-scope" title="Permanent link">&para;</a></h3>
-<!-- TODO -->
-
+<p><strong>Trigonometry</strong></p>
+<ul>
+<li><code>sin</code>, <code>cos</code>, <code>tan</code> (and inverse variants: <code>asin</code>, <code>acos</code>, <code>atan</code> where space allows)</li>
+<li>Degree / radian mode toggle with persistent indicator in the UI</li>
+</ul>
+<p><strong>Powers and roots</strong></p>
+<ul>
+<li>Square (<code>x²</code>) and square root (<code>√</code>)</li>
+<li>General power (<code>xʸ</code> or <code>^</code>)</li>
+<li>Reciprocal (<code>1/x</code>)</li>
+</ul>
+<p><strong>Logarithms and constants</strong></p>
+<ul>
+<li>Natural log (<code>ln</code>) and common log (<code>log</code>)</li>
+<li>Constants: <code>π</code>, <code>e</code> (insert into current entry)</li>
+</ul>
+<p><strong>Expression grouping</strong></p>
+<ul>
+<li>Parentheses <code>(</code> <code>)</code> for nested evaluation</li>
+<li>Expression evaluation respects standard operator precedence and grouping</li>
+</ul>
+<p><strong>Carried forward from v1</strong></p>
+<ul>
+<li>Basic operations, memory keys, clear controls, decimal input, sign toggle, percentage, and error handling — unless explicitly redesigned for scientific layout</li>
+</ul>
+<p><strong>Layout and mode</strong></p>
+<ul>
+<li>Scientific keypad or panel (additional rows or toggle between standard and scientific views)</li>
+<li>Display long expressions with horizontal scroll or truncation rules documented in implementation</li>
+</ul>
+<p><strong>Quality</strong></p>
+<ul>
+<li>Keyboard shortcuts for common scientific keys where practical</li>
+<li>Storybook stories for scientific layout and degree/radian mode</li>
+</ul>
 <h3 id="out-of-scope">Out of scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
-<!-- TODO -->
-
+<ul>
+<li>Graphing equations or plotting functions</li>
+<li>Unit conversion (length, temperature, currency)</li>
+<li>Programmable macros or custom formulas</li>
+<li>Complex numbers and matrix math</li>
+<li>Exporting calculation history</li>
+</ul>
 <h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="../../../process/feature-to-issues/">Feature doc → issues</a></li>
+<li><a href="../calculator-poc/">Calculator PoC</a></li>
+<li><a href="../calculator-v1/">Calculator v1</a></li>
 <li><a href="../../vision/">Vision</a></li>
 <li><a href="../../roadmap/">Roadmap</a></li>
 <li><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues">GitHub Issues</a></li>
