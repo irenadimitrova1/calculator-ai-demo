@@ -28,3 +28,6 @@ coverage
 
 # Scaffold temp
 .tmp-vite-scaffold
+
+*storybook.log
+storybook-static
