@@ -49,7 +49,7 @@ Clears only the active number while a calculation is in progress; after a finish
 _Avoid_: CE, clear entry (when meaning the C key)
 
 **Error state**:
-Session status after an invalid operation (e.g. divide by zero). The active-number line shows `Error`; further input is blocked until All Clear or Clear.
+Session status after an invalid operation (e.g. divide by zero). The active-number line shows `Error`. Digit, decimal, operator, and sign-toggle input clear the session (memory preserved) and start fresh — macOS/iOS recovery. Equals, memory keys, percent, and backspace stay blocked until All Clear or Clear.
 _Avoid_: Error mode, fault state
 
 **Memory**:

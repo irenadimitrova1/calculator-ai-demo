@@ -150,6 +150,35 @@ function clearedSession(memory: number): CalculationSessionState {
   return { ...initialState, memory }
 }
 
+function isErrorRecoverableAction(action: CalculationSessionAction): boolean {
+  return (
+    action.type === 'digit' ||
+    action.type === 'decimal' ||
+    action.type === 'operator' ||
+    action.type === 'signToggle'
+  )
+}
+
+function recoverFromError(
+  state: CalculationSessionState,
+  action: CalculationSessionAction,
+): CalculationSessionState {
+  if (action.type === 'operator') {
+    return {
+      phase: 'entry',
+      expressionLine: '',
+      activeNumber: '',
+      runningTotal: null,
+      pendingOperator: action.operator,
+      lastOperator: null,
+      lastSecondOperand: null,
+      memory: state.memory,
+    }
+  }
+
+  return transition(clearedSession(state.memory), action)
+}
+
 function resolveMemoryOperand(state: CalculationSessionState): number {
   if (!isActiveEmpty(state.activeNumber)) {
     return Number(state.activeNumber)
@@ -167,6 +196,9 @@ export function transition(
   if (state.phase === 'error') {
     if (action.type === 'allClear' || action.type === 'clear') {
       return clearedSession(state.memory)
+    }
+    if (isErrorRecoverableAction(action)) {
+      return recoverFromError(state, action)
     }
     return state
   }

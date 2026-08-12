@@ -103,7 +103,7 @@ _Sourced from PM sections above. `/to-spec` reads this section for the parent sp
 - **All Clear (AC):** Resets the entire session — operands, operator, both display lines, memory indicator context, and error state
 - **Clear (C):** While building a calculation, clears only the active number; when a finished result is on screen, behaves like All Clear
 - **Decimal input:** One decimal point per active-number entry; a leading `.` displays as `0.`; long values truncate visually per display formatting
-- **Divide by zero / errors:** Enter error state — active-number line shows `Error`; block all keypad and keyboard input until All Clear or Clear
+- **Divide by zero / errors:** Enter error state — active-number line shows `Error`; digit, decimal, operator, and sign-toggle clear the session (memory preserved) and start fresh (macOS/iOS recovery); equals, memory keys, percent, and backspace stay blocked until All Clear or Clear
 - **Memory (macOS/iOS):** `MC` clears stored memory; `MR` recalls memory into the active number; `M+` / `M−` add or subtract the current display value to/from memory; memory persists across calculations until `MC`; show **M** indicator when memory ≠ 0
 - **Sign toggle (+/−):** Flip the sign of the active number only — while typing or on a finished result; expression line unchanged
 - **Keyboard (focused calculator root):** Digits `0`–`9`, `.`, `+`, `-`, `*`, `/` mirror keypad; `Enter` or `=` → equals; `Backspace` → delete last digit of active number (behaves like **C** when active number is empty); `Escape` → **AC**; no keyboard-mode toggle
@@ -116,7 +116,7 @@ _Sourced from PM sections above. `/to-spec` reads this section for the parent sp
 - Expression line uses **×** / **÷** glyphs; active number and trail values use display formatting (~12 visible digits, float-noise cleanup)
 - PoC phone-calculator layout and shadcn theme carry forward; new buttons added for clear, memory, decimal, %, +/-
 - **AC** and **C** keys on keypad — both always visible (fixed labels, not a dynamic C/AC toggle)
-- Error state: `Error` on the active-number line (bottom); expression line may retain the last trail until cleared
+- Error state: `Error` on the active-number line (bottom); expression line may retain the error trail until digit/decimal/operator/sign-toggle recovery or All Clear/Clear
 - Memory indicator: **M** visible when memory holds a non-zero value (macOS/iOS style)
 - Keypad adds **AC**, **C**, memory row, decimal, **%**, **+/−**; carry forward PoC phone layout
 - Auto-focus the calculator root on load so keyboard input works immediately
@@ -139,6 +139,7 @@ _Sourced from PM sections above. `/to-spec` reads this section for the parent sp
 | [#27](https://github.com/irenadimitrova1/calculator-ai-demo/issues/27) | Memory operations and indicator | implemented |
 | [#28](https://github.com/irenadimitrova1/calculator-ai-demo/issues/28) | Percent key | in-review |
 | [#29](https://github.com/irenadimitrova1/calculator-ai-demo/issues/29) | Keyboard input, accessibility, and Storybook v1 states | in-review |
+| [#34](https://github.com/irenadimitrova1/calculator-ai-demo/issues/34) | Typing after error result | in-review |
 
 Set **Status:** to `done` when all rows are **`implemented`**.
 
