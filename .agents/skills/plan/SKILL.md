@@ -1,10 +1,12 @@
 ---
 name: plan
-description: Plan one child ticket in Plan mode — branch from main, grill-me, Cursor plan. No commit.
+description: Plan one child ticket in Plan mode — branch from main, grill-me, CreatePlan (Build button). Stops if not in Plan mode. No commit.
 disable-model-invocation: true
 ---
 
 Plan how to build **one child ticket** on a feature branch. Run `/grilling` per `/grill-me`. Do **not** commit, push, or open a PR.
+
+**Deliverable:** a **Cursor Plan** (via `CreatePlan`) — the artifact that exposes the **Build** button. A markdown file alone is **not** a completed `/plan`.
 
 ## Resolve the target issue first
 
@@ -21,7 +23,7 @@ Fetch the issue the user pointed at (number, URL, or title). Read labels, body, 
 
 ### Parent `story` issues
 
-When the target has the `story` label, run `/grilling` per `/grill-me`:
+When the target has the `story` label, run `/grilling` per `/grill-me` **after** the [Plan mode gate](#plan-mode-gate--mandatory):
 
 1. Gather **child tickets** whose body references this parent under `## Parent`.
 2. Compute the **frontier** — children labeled `ready-for-agent` whose blockers are all closed.
@@ -68,13 +70,22 @@ Create the **`in-progress`** and **`implemented`** labels on GitHub if they do n
 | Feature doc | `## Engineering specification` + `## Questions` | Stack, behavior, constraints; each question is an AskQuestion-shaped block (`Prompt`, `Options` table); resolved **Answer** overrides **Assumption** |
 | `CONTEXT.md`, ADRs, codebase | repo root | Facts and vocabulary |
 
-## Enter Plan mode
+## Plan mode gate — mandatory
 
-Call `SwitchMode` with `target_mode_id: "plan"` before grilling and plan authoring.
+Run **after** branch setup and reading materials. **Before** any grill-me round or plan output.
 
-If `SwitchMode` is unavailable, tell the user to switch to Plan mode manually.
+`/plan` runs in **Plan mode** only from this point forward.
 
-## Grill-me rounds — plan-mode UI
+1. Call `SwitchMode` with `target_mode_id: "plan"`.
+2. **If `SwitchMode` is rejected or unavailable — stop.** Tell the user:
+   - Switch to **Plan mode** manually (mode picker in chat/composer).
+   - Re-run **`/plan #N`** once in Plan mode.
+   - Do **not** grill, do **not** call `CreatePlan`, do **not** write a standalone plan markdown file, and do **not** set ticket progress to `planned`.
+3. **If you are not in Plan mode — stop.** Same message as above. Do not continue in Agent mode.
+
+## Grill-me rounds — Plan mode UI
+
+**Prerequisite:** [Plan mode gate](#plan-mode-gate--mandatory) passed.
 
 Work the **design tree** in rounds for *this ticket only*.
 
@@ -82,20 +93,23 @@ Present each frontier with `AskQuestion` — same shape as `/grill-with-docs`: *
 
 Do **not** write code, **commit**, or run checks during grilling.
 
-## Produce the plan
+## Produce the plan — Cursor Plan required
 
-Call `CreatePlan` with issue `#N`, parent `story`, feature doc path, acceptance criteria, testing seams, and out-of-scope.
+**Prerequisite:** [Plan mode gate](#plan-mode-gate--mandatory) passed and grilling complete.
 
-Optionally save under `.scratch/plans/<issue>-<slug>.md`.
+1. Call **`CreatePlan`** with issue `#N`, parent `story`, feature doc path, acceptance criteria, testing seams, and out-of-scope. This is the **only** valid plan deliverable — it wires the **Build** button in Cursor.
+2. **If `CreatePlan` is unavailable — stop.** Tell the user to switch to Plan mode and re-run `/plan #N`. Do **not** substitute a markdown-only plan.
+3. **Do not** write `.scratch/plans/*.md` (or any other file) **instead of** `CreatePlan`. Optionally mirror the approved Cursor Plan to `.scratch/plans/<issue>-<slug>.md` **after** `CreatePlan` succeeds.
+4. Update feature doc **`### Ticket progress`**: set row to `planned`. Do **not** edit PM sections.
 
-Update feature doc **`### Ticket progress`**: set row to `planned`. Do **not** edit PM sections.
+**Done when:** `CreatePlan` succeeded, ticket progress is `planned`, and the user can review the Cursor Plan and click **Build**.
 
 ## Handoff
 
 Tell the dev:
 
-1. Review and approve the plan in Cursor
-2. **Build** on branch `issue-<N>-<slug>` — two phases in one session ([Build](../../docs/agents/workflow.md#build)):
+1. Review and approve the **Cursor Plan** (not a `.scratch` markdown copy)
+2. Click **Build** on the plan (or run Build from Plan mode) on branch `issue-<N>-<slug>` — two phases in one session ([Build](../../docs/agents/workflow.md#build)):
    - **Implement** the plan
    - **Verify** — run the full checklist from [`/verify` skill](../verify/SKILL.md) **automatically when implementation finishes**
 3. Run **`/pr #N`** — commit, push, open PR (only after verify passes)

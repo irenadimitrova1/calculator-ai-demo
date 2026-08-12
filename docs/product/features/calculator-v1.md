@@ -64,15 +64,17 @@ The PoC shows that math works, but it doesn't feel like a real calculator yet. I
 ### Out of scope
 
 - Scientific functions (sine, cosine, logarithms, etc.) — [Calculator v2](calculator-v2.md)
-- A scrollable log of **past** completed calculations (the live expression on the top display line is in scope; a separate history panel is not)
-- Different color themes or skins
-- Memory still clears when you refresh the page (we can revisit later)
+- A scrollable log of **past** completed calculations (the live expression on the top display line is in scope; a separate history panel is not) — [Calculator v3](calculator-v3.md)
+- Different color themes or skins — [Calculator v4](calculator-v4.md)
+- Memory still clears when you refresh the page — [Calculator v3](calculator-v3.md)
 
 ## Related
 
 - [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator PoC](calculator-poc.md)
 - [Calculator v2](calculator-v2.md)
+- [Calculator v3](calculator-v3.md)
+- [Calculator v4](calculator-v4.md)
 - [Vision](../vision.md)
 - [Roadmap](../roadmap.md)
 - [GitHub Issues](https://github.com/irenadimitrova1/calculator-ai-demo/issues)

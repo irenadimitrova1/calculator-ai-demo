@@ -1,7 +1,7 @@
 # Calculator v2
 
 **Owner:** PM / PO  
-**Last updated:** <!-- TODO: YYYY-MM-DD -->
+**Last updated:** 2026-08-12
 
 ## Purpose
 
@@ -62,17 +62,28 @@ v1 is great for grocery math and quick totals, but students and technical users 
 
 ### Out of scope
 
-- Graphing equations or drawing charts
-- Converting units (miles to km, °F to °C, currency, etc.)
-- Letting users save their own formulas or macros
-- Advanced math (complex numbers, matrices)
-- Downloading or emailing a history of calculations
+- Graphing equations or drawing charts — [Calculator v7](calculator-v7.md)
+- Converting units (miles to km, °F to °C, currency, etc.) — [Calculator v5](calculator-v5.md)
+- Letting users save their own formulas or macros — [Calculator v8](calculator-v8.md)
+- Advanced math (complex numbers, matrices) — [Calculator v9](calculator-v9.md)
+- Downloading or emailing a history of calculations — [Calculator v10](calculator-v10.md)
+- Programmer mode (hex, binary, bitwise) — [Calculator v6](calculator-v6.md)
+- Calculation history panel and refresh persistence — [Calculator v3](calculator-v3.md)
+- Themes and skins — [Calculator v4](calculator-v4.md)
 
 ## Related
 
 - [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator PoC](calculator-poc.md)
 - [Calculator v1](calculator-v1.md)
+- [Calculator v3](calculator-v3.md)
+- [Calculator v4](calculator-v4.md)
+- [Calculator v5](calculator-v5.md)
+- [Calculator v6](calculator-v6.md)
+- [Calculator v7](calculator-v7.md)
+- [Calculator v8](calculator-v8.md)
+- [Calculator v9](calculator-v9.md)
+- [Calculator v10](calculator-v10.md)
 - [Vision](../vision.md)
 - [Roadmap](../roadmap.md)
 - [GitHub Issues](https://github.com/irenadimitrova1/calculator-ai-demo/issues)

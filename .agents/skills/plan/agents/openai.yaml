@@ -1,5 +1,5 @@
 interface:
   display_name: "Plan"
-  short_description: "Branch from main, grill-me, Cursor plan — no commit"
+  short_description: "Plan mode required — branch, grill-me, CreatePlan (Build button)"
 policy:
   allow_implicit_invocation: false

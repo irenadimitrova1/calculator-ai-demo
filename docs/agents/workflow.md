@@ -17,7 +17,7 @@ Run in order:
 3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
 
 4. **Per child ticket** (repeat until all children ship):
-   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
+   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **must run in Plan mode**; grill-me; **`CreatePlan`** (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.
    - **Build** — see [Build](#build) below. **No commit.**
    - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
    - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**, **`/clear`**.
@@ -28,7 +28,9 @@ Use **`/clear`** after each `/pr` so the next `/plan` starts fresh.
 
 ## Build
 
-Cursor **Build** runs on the feature branch after the plan is approved. It is **two phases in one session** — verify is not a separate mandatory step:
+Cursor **Build** runs on the feature branch after the **Cursor Plan** from `/plan` is approved. The **Build** button appears only on that plan artifact (`CreatePlan` in Plan mode) — not on a markdown file in `.scratch/plans/`. If you only have a markdown plan, switch to Plan mode and re-run `/plan #N`, or build manually in Agent mode.
+
+Cursor **Build** is **two phases in one session** — verify is not a separate mandatory step:
 
 | Phase | What runs | When |
 |-------|-----------|------|

@@ -29,7 +29,7 @@ When **no feature doc exists yet**, start here. When a PM doc already exists in 
    - **Yes** → **`/to-spec`** (turn the thread into a spec), then **`/to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/plan`** per ticket (branch from main, claim issue), **Build** (verify runs at end), then **`/pr`**, **`/clear`ing context between each one**.
    - **No** → **`/plan`** then Build then **`/pr`** in sequence.
 
-   Per ticket: **`/plan`** (branch + Plan mode + grill-me, **no commit**) → **Build** (execute + verify checklist at end, **no commit**) → **`/pr`** (commit, push, open PR, **`/clear`**). Optional **`/verify`** if you edit after Build. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   Per ticket: **`/plan`** (branch + **Plan mode required** + grill-me + **`CreatePlan`** for **Build** button, **no commit**) → **Build** (execute + verify checklist at end, **no commit**) → **`/pr`** (commit, push, open PR, **`/clear`**). Optional **`/verify`** if you edit after Build. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
 
 ### Context hygiene
 
@@ -90,7 +90,7 @@ Skills that turn thinking into tracker artifacts and ship code.
 
 - **`/to-spec`** — synthesize the current thread into one spec issue on GitHub (user stories + implementation/testing decisions). No interview — publish what you already know. Applies **`story`** label.
 - **`/to-tickets`** — break a plan, spec, feature doc path, or issue into tracer-bullet tickets with blocking edges. Review via **`AskQuestion`**, confirm, then publish.
-- **`/plan`** — branch from main, claim issue (`in-progress`), Plan mode + grill-me; Cursor plan (**no commit**).
+- **`/plan`** — branch from main, claim issue (`in-progress`), **Plan mode required**, grill-me, **`CreatePlan`** (Cursor Plan + **Build** button; stops if not in Plan mode). **No commit.**
 - **`/verify`** — *(optional)* re-run the verify checklist after post-Build edits (**no commit**).
 - **`/pr`** — commit, confirm, push, open PR, remove `in-progress`, doc **`in-review`**; on merge label **`implemented`** and close parent `story` when last child done. Then **`/clear`**.
 

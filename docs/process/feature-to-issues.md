@@ -22,7 +22,7 @@ Before engineering picks it up, the doc should pass [Definition of Ready](defini
 - Out of scope is explicit
 - Linked to roadmap or vision where relevant
 
-Use [TEMPLATE.md](../product/features/TEMPLATE.md) for new features, or the existing calculator docs (PoC, v1, v2) as examples.
+Use [TEMPLATE.md](../product/features/TEMPLATE.md) for new features, or the existing calculator docs (PoC through v10) as examples.
 
 ## PM step: write the spec
 
@@ -72,7 +72,7 @@ Review the proposed breakdown with **`AskQuestion`** (granularity, blocking edge
 
 For each **`ready-for-agent`** child ticket:
 
-1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
+1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; **Plan mode required**; grill-me; **`CreatePlan`** (enables **Build** button). **No commit.** Do not finish with markdown-only output.
 2. **Build** — execute the plan on the feature branch; **automatically run verify checklist** at the end (lint, tests, Storybook, docs). **No commit.**
 3. **`/verify #N`** *(optional)* — re-validate after post-Build edits.
 4. **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**. Then **`/clear`**.
@@ -94,6 +94,14 @@ Work in dependency order:
 1. [Calculator PoC](../product/features/calculator-poc.md) — stack + basic arithmetic
 2. [Calculator v1](../product/features/calculator-v1.md) — memory, clear, standard UX
 3. [Calculator v2](../product/features/calculator-v2.md) — scientific mode
+4. [Calculator v3](../product/features/calculator-v3.md) — history + persistence
+5. [Calculator v4](../product/features/calculator-v4.md) — themes & skins
+6. [Calculator v5](../product/features/calculator-v5.md) — unit conversion
+7. [Calculator v6](../product/features/calculator-v6.md) — programmer mode
+8. [Calculator v7](../product/features/calculator-v7.md) — graphing
+9. [Calculator v8](../product/features/calculator-v8.md) — saved formulas & macros
+10. [Calculator v9](../product/features/calculator-v9.md) — advanced math (complex, matrices, stats)
+11. [Calculator v10](../product/features/calculator-v10.md) — export / share + light AI assist
 
 Each gets its own grill → spec → tickets → plan/pr cycle.
 

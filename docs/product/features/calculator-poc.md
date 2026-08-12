@@ -52,14 +52,16 @@ This is intentionally bare-bones. Everything below waits for a later release.
 - Helpful messages when something goes wrong (e.g. dividing by zero) — [Calculator v1](calculator-v1.md)
 - Typing on the keyboard instead of only clicking — [Calculator v1](calculator-v1.md)
 - Scientific math (sin, cos, log, etc.) — [Calculator v2](calculator-v2.md)
-- Saving your last calculation when you refresh the page
-- Fancy themes or customization
+- Saving your last calculation when you refresh the page — [Calculator v3](calculator-v3.md)
+- Fancy themes or customization — [Calculator v4](calculator-v4.md)
 
 ## Related
 
 - [Feature doc → issues](../../process/feature-to-issues.md)
 - [Calculator v1](calculator-v1.md)
 - [Calculator v2](calculator-v2.md)
+- [Calculator v3](calculator-v3.md)
+- [Calculator v4](calculator-v4.md)
 - [Vision](../vision.md)
 - [Roadmap](../roadmap.md)
 - [GitHub Issues](https://github.com/irenadimitrova1/calculator-ai-demo/issues)
