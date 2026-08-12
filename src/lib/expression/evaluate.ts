@@ -110,6 +110,10 @@ export function evaluate(ast: AstNode, angleUnit: AngleUnit): ExpressionResult {
           return { ok: true, value: left.value / right.value }
         case 'power':
           return { ok: true, value: left.value ** right.value }
+        default: {
+          const unreachable: never = ast.operator
+          throw new Error(`Unknown operator: ${String(unreachable)}`)
+        }
       }
     }
     case 'call': {

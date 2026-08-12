@@ -1,10 +1,37 @@
+import { useEffect, useRef } from 'react'
+
+import type { CalculatorMode } from '@/lib/calculator-orchestrator'
+import type { AngleUnit } from '@/lib/expression'
+
 type DisplayProps = {
+  mode: CalculatorMode
+  angleUnit: AngleUnit
   expressionLine: string
   activeNumber: string
   hasMemory: boolean
 }
 
-export function Display({ expressionLine, activeNumber, hasMemory }: DisplayProps) {
+export function Display({
+  mode,
+  angleUnit,
+  expressionLine,
+  activeNumber,
+  hasMemory,
+}: DisplayProps) {
+  const expressionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (mode !== 'scientific' || expressionRef.current === null) {
+      return
+    }
+    expressionRef.current.scrollLeft = expressionRef.current.scrollWidth
+  }, [expressionLine, mode])
+
+  const expressionClassName =
+    mode === 'scientific'
+      ? 'min-h-6 overflow-x-auto whitespace-nowrap text-right text-lg text-muted-foreground'
+      : 'min-h-6 truncate text-right text-lg text-muted-foreground'
+
   return (
     <div
       aria-label="Calculator display"
@@ -20,8 +47,17 @@ export function Display({ expressionLine, activeNumber, hasMemory }: DisplayProp
           M
         </span>
       ) : null}
+      {mode === 'scientific' ? (
+        <span
+          aria-label={`Angle unit: ${angleUnit === 'deg' ? 'degrees' : 'radians'}`}
+          className="absolute right-4 top-3 text-sm font-semibold text-muted-foreground"
+        >
+          {angleUnit === 'deg' ? 'DEG' : 'RAD'}
+        </span>
+      ) : null}
       <div
-        className="min-h-6 truncate text-right text-lg text-muted-foreground"
+        ref={expressionRef}
+        className={expressionClassName}
         data-testid="display-expression"
       >
         {expressionLine}

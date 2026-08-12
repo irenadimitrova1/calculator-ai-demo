@@ -1,14 +1,18 @@
 import { useCallback, useReducer } from 'react'
 
+import type { CalculatorMode } from '@/lib/calculator-orchestrator'
 import {
+  getActiveNumber,
+  getExpressionLine,
   hasStoredMemory,
-  initialState,
+  initialOrchestratorState,
   transition,
-} from '@/lib/calculation-session'
+  type AngleUnit,
+} from '@/lib/calculator-orchestrator'
 import type { Operator } from '@/lib/calculation'
 
 export function useCalculator() {
-  const [state, dispatch] = useReducer(transition, initialState)
+  const [state, dispatch] = useReducer(transition, initialOrchestratorState)
 
   const pressDigit = useCallback((digit: number) => {
     dispatch({ type: 'digit', digit })
@@ -62,10 +66,38 @@ export function useCalculator() {
     dispatch({ type: 'backspace' })
   }, [])
 
+  const pressOpenParen = useCallback(() => {
+    dispatch({ type: 'openParen' })
+  }, [])
+
+  const pressCloseParen = useCallback(() => {
+    dispatch({ type: 'closeParen' })
+  }, [])
+
+  const pressConstant = useCallback((name: 'pi' | 'e') => {
+    dispatch({ type: 'constant', name })
+  }, [])
+
+  const pressPower = useCallback(() => {
+    dispatch({ type: 'power' })
+  }, [])
+
+  const setMode = useCallback((mode: CalculatorMode) => {
+    dispatch({ type: 'setMode', mode })
+  }, [])
+
+  const setAngleUnit = useCallback((angleUnit: AngleUnit) => {
+    dispatch({ type: 'setAngleUnit', angleUnit })
+  }, [])
+
   return {
-    expressionLine: state.expressionLine,
-    activeNumber: state.activeNumber,
+    mode: state.mode,
+    angleUnit: state.angleUnit,
+    expressionLine: getExpressionLine(state),
+    activeNumber: getActiveNumber(state),
     hasMemory: hasStoredMemory(state.memory),
+    setMode,
+    setAngleUnit,
     pressDigit,
     pressOperator,
     pressEquals,
@@ -79,5 +111,9 @@ export function useCalculator() {
     pressMemoryAdd,
     pressMemorySubtract,
     pressBackspace,
+    pressOpenParen,
+    pressCloseParen,
+    pressConstant,
+    pressPower,
   }
 }
