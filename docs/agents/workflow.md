@@ -17,7 +17,7 @@ Run in order:
 3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
 
 4. **Per child ticket** (repeat until all children ship):
-   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **must run in Plan mode**; grill-me; **`CreatePlan`** (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.
+   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **AskQuestion grill-me in Agent mode** (Plan mode blocks AskQuestion); then Plan mode **`CreatePlan`** (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.
    - **Build** — see [Build](#build) below. **No commit.**
    - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
    - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**, **`/clear`**.

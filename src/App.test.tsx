@@ -26,6 +26,6 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: '3' }))
     await user.click(screen.getByRole('button', { name: 'equals' }))
 
-    expect(screen.getByTestId('display-bottom')).toHaveTextContent('5')
+    expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
   })
 })

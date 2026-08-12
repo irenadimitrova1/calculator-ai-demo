@@ -22,8 +22,8 @@ export function useCalculator() {
   }, [])
 
   return {
-    topLine: state.topLine,
-    bottomLine: state.bottomLine,
+    expressionLine: state.expressionLine,
+    activeNumber: state.activeNumber,
     pressDigit,
     pressOperator,
     pressEquals,

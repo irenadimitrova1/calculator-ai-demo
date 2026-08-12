@@ -134,7 +134,7 @@ _Sourced from PM sections above. `/to-spec` reads this section for the parent sp
 | Issue | Title | Status |
 |-------|-------|--------|
 | [#24](https://github.com/irenadimitrova1/calculator-ai-demo/issues/24) | Extract calculation session module (PoC parity) | in-review |
-| [#25](https://github.com/irenadimitrova1/calculator-ai-demo/issues/25) | Immediate-execution chaining, two-line display, and repeat equals | ready-for-agent |
+| [#25](https://github.com/irenadimitrova1/calculator-ai-demo/issues/25) | Immediate-execution chaining, two-line display, and repeat equals | in-review |
 | [#26](https://github.com/irenadimitrova1/calculator-ai-demo/issues/26) | Clear keys, decimal entry, sign toggle, and error state | ready-for-agent |
 | [#27](https://github.com/irenadimitrova1/calculator-ai-demo/issues/27) | Memory operations and indicator | ready-for-agent |
 | [#28](https://github.com/irenadimitrova1/calculator-ai-demo/issues/28) | Percent key | ready-for-agent |
