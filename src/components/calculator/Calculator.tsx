@@ -7,6 +7,7 @@ export function Calculator() {
   const {
     expressionLine,
     activeNumber,
+    hasMemory,
     pressDigit,
     pressOperator,
     pressEquals,
@@ -14,18 +15,30 @@ export function Calculator() {
     pressClear,
     pressDecimal,
     pressSignToggle,
+    pressMemoryClear,
+    pressMemoryRecall,
+    pressMemoryAdd,
+    pressMemorySubtract,
   } = useCalculator()
 
   return (
     <Card className="w-full max-w-xs">
       <CardContent className="flex flex-col gap-4">
-        <Display activeNumber={activeNumber} expressionLine={expressionLine} />
+        <Display
+          activeNumber={activeNumber}
+          expressionLine={expressionLine}
+          hasMemory={hasMemory}
+        />
         <Keypad
           onAllClear={pressAllClear}
           onClear={pressClear}
           onDecimal={pressDecimal}
           onDigit={pressDigit}
           onEquals={pressEquals}
+          onMemoryAdd={pressMemoryAdd}
+          onMemoryClear={pressMemoryClear}
+          onMemoryRecall={pressMemoryRecall}
+          onMemorySubtract={pressMemorySubtract}
           onOperator={pressOperator}
           onSignToggle={pressSignToggle}
         />
