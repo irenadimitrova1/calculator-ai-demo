@@ -155,6 +155,15 @@ Do NOT close or modify any parent issue or existing **`needs-info`** / **`answer
 
 After publishing on GitHub, append rows to the feature doc **`### Ticket progress`** table (engineering section) for each new `ready-for-agent` child ticket.
 
+**Usage tracking** — after tickets are published:
+
+```bash
+node scripts/usage/set-context.mjs --phase to-tickets --story <parent-N>
+node scripts/usage/register-session.mjs --story <parent-N> --phase to-tickets
+```
+
+Register on the parent **story** issue. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
+
 <local-ticket-template>
 
 # <NN> — <Ticket title>

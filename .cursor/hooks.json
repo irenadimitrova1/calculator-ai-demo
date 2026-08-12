@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [{ "command": "node .cursor/hooks/usage-session.mjs" }],
+    "sessionEnd": [{ "command": "node .cursor/hooks/usage-session.mjs" }],
+    "stop": [{ "command": "node .cursor/hooks/usage-session.mjs" }],
+    "subagentStart": [{ "command": "node .cursor/hooks/usage-session.mjs" }],
+    "subagentStop": [{ "command": "node .cursor/hooks/usage-session.mjs" }]
+  }
+}

@@ -52,6 +52,10 @@ Phase 2 uses the same checklist as the optional [`/verify`](../../.agents/skills
 
 Keep steps 1–3 in **one unbroken context window**. Each `/plan` starts fresh for the next ticket.
 
+## AI usage tracking
+
+Skills and hooks register each agent session on GitHub; `/pr` posts token and cost roll-up on the parent **`story`** when all children ship. See [usage-tracking.md](usage-tracking.md).
+
 ## Parent story closure
 
 When the **last** child issue is merged (`Closes #N` on its PR), CI applies label **`implemented`**, set the doc row to **`implemented`**, close the parent **`story`** issue, and set the feature doc **`Status:`** to `done`. `/pr` handles doc/story closure when all siblings are closed (including after re-invoke post-merge).

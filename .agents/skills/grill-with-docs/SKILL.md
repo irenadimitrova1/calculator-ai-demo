@@ -50,6 +50,16 @@ Also read what frames it (look up facts yourself; don't ask the user to point yo
 
 If the user didn't name a feature doc, list what's in `docs/product/features/` (exclude `TEMPLATE.md`) and ask which one to grill (dependency order is the default recommendation). For a **new** feature, point PMs at `docs/product/features/TEMPLATE.md`.
 
+## Usage tracking
+
+At session start (once the feature doc path is known), set usage context:
+
+```bash
+node scripts/usage/set-context.mjs --phase grill-with-docs --feature-doc docs/product/features/<name>.md
+```
+
+Hooks register the session on GitHub when context includes a story issue (after `/to-spec`). See [usage-tracking.md](../../docs/agents/usage-tracking.md).
+
 
 
 ## PM vs engineering — do not cross the line

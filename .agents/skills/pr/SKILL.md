@@ -94,6 +94,15 @@ Use **`AskQuestion`**:
 5. `gh issue edit <N> --remove-label in-progress`
 6. Update **`### Ticket progress`** row to **`in-review`**
 
+**Usage tracking** — before push:
+
+```bash
+node scripts/usage/set-context.mjs --phase pr --story <parent-M> --child <N>
+node scripts/usage/register-session.mjs --story <parent-M> --child <N> --phase pr
+```
+
+Count session registry comments on `#N` for the PR body note: *N sessions registered — run `node scripts/usage/reconcile.mjs --issue <N>` for interim cost (requires admin key).*
+
 Do **not** manually close `#N` — `Closes #N` closes it on merge.
 
 ---
@@ -117,6 +126,13 @@ When **all** child issues are **closed** (after merge — user may re-invoke `/p
 
 1. `gh issue close <story> --comment "All child tickets implemented."`
 2. Set feature doc **`Status:`** to `done`
+3. **Usage roll-up** — post AI cost totals on the parent **story** issue:
+
+   ```bash
+   node scripts/usage/reconcile.mjs --story <story> --post
+   ```
+
+   Requires `CURSOR_ADMIN_API_KEY` in `.env.local`. Skips if a roll-up comment or `cost-reported` label already exists. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
 
 If all siblings closed now (e.g. re-run after merge), close story immediately.
 

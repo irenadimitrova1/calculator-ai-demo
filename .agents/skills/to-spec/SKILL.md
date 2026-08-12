@@ -24,6 +24,15 @@ Check with the user that these seams match their expectations.
 
 3. Write the spec using the template below, then publish the **parent** issue to the project issue tracker. Apply the **`story`** label — umbrella spec, **not** directly implementable. Do **not** apply `ready-for-agent` to parent specs.
 
+   **Usage tracking** — after the parent **`story`** issue is published as `#N`:
+
+   ```bash
+   node scripts/usage/set-context.mjs --phase to-spec --story <N> --feature-doc docs/product/features/<name>.md
+   node scripts/usage/register-session.mjs --story <N> --phase to-spec
+   ```
+
+   Register on the **story** issue. If `register-session` reports a missing `conversation_id`, hooks will register on the next agent turn. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
+
 4. Publish **PM question issues** from the feature doc **`## Questions`** index:
    - One GitHub issue per row with **Status:** `open`
    - Label: **`needs-info`** only — not `ready-for-agent`, not `story`

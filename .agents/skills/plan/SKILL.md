@@ -63,6 +63,15 @@ Planning and **Build** both happen on this branch. **Do not commit** during `/pl
 
 Create the **`in-progress`** and **`implemented`** labels on GitHub if they do not exist yet.
 
+**Usage tracking** — after branch setup, set context and register on the **child** issue (read parent from `## Parent`):
+
+```bash
+node scripts/usage/set-context.mjs --phase plan --story <parent-M> --child <N>
+node scripts/usage/register-session.mjs --story <parent-M> --child <N> --phase plan
+```
+
+Before **Build**, update phase: `node scripts/usage/set-context.mjs --phase build --story <parent-M> --child <N>`. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
+
 ## What to read first
 
 | Material | Path | Why |
