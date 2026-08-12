@@ -26,6 +26,7 @@ const memoryClear: CalculationSessionAction = { type: 'memoryClear' }
 const memoryRecall: CalculationSessionAction = { type: 'memoryRecall' }
 const memoryAdd: CalculationSessionAction = { type: 'memoryAdd' }
 const memorySubtract: CalculationSessionAction = { type: 'memorySubtract' }
+const backspace: CalculationSessionAction = { type: 'backspace' }
 
 function runScenario(actions: CalculationSessionAction[]) {
   return actions.reduce(transition, initialState)
@@ -455,6 +456,80 @@ describe('calculation session', () => {
     },
   ])('percent: $name', ({ actions, expected }) => {
     const state = runScenario(actions)
+    expect(state.expressionLine).toBe(expected.expressionLine)
+    expect(state.activeNumber).toBe(expected.activeNumber)
+    if ('phase' in expected) {
+      expect(state.phase).toBe(expected.phase)
+    }
+  })
+
+  it.each([
+    {
+      name: 'delete last digit',
+      actions: [digit(1), digit(2), digit(3), backspace],
+      expected: { expressionLine: '', activeNumber: '12' },
+    },
+    {
+      name: 'delete from decimal entry',
+      actions: [decimal, backspace],
+      expected: { expressionLine: '', activeNumber: '0' },
+    },
+    {
+      name: 'lone minus to empty',
+      actions: [signToggle, backspace],
+      expected: { expressionLine: '', activeNumber: '' },
+    },
+    {
+      name: 'empty active mid-calculation is no-op',
+      actions: [digit(5), operator('add'), backspace],
+      expected: { expressionLine: '5 +', activeNumber: '' },
+    },
+    {
+      name: 'delete last digit on result',
+      actions: [digit(2), operator('add'), digit(3), equals, backspace],
+      expected: {
+        expressionLine: '2 + 3 =',
+        activeNumber: '',
+        phase: 'result' as const,
+      },
+    },
+    {
+      name: 'empty active on result resets session',
+      actions: [digit(2), operator('add'), digit(3), equals, backspace, backspace],
+      expected: initialState,
+    },
+    {
+      name: 'partial result edit digit by digit',
+      actions: [
+        digit(5),
+        operator('add'),
+        digit(3),
+        operator('multiply'),
+        backspace,
+      ],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '' },
+    },
+    {
+      name: 'backspace blocked in error',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        backspace,
+      ],
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+  ])('backspace: $name', ({ actions, expected }) => {
+    const state = runScenario(actions)
+    if (expected === initialState) {
+      expect(state).toEqual(initialState)
+      return
+    }
     expect(state.expressionLine).toBe(expected.expressionLine)
     expect(state.activeNumber).toBe(expected.activeNumber)
     if ('phase' in expected) {

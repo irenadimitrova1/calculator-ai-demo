@@ -53,4 +53,15 @@ describe('App', () => {
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('')
     expect(screen.getByTestId('display-expression')).toHaveTextContent('')
   })
+
+  it('completes a calculation using keyboard input', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    const calculator = screen.getByLabelText('Calculator')
+    await user.click(calculator)
+    await user.keyboard('2+3{Enter}')
+
+    expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
+  })
 })

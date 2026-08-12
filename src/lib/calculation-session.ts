@@ -29,6 +29,7 @@ export type CalculationSessionAction =
   | { type: 'memoryRecall' }
   | { type: 'memoryAdd' }
   | { type: 'memorySubtract' }
+  | { type: 'backspace' }
 
 export const initialState: CalculationSessionState = {
   phase: 'entry',
@@ -385,6 +386,18 @@ export function transition(
         ...state,
         memory: state.memory - resolveMemoryOperand(state),
       }
+    case 'backspace': {
+      if (state.activeNumber === '') {
+        if (state.phase === 'result') {
+          return clearedSession(state.memory)
+        }
+        return state
+      }
+      return {
+        ...state,
+        activeNumber: state.activeNumber.slice(0, -1),
+      }
+    }
     default:
       return state
   }
