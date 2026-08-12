@@ -112,6 +112,17 @@ _Sourced from PM sections above. `/to-spec` reads this section. `/to-tickets` re
 - **Tests:** Table-driven Vitest on history module (append, cap FIFO, clear, recall payload); persistence adapter round-trip; integration tests for equals → history, recall → session, refresh hydration
 - **Storybook:** Calculator stories with history panel populated, empty, at-cap, and post-recall states
 
+### Ticket progress
+
+| Issue | Title | Status |
+|-------|-------|--------|
+| [#51](https://github.com/irenadimitrova1/calculator-ai-demo/issues/51) | Calculation history module | ready-for-agent |
+| [#52](https://github.com/irenadimitrova1/calculator-ai-demo/issues/52) | Persistence adapter and session history integration | ready-for-agent |
+| [#53](https://github.com/irenadimitrova1/calculator-ai-demo/issues/53) | History panel UI and responsive layout | ready-for-agent |
+| [#54](https://github.com/irenadimitrova1/calculator-ai-demo/issues/54) | Storybook v3, storage degrade notice, and App smoke tests | ready-for-agent |
+
+Set **Status:** to `done` when all rows are **`implemented`**.
+
 ### Open questions
 
 _Engineering-internal only. Product questions for PM/PO go in `## Questions` — not here._
@@ -127,10 +138,10 @@ _`/to-spec` → **`needs-info`**. PM replies → **`answered`**. **`/triage #N`*
 
 | ID | Issue | Status |
 |----|-------|--------|
-| pm-q1-panel-layout | | open |
-| pm-q2-clear-confirm | | open |
-| pm-q3-timestamps | | open |
-| pm-q4-history-a11y | | open |
+| pm-q1-panel-layout | [#47](https://github.com/irenadimitrova1/calculator-ai-demo/issues/47) | resolved |
+| pm-q2-clear-confirm | [#48](https://github.com/irenadimitrova1/calculator-ai-demo/issues/48) | resolved |
+| pm-q3-timestamps | [#49](https://github.com/irenadimitrova1/calculator-ai-demo/issues/49) | resolved |
+| pm-q4-history-a11y | [#50](https://github.com/irenadimitrova1/calculator-ai-demo/issues/50) | resolved |
 
 ### pm-q1-panel-layout {#pm-q1-panel-layout}
 
@@ -149,7 +160,7 @@ v2 widens the scientific card; history should stay readable on laptop/tablet per
 
 **Assumption (if blocked):** `beside-right` — Panel beside calculator — history on the right, scrollable
 
-**Answer:** <!-- /triage: option-id — label -->
+**Answer:** `beside-right` — Panel beside calculator — history on the right, scrollable; add a toggle to show/hide
 
 ### pm-q2-clear-confirm {#pm-q2-clear-confirm}
 
@@ -165,7 +176,7 @@ v2 widens the scientific card; history should stay readable on laptop/tablet per
 
 **Assumption (if blocked):** `immediate` — Clear immediately — one tap, no confirmation
 
-**Answer:** <!-- /triage: option-id — label -->
+**Answer:** `immediate` — Clear immediately — one tap, no confirmation
 
 ### pm-q3-timestamps {#pm-q3-timestamps}
 
@@ -183,7 +194,7 @@ PM success metrics focus on expression, result, and recall — not audit trails.
 
 **Assumption (if blocked):** `no-timestamps` — No timestamps — expression = result only
 
-**Answer:** <!-- /triage: option-id — label -->
+**Answer:** `show-time` — Show time-of-day on each row; group entries by date
 
 ### pm-q4-history-a11y {#pm-q4-history-a11y}
 
@@ -201,4 +212,4 @@ v1 already uses aria-live on the display region.
 
 **Assumption (if blocked):** `click-only` — Pointer/tap only — no dedicated history keyboard nav in v3
 
-**Answer:** <!-- /triage: option-id — label -->
+**Answer:** `keyboard-nav` — Keyboard navigable list — arrow keys + Enter to recall; proper aria roles
