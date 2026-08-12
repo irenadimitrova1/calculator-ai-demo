@@ -50,7 +50,7 @@ Child issues reference the parent under `## Parent` in the body. `/plan` on a `s
 2. **Build** on that branch — at end, automatically run verify checklist — no commit
 3. **`/verify`** *(optional)* — re-run checks after post-Build edits — no commit
 4. **`/pr`** — commit, push, open PR, remove `in-progress`, set doc row **`in-review`**
-5. **Merge** — `Closes #N` closes the child; `gh issue edit <N> --add-label implemented`, doc row **`implemented`**
+5. **Merge** — `Closes #N` closes the child; GitHub Action **Label implemented on merge** adds **`implemented`** (and removes **`in-progress`** if still present). Update doc row to **`implemented`**. Re-run **`/pr #N`** post-merge if the doc row still needs updating.
 6. **Last child closed** — close parent `story` and set feature doc `Status: done`
 
 ## PR conventions

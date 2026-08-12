@@ -1,0 +1,72 @@
+name: Label implemented on merge
+
+# When a PR merges with Closes #N, apply `implemented` to closed child tickets.
+# PM question issues and parent `story` issues are not closed via implementation PRs.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+
+jobs:
+  label-implemented:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.pull_request.number;
+
+            const { data } = await github.graphql(
+              `query($owner: String!, $repo: String!, $pr: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  pullRequest(number: $pr) {
+                    closingIssuesReferences(first: 50) {
+                      nodes {
+                        number
+                        state
+                        labels(first: 20) {
+                          nodes { name }
+                        }
+                      }
+                    }
+                  }
+                }
+              }`,
+              { owner, repo, pr: prNumber }
+            );
+
+            const issues = data.repository.pullRequest.closingIssuesReferences.nodes;
+
+            for (const issue of issues) {
+              if (issue.state !== 'CLOSED') continue;
+
+              const labels = issue.labels.nodes.map((l) => l.name);
+              if (labels.includes('implemented')) continue;
+
+              // PM question and parent story issues are not implementation tickets.
+              if (labels.includes('story') || labels.includes('answered')) continue;
+
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: issue.number,
+                labels: ['implemented'],
+              });
+
+              if (labels.includes('in-progress')) {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: issue.number,
+                  name: 'in-progress',
+                });
+              }
+
+              core.info(`Added implemented to #${issue.number}`);
+            }

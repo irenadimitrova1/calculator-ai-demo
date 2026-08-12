@@ -1,5 +1,5 @@
 interface:
   display_name: "Plan"
-  short_description: "AskQuestion grill in Agent mode, then Plan mode CreatePlan (Build)"
+  short_description: "AskQuestion grill, then CreatePlan in same session (Build)"
 policy:
   allow_implicit_invocation: false

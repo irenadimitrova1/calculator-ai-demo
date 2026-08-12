@@ -71,3 +71,19 @@ _Avoid_: Rounding mode, pretty print
 **Repeat equals**:
 After equals completes a calculation, pressing equals again repeats the last operation using the same second operand (macOS/iOS behavior).
 _Avoid_: Repeat operation, re-equals
+
+**Basic mode**:
+The everyday calculator layout and behavior from v1 — immediate execution, v1 keypad, no scientific functions.
+_Avoid_: Standard mode, normal mode
+
+**Scientific mode**:
+The expanded calculator mode with trig, logs, powers, parentheses, and PEMDAS evaluation on equals.
+_Avoid_: Advanced mode, sci mode
+
+**PEMDAS evaluation**:
+Expression evaluation that respects parentheses and operator precedence (multiply/divide before add/subtract) — used in Scientific mode only.
+_Avoid_: Order of operations, BODMAS
+
+**Angle unit**:
+Whether trigonometry uses degrees or radians; toggled in Scientific mode with an on-screen DEG/RAD label. Defaults to degrees.
+_Avoid_: Angle mode, trig unit

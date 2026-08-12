@@ -72,7 +72,7 @@ Review the proposed breakdown with **`AskQuestion`** (granularity, blocking edge
 
 For each **`ready-for-agent`** child ticket:
 
-1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; **Plan mode required**; grill-me; **`CreatePlan`** (enables **Build** button). **No commit.** Do not finish with markdown-only output.
+1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; grill-me; **`CreatePlan`** in the same session (enables **Build** button). **No commit.** Do not finish with markdown-only output.
 2. **Build** — execute the plan on the feature branch; **automatically run verify checklist** at the end (lint, tests, Storybook, docs). **No commit.**
 3. **`/verify #N`** *(optional)* — re-validate after post-Build edits.
 4. **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**. Then **`/clear`**.

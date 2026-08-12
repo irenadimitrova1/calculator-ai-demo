@@ -231,7 +231,7 @@ Do **not** skip the sweep when any PM/PO row is still **open**.
 
 **Decision** `AskQuestion` calls — engineering frontier items and dedicated PM uncertainty prompts — must include **`Record as open question for PM/PO`** as the **last option** in each question's `options` array.
 
-**Do not** add it to **`round-additions`** or **`round-pm-questions`** — those gates have their own purpose (see [Between-round gates](#between-round-gates--always)).
+**Do not** add it to **`round-additions`** or **`round-pm-questions`** — those gate questions have their own purpose (see [Between-round gate](#between-round-gate--always)).
 
 When the user picks **Record as open question for PM/PO** on a decision question:
 
@@ -248,7 +248,7 @@ Present each round's **frontier** with the `AskQuestion` tool — the same inter
 
 
 
-**One `AskQuestion` call per round** for the frontier. Put every frontier question in that call's `questions` array (one object per decision). Then wait for answers before the [between-round gates](#between-round-gates--always).
+**One `AskQuestion` call per round** for the frontier. Put every frontier question in that call's `questions` array (one object per decision). Then wait for answers before the [between-round gate](#between-round-gate--always).
 
 
 
@@ -270,11 +270,13 @@ Include **Other (I'll type it)** only when the listed options might not cover th
 
 
 
-### Between-round gates — always
+### Between-round gate — always
 
-After recording a round's answers, run **two** `AskQuestion` calls before the next frontier round — in order. Do **not** skip either gate.
+After recording a round's answers, run **one** `AskQuestion` call before the next frontier round. Put **both** gate questions in that call's `questions` array — do **not** split them into separate rounds. Do **not** skip the gate.
 
-#### 1. Engineering additions (`round-additions`)
+**No** `Record as open question for PM/PO` on either gate question — engineering additions belong in the spec; PM/PO capture uses the second gate's freeform path.
+
+#### Engineering additions (`round-additions`)
 
 The frontier cannot cover everything — styling, UI libraries, tooling, naming, constraints the user already has in mind.
 
@@ -284,11 +286,7 @@ The frontier cannot cover everything — styling, UI libraries, tooling, naming,
   - `Nothing to add — continue` `(Recommended)`
   - `I have requirements to add (I'll type them)`
 
-**No** `Record as open question` here — engineering additions belong in the spec, not the PM/PO table.
-
-If they pick **I have requirements to add**, wait for freeform input. Integrate into `## Engineering specification`, `CONTEXT.md`, or an ADR — then continue to gate 2.
-
-#### 2. Additional PM/PO questions (`round-pm-questions`)
+#### Additional PM/PO questions (`round-pm-questions`)
 
 Capture product questions that surfaced during the round but were not tied to a single frontier decision.
 
@@ -298,7 +296,7 @@ Capture product questions that surfaced during the round but were not tied to a 
   - `No additional PM/PO questions` `(Recommended)`
   - `Add PM/PO questions (I'll type them)`
 
-If they pick **Add PM/PO questions**, wait for freeform input. For each uncertainty, run a product **`AskQuestion`** (concrete options + `record-open`), then add the index row + `###` block. Document interim **Assumption** in the engineering spec if grilling continues.
+**After answers:** If **I have requirements to add**, wait for freeform input and integrate into `## Engineering specification`, `CONTEXT.md`, or an ADR. If **Add PM/PO questions**, wait for freeform input; for each uncertainty run a product **`AskQuestion`** (concrete options + `record-open`), add the index row + `###` block, and document interim **Assumption** in the engineering spec if grilling continues. Then recompute the frontier.
 
 
 
@@ -318,7 +316,7 @@ Use prose **only** for framing — what you're grilling, what's settled so far, 
 
 2. Offer an ADR only when the domain-modeling skill's three ADR criteria all apply.
 
-3. Run **`round-additions`**, then **`round-pm-questions`** (both gates, every round).
+3. Run the between-round gate — **one** `AskQuestion` with **`round-additions`** and **`round-pm-questions`** together (every frontier round).
 
 4. If the user added engineering requirements or PM/PO questions, record those — then recompute the frontier and call `AskQuestion` again.
 

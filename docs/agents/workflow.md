@@ -17,18 +17,18 @@ Run in order:
 3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
 
 4. **Per child ticket** (repeat until all children ship):
-   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **AskQuestion grill-me in Agent mode** (Plan mode blocks AskQuestion); then Plan mode **`CreatePlan`** (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.
+   - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **AskQuestion grill-me**, then **`CreatePlan`** in the same session (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.
    - **Build** — see [Build](#build) below. **No commit.**
    - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
    - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**, **`/clear`**.
 
-Child ticket label flow: **`ready-for-agent`** → **`in-progress`** (`/plan`) → **`implemented`** (PR merged; issue closed).
+Child ticket label flow: **`ready-for-agent`** → **`in-progress`** (`/plan`) → **`implemented`** (PR merged; issue closed; label applied by CI).
 
 Use **`/clear`** after each `/pr` so the next `/plan` starts fresh.
 
 ## Build
 
-Cursor **Build** runs on the feature branch after the **Cursor Plan** from `/plan` is approved. The **Build** button appears only on that plan artifact (`CreatePlan` in Plan mode) — not on a markdown file in `.scratch/plans/`. If you only have a markdown plan, switch to Plan mode and re-run `/plan #N`, or build manually in Agent mode.
+Cursor **Build** runs on the feature branch after the **Cursor Plan** from `/plan` is approved. `/plan` must call **`CreatePlan`** — the plan appears in **Plan mode** with the **Build** button. A `.scratch/plans/*.md` mirror or a handoff to `~/.cursor/plans/...` is not a completed `/plan`.
 
 Cursor **Build** is **two phases in one session** — verify is not a separate mandatory step:
 
@@ -54,7 +54,7 @@ Keep steps 1–3 in **one unbroken context window**. Each `/plan` starts fresh f
 
 ## Parent story closure
 
-When the **last** child issue is merged (`Closes #N` on its PR), apply label **`implemented`**, set the doc row to **`implemented`**, close the parent **`story`** issue, and set the feature doc **`Status:`** to `done`. `/pr` handles this when all siblings are closed (including after re-invoke post-merge).
+When the **last** child issue is merged (`Closes #N` on its PR), CI applies label **`implemented`**, set the doc row to **`implemented`**, close the parent **`story`** issue, and set the feature doc **`Status:`** to `done`. `/pr` handles doc/story closure when all siblings are closed (including after re-invoke post-merge).
 
 ## PM/PO question lifecycle
 

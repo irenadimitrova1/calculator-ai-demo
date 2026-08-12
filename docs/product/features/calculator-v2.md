@@ -87,3 +87,93 @@ v1 is great for grocery math and quick totals, but students and technical users 
 - [Vision](../vision.md)
 - [Roadmap](../roadmap.md)
 - [GitHub Issues](https://github.com/irenadimitrova1/calculator-ai-demo/issues)
+
+## Engineering specification
+
+**Owner:** Engineering  
+**Last updated:** 2026-08-12
+
+_Sourced from PM sections above. `/to-spec` reads this section. `/to-tickets` reads this section and `## Questions`._
+
+> **Frozen after grill:** Do not edit stack, behavior, UI, or constraints when PM answers — only **`### Ticket progress`** updates during delivery. PM **Answer** values go in **`## Questions`**.
+
+### Stack
+
+- **Same as v1** — React + Vite + TypeScript, Tailwind + shadcn/ui, Storybook, Vitest + RTL
+- **Dual evaluation engines** — v1 `calculation-session` immediate-execution path unchanged for **Basic mode**; new pure expression module (parse + PEMDAS evaluate) for **Scientific mode**
+- **Scientific expression module** — custom pure TypeScript parser/evaluator in `src/lib/expression/` (no new dependencies): tokenize/parse infix expressions with parentheses, unary/binary ops, constants; PEMDAS + right-associative `^`; evaluate with degree/radian awareness for trig
+- **`useCalculator` / session** — gains `mode: 'basic' | 'scientific'` and `angleUnit: 'deg' | 'rad'`; dispatches to the correct engine per mode
+
+### Behavior
+
+- **Dual engines:** **Basic mode** keeps all v1 behavior (immediate execution, full-typed-history expression trail, repeat equals, memory, percent, etc.). **Scientific mode** builds a parenthesized expression and evaluates with PEMDAS on equals.
+- **Mode toggle:** User switches **Basic** ↔ **Scientific**; Basic shows the v1 keypad only; Scientific reveals additional function/operator rows. Mode choice is session-only (no refresh persistence until v3). **Switching modes clears the session** (AC-equivalent reset) because the engines are incompatible.
+- **Angle unit:** Default **degrees** in Scientific mode; toggle to radians; on-screen **DEG** / **RAD** label always visible in Scientific mode.
+- **Unary functions:** _Pending PM/PO (`pm-q1-unary-apply`). Assumption until answered:_ immediate unary on press — applies to the active number and **inserts the computed numeric result** into the building expression (not `sin(30)` syntax).
+- **Scientific expression:** Parentheses `(` `)` supported; PEMDAS for `+` `−` `×` `÷` and power; **π** and **e** insert as expression tokens; binary power `x^y` supported.
+- **Trig:** sin, cos, tan plus **sin⁻¹, cos⁻¹, tan⁻¹** keys on the scientific keypad.
+- **Repeat equals:** Basic mode only (v1 behavior). Scientific mode evaluates the expression once per equals press — no repeat-equals.
+- **Memory:** Shared **M** register across Basic and Scientific modes; memory keys work in both. Mode switch clears the calculation session but **does not** clear memory.
+- **Percent:** Same v1 divide-by-100 semantics in both modes (per resolved v1 PM answer).
+- **Power:** `^` is right-associative (`2^3^2` → `512`).
+- **Errors:** Invalid scientific input (e.g. log of zero, √(negative), divide by zero) enters the same **error state** as v1 — active number shows `Error`, input blocked until AC/C.
+- **Keyboard (Scientific mode):** Extend v1 keyboard — digits, `.`, `+`, `−`, `*`, `/`, `Enter`/`=`, `Escape` → AC, `Backspace`; add `(`, `)`, `^` for power, and letter shortcuts for trig/logs where practical (e.g. `s` sin, `c` cos, `t` tan — exact map in implementation).
+- **v1 carry-forward:** Memory, clear keys, decimals, percent, sign toggle, keyboard (basic keys), and two-line display behavior unchanged in Basic mode.
+
+### UI / UX
+
+- **Mode toggle** control (e.g. segmented **Basic** / **Scientific**) above or beside the display — obvious which mode is active.
+- **Scientific keypad** — extra rows for sin/cos/tan, sin⁻¹/cos⁻¹/tan⁻¹, **ln** / **log**, powers (√, x², x^y, 1/x), parentheses, π, e.
+- **DEG/RAD indicator** on the display region in Scientific mode.
+- **Expression display** in Scientific mode shows the building expression (including functions and parentheses); overflow uses **horizontal scroll** to the tail. After equals, **two-line layout** — full expression on top, result on active-number line (v1 pattern). Basic mode keeps v1 two-line behavior.
+- **Card width:** Scientific mode uses a wider card (e.g. `max-w-sm` / `max-w-md`) than Basic (`max-w-xs`) to fit extra keys without unusably small buttons.
+- Carry forward v1 display formatting (~12 visible digits, float-noise cleanup) and error presentation.
+
+### Constraints
+
+- Build on shipped v1 session module; no stack changes
+- PM out-of-scope still applies: no history panel, no themes, no persistence on refresh, no graphing/units/programmer mode
+- **Tests:** Table-driven Vitest on expression parser/evaluator (PEMDAS, parens, trig deg/rad, domain errors); integration tests for mode switching and Basic-mode regression (v1 scenarios unchanged)
+- **Storybook:** Calculator stories for Basic vs Scientific layouts, DEG/RAD toggle, scientific errors, long-expression scroll
+
+### Ticket progress
+
+| Issue | Title | Status |
+|-------|-------|--------|
+| [#39](https://github.com/irenadimitrova1/calculator-ai-demo/issues/39) | Scientific expression evaluator module | ready-for-agent |
+| [#40](https://github.com/irenadimitrova1/calculator-ai-demo/issues/40) | Mode toggle, dual-engine orchestrator, and scientific arithmetic UI | ready-for-agent |
+| [#41](https://github.com/irenadimitrova1/calculator-ai-demo/issues/41) | Scientific unary functions and full keypad | ready-for-agent |
+| [#42](https://github.com/irenadimitrova1/calculator-ai-demo/issues/42) | Scientific keyboard, Storybook v2, and App smoke tests | ready-for-agent |
+
+Set **Status:** to `done` when all rows are **`implemented`**.
+
+### Open questions
+
+_None — product uncertainties tracked in `## Questions` below._
+
+## Questions
+
+**Owner:** Engineering (from `/grill-with-docs`)  
+**Last updated:** 2026-08-12
+
+_`/to-spec` → **`needs-info`**. PM replies → **`answered`**. **`/triage #N`** fills **Answer** here — never edits spec above._
+
+| ID | Issue | Status |
+|----|-------|--------|
+| pm-q1-unary-apply | [#37](https://github.com/irenadimitrova1/calculator-ai-demo/issues/37) | open |
+
+### pm-q1-unary-apply {#pm-q1-unary-apply}
+
+**Prompt:** Unary functions — how should sin, √, x², 1/x, and log keys behave? This couples to the evaluation model but is a separate UX choice.
+
+**Options:**
+
+| id | label |
+|----|-------|
+| `immediate-unary` | Immediate unary — sin/cos/tan/√/x²/1/x apply to the active number on press (classic scientific keypad) *(Recommended)* |
+| `expression-token` | Expression token — functions build the expression string; everything evaluates on equals |
+| `record-open` | Record as open question for PM/PO |
+
+**Assumption (if blocked):** `immediate-unary` — immediate unary apply on press until PM/PO confirms
+
+**Answer:** <!-- /triage: option-id — label -->

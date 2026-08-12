@@ -65,7 +65,7 @@ Do **not** commit yet.
 ### Labels
 - Remove `in-progress` from #N after PR opened
 - Doc row → **`in-review`**
-- On merge: `gh issue edit <N> --add-label implemented`; doc row → **`implemented`**
+- On merge: GitHub Action **Label implemented on merge** (`.github/workflows/issue-implemented-label.yml`) adds **`implemented`** to issues closed by the PR; update doc row → **`implemented`**
 ```
 
 ---
@@ -102,7 +102,7 @@ Do **not** manually close `#N` — `Closes #N` closes it on merge.
 
 When `#N` is **closed** (PR merged) or re-invoked post-merge:
 
-1. `gh issue edit <N> --add-label implemented`
+1. **Label** — CI applies **`implemented`** automatically when the PR merges (`issue-implemented-label` workflow). Only run `gh issue edit <N> --add-label implemented` if the label is still missing (workflow failed or PR merged before the workflow existed).
 2. Update **`### Ticket progress`** row to **`implemented`**
 
 ---

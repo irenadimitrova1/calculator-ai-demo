@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Plan one child ticket — branch from main, AskQuestion grill-me in Agent mode, then Plan mode CreatePlan (Build button). No commit.
+description: Plan one child ticket — branch from main, AskQuestion grill-me, then CreatePlan in the same session (Build button). No commit.
 disable-model-invocation: true
 ---
 
@@ -36,7 +36,7 @@ Before planning, verify blockers are satisfied. Stop if `## Blocked by` referenc
 
 ## Start — branch and issue (Agent mode)
 
-Stay in **Agent mode** through branch setup, reading, and grill-me. Do **not** call `SwitchMode` yet.
+Stay in **Agent mode** through branch setup, reading, grill-me, and plan creation.
 
 Run **once** when the ticket has `ready-for-agent` (skip branch setup if already `in-progress` with a linked branch — see below).
 
@@ -105,55 +105,46 @@ After the user answers, recompute the frontier. The **next** round contains only
 
 Per-question shape matches `/grill-with-docs`: **`id`**, **`prompt`**, **`options`** (2–5 choices; `(Recommended)` first; **`Record as open question for PM/PO`** last on product uncertainties; **`Other (I'll type it)`** only when needed).
 
-### Between-round gates — after each frontier round only
+### Between-round gate — after each frontier round only
 
-Run **after** recording answers for a full frontier round — **not** after every single question. Two gates, in order (see `/grill-with-docs`):
+Run **after** recording answers for a full frontier round — **not** after every single question. **One** `AskQuestion` call with **both** gate questions in the `questions` array (see `/grill-with-docs`):
 
 1. **`round-additions`** — engineering specs/constraints the frontier missed
 2. **`round-pm-questions`** — product questions for PM/PO that surfaced during the round
 
-Do **not** substitute a custom "Continue / Done grilling" gate. Do **not** skip either gate.
+Do **not** split these into separate `AskQuestion` calls. Do **not** substitute a custom "Continue / Done grilling" gate. Do **not** skip the gate.
 
 **Hard rules:**
 
-- **Always** call `AskQuestion` for frontier rounds and between-round gates.
+- **Always** call `AskQuestion` for frontier rounds and the between-round gate.
 - **Never** dump numbered markdown question lists in chat as a substitute.
 - **Never** chain single-question `AskQuestion` calls when those questions could have been batched.
 - **If `AskQuestion` is unavailable** — stop. Tell the user `AskQuestion` is missing (stay in Agent mode; do not switch to Plan mode). Do **not** grill in markdown. Do **not** call `CreatePlan`.
 
 Do **not** write code, **commit**, or run checks during grilling.
 
-## Plan mode gate — CreatePlan only
-
-Run **after** grilling is complete. **Not** before AskQuestion rounds.
-
-1. Call `SwitchMode` with `target_mode_id: "plan"`.
-2. **If `SwitchMode` is rejected or unavailable — stop.** Tell the user:
-   - Switch to **Plan mode** manually (mode picker in chat/composer).
-   - Re-run **`/plan #N`** once in Plan mode **only to finish CreatePlan** (grilling already done — do not re-grill in markdown).
-   - Do **not** call `CreatePlan` from Agent mode, do **not** write a standalone plan markdown file, and do **not** set ticket progress to `planned`.
-3. **If you are not in Plan mode — stop.** Same message as above.
-
 ## Produce the plan — Cursor Plan required
 
-**Prerequisite:** grilling complete and [Plan mode gate](#plan-mode-gate--createplan-only) passed.
+**Prerequisite:** grilling complete. **Not** before AskQuestion rounds.
 
-1. Call **`CreatePlan`** with issue `#N`, parent `story`, feature doc path, acceptance criteria, testing seams, and out-of-scope. This is the **only** valid plan deliverable — it wires the **Build** button in Cursor.
-2. **If `CreatePlan` is unavailable — stop.** Tell the user to switch to Plan mode and re-run `/plan #N`. Do **not** substitute a markdown-only plan.
-3. **Do not** write `.scratch/plans/*.md` (or any other file) **instead of** `CreatePlan`. Optionally mirror the approved Cursor Plan to `.scratch/plans/<issue>-<slug>.md` **after** `CreatePlan` succeeds.
-4. Update feature doc **`### Ticket progress`**: set row to `planned`. Do **not** edit PM sections.
+Immediately after the between-round gate (or when the frontier is empty), in the **same `/plan` session**:
 
-**Done when:** `CreatePlan` succeeded, ticket progress is `planned`, and the user can review the Cursor Plan and click **Build**.
+1. Call **`CreatePlan`** with issue `#N`, parent `story`, feature doc path, acceptance criteria, grill decisions, testing seams, and out-of-scope. This is the **only** valid plan deliverable — it opens the plan in **Plan mode** with the **Build** button.
+2. **If `CreatePlan` is unavailable** — **stop**. Tell the user `/plan` cannot finish without `CreatePlan`. Do **not** write plan files manually. Do **not** hand off with file paths. Ask them to re-invoke `/plan #N` (stay in Agent mode through grill-me; `CreatePlan` runs at the end).
+3. **Do not** ask the user to switch modes or re-run `/plan` when `CreatePlan` succeeded — finish planning automatically in that session.
+4. **Do not** write `.scratch/plans/*.md` as a substitute for `CreatePlan`.
+5. Update feature doc **`### Ticket progress`**: set row to `planned`. Do **not** edit PM sections.
+
+**Done when:** `CreatePlan` succeeded, ticket progress is `planned`, and the user sees the plan in Plan mode with **Build**.
 
 ## Handoff
 
 Tell the dev:
 
-1. Review and approve the **Cursor Plan** (not a `.scratch` markdown copy)
-2. Click **Build** on the plan (or run Build from Plan mode) on branch `issue-<N>-<slug>` — two phases in one session ([Build](../../docs/agents/workflow.md#build)):
+1. Review the plan in **Plan mode** and click **Build** on branch `issue-<N>-<slug>` — two phases in one session ([Build](../../docs/agents/workflow.md#build)):
    - **Implement** the plan
    - **Verify** — run the full checklist from [`/verify` skill](../verify/SKILL.md) **automatically when implementation finishes**
-3. Run **`/pr #N`** — commit, push, open PR (only after verify passes)
+2. Run **`/pr #N`** — commit, push, open PR (only after verify passes)
 
 If you change anything after Build, run optional **`/verify #N`** to re-validate before `/pr`.
 
