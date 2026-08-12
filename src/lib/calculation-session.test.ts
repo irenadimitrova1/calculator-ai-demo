@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { Operator } from '@/lib/calculation'
 import {
+  hasStoredMemory,
   initialState,
   transition,
   type CalculationSessionAction,
@@ -20,6 +21,10 @@ const allClear: CalculationSessionAction = { type: 'allClear' }
 const clear: CalculationSessionAction = { type: 'clear' }
 const decimal: CalculationSessionAction = { type: 'decimal' }
 const signToggle: CalculationSessionAction = { type: 'signToggle' }
+const memoryClear: CalculationSessionAction = { type: 'memoryClear' }
+const memoryRecall: CalculationSessionAction = { type: 'memoryRecall' }
+const memoryAdd: CalculationSessionAction = { type: 'memoryAdd' }
+const memorySubtract: CalculationSessionAction = { type: 'memorySubtract' }
 
 function runScenario(actions: CalculationSessionAction[]) {
   return actions.reduce(transition, initialState)
@@ -282,5 +287,101 @@ describe('calculation session', () => {
     if ('runningTotal' in expected) {
       expect(state.runningTotal).toBe(expected.runningTotal)
     }
+    if ('memory' in expected) {
+      expect(state.memory).toBe(expected.memory)
+    }
+  })
+
+  it.each([
+    {
+      name: 'M+ stores active number',
+      actions: [digit(5), memoryAdd],
+      expected: { expressionLine: '', activeNumber: '5', memory: 5 },
+    },
+    {
+      name: 'M− subtracts active number from memory',
+      actions: [digit(5), memoryAdd, clear, digit(2), memorySubtract],
+      expected: { expressionLine: '', activeNumber: '2', memory: 3 },
+    },
+    {
+      name: 'M+ empty active with runningTotal',
+      actions: [digit(5), operator('add'), digit(3), operator('multiply'), memoryAdd],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '8', memory: 8 },
+    },
+    {
+      name: 'M+ empty active with no runningTotal',
+      actions: [memoryAdd],
+      expected: { expressionLine: '', activeNumber: '', memory: 0 },
+    },
+    {
+      name: 'MR recalls memory into active number',
+      actions: [digit(7), memoryAdd, digit(2), memoryRecall],
+      expected: { expressionLine: '', activeNumber: '7', memory: 7 },
+    },
+    {
+      name: 'MC clears memory',
+      actions: [digit(4), memoryAdd, memoryClear],
+      expected: { expressionLine: '', activeNumber: '4', memory: 0 },
+    },
+    {
+      name: 'AC preserves memory',
+      actions: [digit(5), memoryAdd, allClear],
+      expected: { expressionLine: '', activeNumber: '', memory: 5 },
+    },
+    {
+      name: 'memory survives equals',
+      actions: [
+        digit(5),
+        memoryAdd,
+        clear,
+        digit(2),
+        operator('add'),
+        digit(3),
+        equals,
+      ],
+      expected: { expressionLine: '2 + 3 =', activeNumber: '5', memory: 5 },
+    },
+    {
+      name: 'memory ops blocked in error',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        memoryAdd,
+        memoryRecall,
+        memoryClear,
+      ],
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+        memory: 0,
+      },
+    },
+    {
+      name: 'C from error preserves memory',
+      actions: [digit(3), memoryAdd, digit(5), operator('divide'), digit(0), equals, clear],
+      expected: { expressionLine: '', activeNumber: '', memory: 3 },
+    },
+  ])('memory: $name', ({ actions, expected }) => {
+    const state = runScenario(actions)
+    expect(state.expressionLine).toBe(expected.expressionLine)
+    expect(state.activeNumber).toBe(expected.activeNumber)
+    if ('phase' in expected) {
+      expect(state.phase).toBe(expected.phase)
+    }
+    expect(state.memory).toBe(expected.memory)
+  })
+})
+
+describe('hasStoredMemory', () => {
+  it.each([
+    { memory: 0, expected: false },
+    { memory: -0, expected: false },
+    { memory: 5, expected: true },
+    { memory: -3, expected: true },
+  ])('memory $memory → $expected', ({ memory, expected }) => {
+    expect(hasStoredMemory(memory)).toBe(expected)
   })
 })

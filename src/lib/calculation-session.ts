@@ -13,6 +13,7 @@ export type CalculationSessionState = {
   pendingOperator: Operator | null
   lastOperator: Operator | null
   lastSecondOperand: number | null
+  memory: number
 }
 
 export type CalculationSessionAction =
@@ -23,6 +24,10 @@ export type CalculationSessionAction =
   | { type: 'clear' }
   | { type: 'decimal' }
   | { type: 'signToggle' }
+  | { type: 'memoryClear' }
+  | { type: 'memoryRecall' }
+  | { type: 'memoryAdd' }
+  | { type: 'memorySubtract' }
 
 export const initialState: CalculationSessionState = {
   phase: 'entry',
@@ -32,6 +37,11 @@ export const initialState: CalculationSessionState = {
   pendingOperator: null,
   lastOperator: null,
   lastSecondOperand: null,
+  memory: 0,
+}
+
+export function hasStoredMemory(memory: number): boolean {
+  return memory !== 0 && !Object.is(memory, -0)
 }
 
 export function operatorGlyph(operator: Operator): string {
@@ -134,23 +144,37 @@ function appendDecimal(base: string): string {
   return `${base}.`
 }
 
+function clearedSession(memory: number): CalculationSessionState {
+  return { ...initialState, memory }
+}
+
+function resolveMemoryOperand(state: CalculationSessionState): number {
+  if (!isActiveEmpty(state.activeNumber)) {
+    return Number(state.activeNumber)
+  }
+  if (state.runningTotal !== null) {
+    return state.runningTotal
+  }
+  return 0
+}
+
 export function transition(
   state: CalculationSessionState,
   action: CalculationSessionAction,
 ): CalculationSessionState {
   if (state.phase === 'error') {
     if (action.type === 'allClear' || action.type === 'clear') {
-      return initialState
+      return clearedSession(state.memory)
     }
     return state
   }
 
   switch (action.type) {
     case 'allClear':
-      return initialState
+      return clearedSession(state.memory)
     case 'clear': {
       if (state.phase === 'result') {
-        return initialState
+        return clearedSession(state.memory)
       }
       if (isActiveEmpty(state.activeNumber)) {
         return state
@@ -170,6 +194,7 @@ export function transition(
           pendingOperator: null,
           lastOperator: null,
           lastSecondOperand: null,
+          memory: state.memory,
         }
       }
 
@@ -200,6 +225,7 @@ export function transition(
           pendingOperator: null,
           lastOperator: null,
           lastSecondOperand: null,
+          memory: state.memory,
         }
       }
 
@@ -223,6 +249,7 @@ export function transition(
           pendingOperator: operator,
           lastOperator: state.lastOperator,
           lastSecondOperand: state.lastSecondOperand,
+          memory: state.memory,
         }
       }
 
@@ -248,6 +275,7 @@ export function transition(
           pendingOperator: operator,
           lastOperator: null,
           lastSecondOperand: null,
+          memory: state.memory,
         }
       }
 
@@ -268,6 +296,7 @@ export function transition(
         pendingOperator: operator,
         lastOperator: state.lastOperator,
         lastSecondOperand: state.lastSecondOperand,
+        memory: state.memory,
       }
     }
     case 'equals': {
@@ -324,8 +353,26 @@ export function transition(
         pendingOperator: null,
         lastOperator: state.pendingOperator,
         lastSecondOperand: operand,
+        memory: state.memory,
       }
     }
+    case 'memoryClear':
+      return { ...state, memory: 0 }
+    case 'memoryRecall':
+      return {
+        ...state,
+        activeNumber: formatDisplay(state.memory),
+      }
+    case 'memoryAdd':
+      return {
+        ...state,
+        memory: state.memory + resolveMemoryOperand(state),
+      }
+    case 'memorySubtract':
+      return {
+        ...state,
+        memory: state.memory - resolveMemoryOperand(state),
+      }
     default:
       return state
   }

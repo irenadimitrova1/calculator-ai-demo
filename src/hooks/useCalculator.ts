@@ -1,6 +1,7 @@
 import { useCallback, useReducer } from 'react'
 
 import {
+  hasStoredMemory,
   initialState,
   transition,
 } from '@/lib/calculation-session'
@@ -37,9 +38,26 @@ export function useCalculator() {
     dispatch({ type: 'signToggle' })
   }, [])
 
+  const pressMemoryClear = useCallback(() => {
+    dispatch({ type: 'memoryClear' })
+  }, [])
+
+  const pressMemoryRecall = useCallback(() => {
+    dispatch({ type: 'memoryRecall' })
+  }, [])
+
+  const pressMemoryAdd = useCallback(() => {
+    dispatch({ type: 'memoryAdd' })
+  }, [])
+
+  const pressMemorySubtract = useCallback(() => {
+    dispatch({ type: 'memorySubtract' })
+  }, [])
+
   return {
     expressionLine: state.expressionLine,
     activeNumber: state.activeNumber,
+    hasMemory: hasStoredMemory(state.memory),
     pressDigit,
     pressOperator,
     pressEquals,
@@ -47,5 +65,9 @@ export function useCalculator() {
     pressClear,
     pressDecimal,
     pressSignToggle,
+    pressMemoryClear,
+    pressMemoryRecall,
+    pressMemoryAdd,
+    pressMemorySubtract,
   }
 }

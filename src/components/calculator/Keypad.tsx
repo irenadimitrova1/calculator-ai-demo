@@ -6,8 +6,12 @@ type KeypadProps = {
   onClear: () => void
   onDecimal: () => void
   onDigit: (digit: number) => void
-  onOperator: (operator: Operator) => void
   onEquals: () => void
+  onMemoryAdd: () => void
+  onMemoryClear: () => void
+  onMemoryRecall: () => void
+  onMemorySubtract: () => void
+  onOperator: (operator: Operator) => void
   onSignToggle: () => void
 }
 
@@ -16,12 +20,56 @@ export function Keypad({
   onClear,
   onDecimal,
   onDigit,
-  onOperator,
   onEquals,
+  onMemoryAdd,
+  onMemoryClear,
+  onMemoryRecall,
+  onMemorySubtract,
+  onOperator,
   onSignToggle,
 }: KeypadProps) {
   return (
     <div className="grid grid-cols-4 gap-2">
+      <Button
+        aria-label="memory clear"
+        className="h-14 text-lg"
+        onClick={onMemoryClear}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        MC
+      </Button>
+      <Button
+        aria-label="memory recall"
+        className="h-14 text-lg"
+        onClick={onMemoryRecall}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        MR
+      </Button>
+      <Button
+        aria-label="memory add"
+        className="h-14 text-lg"
+        onClick={onMemoryAdd}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        M+
+      </Button>
+      <Button
+        aria-label="memory subtract"
+        className="h-14 text-lg"
+        onClick={onMemorySubtract}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        M−
+      </Button>
       <Button
         aria-label="all clear"
         className="h-14 text-lg"
