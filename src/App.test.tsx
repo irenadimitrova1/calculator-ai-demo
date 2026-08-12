@@ -12,6 +12,8 @@ describe('App', () => {
       screen.getByRole('status', { name: 'Calculator display' }),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'equals' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'Basic mode' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'Scientific mode' })).toBeInTheDocument()
     expect(
       screen.queryByRole('button', { name: 'Coming soon' }),
     ).not.toBeInTheDocument()
@@ -65,19 +67,16 @@ describe('App', () => {
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
   })
 
-  it('completes a PEMDAS expression in scientific mode via keypad', async () => {
+  it('completes a PEMDAS expression in scientific mode via keyboard', async () => {
     const user = userEvent.setup()
     render(<App />)
 
     await user.click(screen.getByRole('radio', { name: 'Scientific mode' }))
-    await user.click(screen.getByRole('button', { name: 'open parenthesis' }))
-    await user.click(screen.getByRole('button', { name: '2' }))
-    await user.click(screen.getByRole('button', { name: 'add' }))
-    await user.click(screen.getByRole('button', { name: '3' }))
-    await user.click(screen.getByRole('button', { name: 'close parenthesis' }))
-    await user.click(screen.getByRole('button', { name: 'multiply' }))
-    await user.click(screen.getByRole('button', { name: '4' }))
-    await user.click(screen.getByRole('button', { name: 'equals' }))
+    expect(screen.getByLabelText('Angle unit: degrees')).toHaveTextContent('DEG')
+
+    const calculator = screen.getByLabelText('Calculator')
+    await user.click(calculator)
+    await user.keyboard('(2+3)*4{Enter}')
 
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('20')
   })

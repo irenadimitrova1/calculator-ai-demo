@@ -39,7 +39,7 @@ export function Calculator() {
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const action = mapCalculatorKey(event)
+      const action = mapCalculatorKey(event, mode)
       if (action === null) {
         return
       }
@@ -66,6 +66,21 @@ export function Calculator() {
         case 'allClear':
           pressAllClear()
           break
+        case 'openParen':
+          pressOpenParen()
+          break
+        case 'closeParen':
+          pressCloseParen()
+          break
+        case 'power':
+          pressPower()
+          break
+        case 'constant':
+          pressConstant(action.name)
+          break
+        case 'unaryFunction':
+          pressUnaryFunction(action.name)
+          break
         default: {
           const unreachable: never = action
           throw new Error(`Unknown key action: ${String(unreachable)}`)
@@ -73,12 +88,18 @@ export function Calculator() {
       }
     },
     [
+      mode,
       pressAllClear,
       pressBackspace,
+      pressCloseParen,
+      pressConstant,
       pressDecimal,
       pressDigit,
       pressEquals,
+      pressOpenParen,
       pressOperator,
+      pressPower,
+      pressUnaryFunction,
     ],
   )
 
