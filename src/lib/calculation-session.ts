@@ -1,7 +1,7 @@
 import { calculate, type Operator } from '@/lib/calculation'
 import { formatDisplay } from '@/lib/format-display'
 
-type Phase = 'entry' | 'result'
+type Phase = 'entry' | 'result' | 'error'
 
 const TRAILING_GLYPHS = ['+', '−', '×', '÷'] as const
 
@@ -19,6 +19,10 @@ export type CalculationSessionAction =
   | { type: 'digit'; digit: number }
   | { type: 'operator'; operator: Operator }
   | { type: 'equals' }
+  | { type: 'allClear' }
+  | { type: 'clear' }
+  | { type: 'decimal' }
+  | { type: 'signToggle' }
 
 export const initialState: CalculationSessionState = {
   phase: 'entry',
@@ -47,6 +51,22 @@ export function operatorGlyph(operator: Operator): string {
   }
 }
 
+function isActiveEmpty(activeNumber: string): boolean {
+  return activeNumber === '' || activeNumber === '-'
+}
+
+function isShowingPartialResult(state: CalculationSessionState): boolean {
+  return (
+    state.pendingOperator !== null &&
+    state.runningTotal !== null &&
+    state.activeNumber === formatDisplay(state.runningTotal)
+  )
+}
+
+function resolveActiveEntryBase(state: CalculationSessionState): string {
+  return isShowingPartialResult(state) ? '' : state.activeNumber
+}
+
 function appendDigit(current: string, digit: number): string {
   if (current === '0') {
     return digit === 0 ? '0' : String(digit)
@@ -72,11 +92,103 @@ function stripTrailingEquals(expressionLine: string): string {
   return expressionLine
 }
 
+function enterErrorState(
+  state: CalculationSessionState,
+  expressionLine: string,
+): CalculationSessionState {
+  return {
+    ...state,
+    phase: 'error',
+    expressionLine,
+    activeNumber: 'Error',
+    runningTotal: null,
+    pendingOperator: null,
+    lastOperator: null,
+    lastSecondOperand: null,
+  }
+}
+
+function toggleSign(activeNumber: string): string {
+  if (activeNumber === '') {
+    return '-'
+  }
+  if (activeNumber === '-') {
+    return ''
+  }
+  if (activeNumber.startsWith('-')) {
+    return activeNumber.slice(1)
+  }
+  return `-${activeNumber}`
+}
+
+function appendDecimal(base: string): string {
+  if (base.includes('.')) {
+    return base
+  }
+  if (base === '') {
+    return '0.'
+  }
+  if (base === '-') {
+    return '-0.'
+  }
+  return `${base}.`
+}
+
 export function transition(
   state: CalculationSessionState,
   action: CalculationSessionAction,
 ): CalculationSessionState {
+  if (state.phase === 'error') {
+    if (action.type === 'allClear' || action.type === 'clear') {
+      return initialState
+    }
+    return state
+  }
+
   switch (action.type) {
+    case 'allClear':
+      return initialState
+    case 'clear': {
+      if (state.phase === 'result') {
+        return initialState
+      }
+      if (isActiveEmpty(state.activeNumber)) {
+        return state
+      }
+      return {
+        ...state,
+        activeNumber: '',
+      }
+    }
+    case 'decimal': {
+      if (state.phase === 'result') {
+        return {
+          phase: 'entry',
+          expressionLine: '',
+          activeNumber: '0.',
+          runningTotal: null,
+          pendingOperator: null,
+          lastOperator: null,
+          lastSecondOperand: null,
+        }
+      }
+
+      const base = resolveActiveEntryBase(state)
+      if (base.includes('.')) {
+        return state
+      }
+
+      return {
+        ...state,
+        activeNumber: appendDecimal(base),
+      }
+    }
+    case 'signToggle': {
+      return {
+        ...state,
+        activeNumber: toggleSign(state.activeNumber),
+      }
+    }
     case 'digit': {
       const { digit } = action
       if (state.phase === 'result') {
@@ -91,12 +203,7 @@ export function transition(
         }
       }
 
-      const showingPartialResult =
-        state.pendingOperator !== null &&
-        state.runningTotal !== null &&
-        state.activeNumber === formatDisplay(state.runningTotal)
-
-      const base = showingPartialResult ? '' : state.activeNumber
+      const base = resolveActiveEntryBase(state)
 
       return {
         ...state,
@@ -119,7 +226,7 @@ export function transition(
         }
       }
 
-      if (state.activeNumber === '') {
+      if (isActiveEmpty(state.activeNumber)) {
         if (state.pendingOperator !== null && state.expressionLine !== '') {
           return {
             ...state,
@@ -144,14 +251,18 @@ export function transition(
         }
       }
 
+      const expressionLine = `${state.expressionLine} ${state.activeNumber} ${operatorGlyph(operator)}`
       const result = calculate(
         state.runningTotal!,
         state.pendingOperator,
         operand,
       )
+      if (!Number.isFinite(result)) {
+        return enterErrorState(state, expressionLine)
+      }
       return {
         phase: 'entry',
-        expressionLine: `${state.expressionLine} ${state.activeNumber} ${operatorGlyph(operator)}`,
+        expressionLine,
         activeNumber: formatDisplay(result),
         runningTotal: result,
         pendingOperator: operator,
@@ -166,18 +277,22 @@ export function transition(
         state.lastSecondOperand !== null
       ) {
         const current = Number(state.activeNumber)
+        const trail = stripTrailingEquals(state.expressionLine)
+        const append = ` ${operatorGlyph(state.lastOperator)} ${formatDisplay(
+          state.lastSecondOperand,
+        )}`
+        const expressionLine = trail + append
         const result = calculate(
           current,
           state.lastOperator,
           state.lastSecondOperand,
         )
-        const trail = stripTrailingEquals(state.expressionLine)
-        const append = ` ${operatorGlyph(state.lastOperator)} ${formatDisplay(
-          state.lastSecondOperand,
-        )}`
+        if (!Number.isFinite(result)) {
+          return enterErrorState(state, `${expressionLine} =`)
+        }
         return {
           ...state,
-          expressionLine: trail + append,
+          expressionLine,
           activeNumber: formatDisplay(result),
           runningTotal: result,
         }
@@ -185,21 +300,25 @@ export function transition(
 
       if (
         state.pendingOperator === null ||
-        state.activeNumber === '' ||
+        isActiveEmpty(state.activeNumber) ||
         state.runningTotal === null
       ) {
         return state
       }
 
       const operand = Number(state.activeNumber)
+      const expressionLine = `${state.expressionLine} ${state.activeNumber} =`
       const result = calculate(
         state.runningTotal,
         state.pendingOperator,
         operand,
       )
+      if (!Number.isFinite(result)) {
+        return enterErrorState(state, expressionLine)
+      }
       return {
         phase: 'result',
-        expressionLine: `${state.expressionLine} ${state.activeNumber} =`,
+        expressionLine,
         activeNumber: formatDisplay(result),
         runningTotal: result,
         pendingOperator: null,

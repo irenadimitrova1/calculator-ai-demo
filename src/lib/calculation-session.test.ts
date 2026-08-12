@@ -16,6 +16,10 @@ function operator(op: Operator): CalculationSessionAction {
 }
 
 const equals: CalculationSessionAction = { type: 'equals' }
+const allClear: CalculationSessionAction = { type: 'allClear' }
+const clear: CalculationSessionAction = { type: 'clear' }
+const decimal: CalculationSessionAction = { type: 'decimal' }
+const signToggle: CalculationSessionAction = { type: 'signToggle' }
 
 function runScenario(actions: CalculationSessionAction[]) {
   return actions.reduce(transition, initialState)
@@ -94,7 +98,141 @@ describe('calculation session', () => {
     {
       name: 'divide by zero',
       actions: [digit(5), operator('divide'), digit(0), equals],
-      expected: { expressionLine: '5 ÷ 0 =', activeNumber: 'Infinity' },
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+    {
+      name: 'divide by zero on operator commit',
+      actions: [digit(5), operator('divide'), digit(0), operator('multiply')],
+      expected: {
+        expressionLine: '5 ÷ 0 ×',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+    {
+      name: 'error blocks digit input',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        digit(1),
+      ],
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+    {
+      name: 'error blocks operator input',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        operator('add'),
+      ],
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+    {
+      name: 'AC from error',
+      actions: [digit(5), operator('divide'), digit(0), equals, allClear],
+      expected: initialState,
+    },
+    {
+      name: 'C from error',
+      actions: [digit(5), operator('divide'), digit(0), equals, clear],
+      expected: initialState,
+    },
+    {
+      name: 'AC from mid-calculation',
+      actions: [digit(5), operator('add'), digit(3), allClear],
+      expected: initialState,
+    },
+    {
+      name: 'C mid-calculation clears active number',
+      actions: [digit(5), operator('add'), digit(3), clear],
+      expected: { expressionLine: '5 +', activeNumber: '' },
+    },
+    {
+      name: 'C empty active mid-calculation is no-op',
+      actions: [digit(5), operator('add'), clear],
+      expected: { expressionLine: '5 +', activeNumber: '' },
+    },
+    {
+      name: 'C after result resets session',
+      actions: [digit(2), operator('add'), digit(3), equals, clear],
+      expected: initialState,
+    },
+    {
+      name: 'C on partial result clears active number',
+      actions: [
+        digit(5),
+        operator('add'),
+        digit(3),
+        operator('multiply'),
+        clear,
+      ],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '' },
+    },
+    {
+      name: 'decimal entry',
+      actions: [digit(3), decimal, digit(1)],
+      expected: { expressionLine: '', activeNumber: '3.1' },
+    },
+    {
+      name: 'leading decimal',
+      actions: [decimal],
+      expected: { expressionLine: '', activeNumber: '0.' },
+    },
+    {
+      name: 'negative entry then digit',
+      actions: [signToggle, digit(5)],
+      expected: { expressionLine: '', activeNumber: '-5' },
+    },
+    {
+      name: 'negative entry then decimal',
+      actions: [signToggle, decimal],
+      expected: { expressionLine: '', activeNumber: '-0.' },
+    },
+    {
+      name: 'duplicate decimal is no-op',
+      actions: [digit(3), decimal, decimal],
+      expected: { expressionLine: '', activeNumber: '3.' },
+    },
+    {
+      name: 'decimal after partial result',
+      actions: [
+        digit(5),
+        operator('add'),
+        digit(3),
+        operator('multiply'),
+        decimal,
+      ],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '0.' },
+    },
+    {
+      name: 'sign toggle on finished result',
+      actions: [digit(2), operator('add'), digit(3), equals, signToggle],
+      expected: {
+        expressionLine: '2 + 3 =',
+        activeNumber: '-5',
+        phase: 'result' as const,
+      },
+    },
+    {
+      name: 'sign toggle in-place',
+      actions: [digit(5), signToggle, signToggle],
+      expected: { expressionLine: '', activeNumber: '5' },
     },
     {
       name: 'leading zero replacement',
@@ -132,6 +270,10 @@ describe('calculation session', () => {
     },
   ])('$name', ({ actions, expected }) => {
     const state = runScenario(actions)
+    if (expected === initialState) {
+      expect(state).toEqual(initialState)
+      return
+    }
     expect(state.expressionLine).toBe(expected.expressionLine)
     expect(state.activeNumber).toBe(expected.activeNumber)
     if ('phase' in expected) {

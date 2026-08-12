@@ -28,4 +28,29 @@ describe('App', () => {
 
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
   })
+
+  it('clears the display with AC', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '5' }))
+    await user.click(screen.getByRole('button', { name: 'all clear' }))
+
+    expect(screen.getByTestId('display-active-number')).toHaveTextContent('')
+    expect(screen.getByTestId('display-expression')).toHaveTextContent('')
+  })
+
+  it('clears the display with C after a finished result', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '2' }))
+    await user.click(screen.getByRole('button', { name: 'add' }))
+    await user.click(screen.getByRole('button', { name: '3' }))
+    await user.click(screen.getByRole('button', { name: 'equals' }))
+    await user.click(screen.getByRole('button', { name: 'clear' }))
+
+    expect(screen.getByTestId('display-active-number')).toHaveTextContent('')
+    expect(screen.getByTestId('display-expression')).toHaveTextContent('')
+  })
 })

@@ -10,6 +10,10 @@ export function Calculator() {
     pressDigit,
     pressOperator,
     pressEquals,
+    pressAllClear,
+    pressClear,
+    pressDecimal,
+    pressSignToggle,
   } = useCalculator()
 
   return (
@@ -17,9 +21,13 @@ export function Calculator() {
       <CardContent className="flex flex-col gap-4">
         <Display activeNumber={activeNumber} expressionLine={expressionLine} />
         <Keypad
+          onAllClear={pressAllClear}
+          onClear={pressClear}
+          onDecimal={pressDecimal}
           onDigit={pressDigit}
           onEquals={pressEquals}
           onOperator={pressOperator}
+          onSignToggle={pressSignToggle}
         />
       </CardContent>
     </Card>

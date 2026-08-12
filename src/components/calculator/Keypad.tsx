@@ -2,14 +2,66 @@ import { Button } from '@/components/ui/button'
 import type { Operator } from '@/lib/calculation'
 
 type KeypadProps = {
+  onAllClear: () => void
+  onClear: () => void
+  onDecimal: () => void
   onDigit: (digit: number) => void
   onOperator: (operator: Operator) => void
   onEquals: () => void
+  onSignToggle: () => void
 }
 
-export function Keypad({ onDigit, onOperator, onEquals }: KeypadProps) {
+export function Keypad({
+  onAllClear,
+  onClear,
+  onDecimal,
+  onDigit,
+  onOperator,
+  onEquals,
+  onSignToggle,
+}: KeypadProps) {
   return (
     <div className="grid grid-cols-4 gap-2">
+      <Button
+        aria-label="all clear"
+        className="h-14 text-lg"
+        onClick={onAllClear}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        AC
+      </Button>
+      <Button
+        aria-label="clear"
+        className="h-14 text-lg"
+        onClick={onClear}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        C
+      </Button>
+      <Button
+        aria-label="sign toggle"
+        className="h-14 text-lg"
+        onClick={onSignToggle}
+        size="lg"
+        type="button"
+        variant="secondary"
+      >
+        +/−
+      </Button>
+      <Button
+        aria-label="decimal"
+        className="h-14 text-lg"
+        onClick={onDecimal}
+        size="lg"
+        type="button"
+        variant="outline"
+      >
+        .
+      </Button>
       <Button
         aria-label="7"
         className="h-14 text-lg"

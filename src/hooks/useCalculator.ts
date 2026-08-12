@@ -21,11 +21,31 @@ export function useCalculator() {
     dispatch({ type: 'equals' })
   }, [])
 
+  const pressAllClear = useCallback(() => {
+    dispatch({ type: 'allClear' })
+  }, [])
+
+  const pressClear = useCallback(() => {
+    dispatch({ type: 'clear' })
+  }, [])
+
+  const pressDecimal = useCallback(() => {
+    dispatch({ type: 'decimal' })
+  }, [])
+
+  const pressSignToggle = useCallback(() => {
+    dispatch({ type: 'signToggle' })
+  }, [])
+
   return {
     expressionLine: state.expressionLine,
     activeNumber: state.activeNumber,
     pressDigit,
     pressOperator,
     pressEquals,
+    pressAllClear,
+    pressClear,
+    pressDecimal,
+    pressSignToggle,
   }
 }
