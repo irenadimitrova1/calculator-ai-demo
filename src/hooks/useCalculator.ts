@@ -10,6 +10,7 @@ import {
   type AngleUnit,
 } from '@/lib/calculator-orchestrator'
 import type { Operator } from '@/lib/calculation'
+import type { ImmediateUnaryName } from '@/lib/expression'
 
 export function useCalculator() {
   const [state, dispatch] = useReducer(transition, initialOrchestratorState)
@@ -82,6 +83,10 @@ export function useCalculator() {
     dispatch({ type: 'power' })
   }, [])
 
+  const pressUnaryFunction = useCallback((name: ImmediateUnaryName) => {
+    dispatch({ type: 'unaryFunction', name })
+  }, [])
+
   const setMode = useCallback((mode: CalculatorMode) => {
     dispatch({ type: 'setMode', mode })
   }, [])
@@ -115,5 +120,6 @@ export function useCalculator() {
     pressCloseParen,
     pressConstant,
     pressPower,
+    pressUnaryFunction,
   }
 }

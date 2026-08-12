@@ -29,7 +29,17 @@ function fromRadians(value: number, angleUnit: AngleUnit): number {
   return angleUnit === 'deg' ? (value * 180) / Math.PI : value
 }
 
-function evaluateCall(name: FunctionName, argument: number, angleUnit: AngleUnit): ExpressionResult {
+export type ImmediateUnaryName =
+  | FunctionName
+  | 'sqrt'
+  | 'square'
+  | 'reciprocal'
+
+export function evaluateCall(
+  name: FunctionName,
+  argument: number,
+  angleUnit: AngleUnit,
+): ExpressionResult {
   switch (name) {
     case 'sin':
       return { ok: true, value: Math.sin(toRadians(argument, angleUnit)) }
@@ -70,6 +80,32 @@ function evaluateCall(name: FunctionName, argument: number, angleUnit: AngleUnit
       return { ok: true, value: Math.log10(argument) }
     }
   }
+}
+
+export function applyImmediateUnary(
+  name: ImmediateUnaryName,
+  value: number,
+  angleUnit: AngleUnit,
+): ExpressionResult {
+  if (name === 'sqrt') {
+    if (value < 0) {
+      return { ok: false, error: logDomainError() }
+    }
+    return { ok: true, value: Math.sqrt(value) }
+  }
+
+  if (name === 'square') {
+    return { ok: true, value: value ** 2 }
+  }
+
+  if (name === 'reciprocal') {
+    if (value === 0) {
+      return { ok: false, error: divideByZeroError() }
+    }
+    return { ok: true, value: 1 / value }
+  }
+
+  return evaluateCall(name, value, angleUnit)
 }
 
 export function evaluate(ast: AstNode, angleUnit: AngleUnit): ExpressionResult {

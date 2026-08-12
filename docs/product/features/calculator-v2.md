@@ -143,7 +143,7 @@ _Sourced from PM sections above. `/to-spec` reads this section. `/to-tickets` re
 |-------|-------|--------|
 | [#39](https://github.com/irenadimitrova1/calculator-ai-demo/issues/39) | Scientific expression evaluator module | in-review |
 | [#40](https://github.com/irenadimitrova1/calculator-ai-demo/issues/40) | Mode toggle, dual-engine orchestrator, and scientific arithmetic UI | in-review |
-| [#41](https://github.com/irenadimitrova1/calculator-ai-demo/issues/41) | Scientific unary functions and full keypad | ready-for-agent |
+| [#41](https://github.com/irenadimitrova1/calculator-ai-demo/issues/41) | Scientific unary functions and full keypad | planned |
 | [#42](https://github.com/irenadimitrova1/calculator-ai-demo/issues/42) | Scientific keyboard, Storybook v2, and App smoke tests | ready-for-agent |
 
 Set **Status:** to `done` when all rows are **`implemented`**.

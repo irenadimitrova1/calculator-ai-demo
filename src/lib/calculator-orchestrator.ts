@@ -72,7 +72,8 @@ function isScientificOnlyAction(
     action.type === 'openParen' ||
     action.type === 'closeParen' ||
     action.type === 'constant' ||
-    action.type === 'power'
+    action.type === 'power' ||
+    action.type === 'unaryFunction'
   )
 }
 

@@ -13,6 +13,9 @@ export type {
   FunctionName,
 } from './types'
 
+export type { ImmediateUnaryName } from './evaluate'
+export { applyImmediateUnary, evaluateCall } from './evaluate'
+
 export function evaluateExpression(
   expression: string,
   angleUnit: AngleUnit,
