@@ -1,4 +1,6 @@
+import type { CalculatorMode } from '@/lib/calculator-orchestrator'
 import type { Operator } from '@/lib/calculation'
+import type { ImmediateUnaryName } from '@/lib/expression'
 
 export type CalculatorKeyAction =
   | { type: 'digit'; digit: number }
@@ -7,6 +9,11 @@ export type CalculatorKeyAction =
   | { type: 'equals' }
   | { type: 'backspace' }
   | { type: 'allClear' }
+  | { type: 'openParen' }
+  | { type: 'closeParen' }
+  | { type: 'power' }
+  | { type: 'constant'; name: 'pi' | 'e' }
+  | { type: 'unaryFunction'; name: ImmediateUnaryName }
 
 function digitAction(digit: number): CalculatorKeyAction {
   return { type: 'digit', digit }
@@ -16,8 +23,59 @@ function operatorAction(operator: Operator): CalculatorKeyAction {
   return { type: 'operator', operator }
 }
 
+function unaryAction(name: ImmediateUnaryName): CalculatorKeyAction {
+  return { type: 'unaryFunction', name }
+}
+
+function mapScientificKey(
+  event: Pick<KeyboardEvent, 'key' | 'shiftKey'>,
+): CalculatorKeyAction | null {
+  if (event.shiftKey) {
+    switch (event.key.toLowerCase()) {
+      case 's':
+        return unaryAction('asin')
+      case 'c':
+        return unaryAction('acos')
+      case 't':
+        return unaryAction('atan')
+      default:
+        return null
+    }
+  }
+
+  switch (event.key) {
+    case '(':
+      return { type: 'openParen' }
+    case ')':
+      return { type: 'closeParen' }
+    case '^':
+      return { type: 'power' }
+    case 's':
+      return unaryAction('sin')
+    case 'c':
+      return unaryAction('cos')
+    case 't':
+      return unaryAction('tan')
+    case 'l':
+      return unaryAction('ln')
+    case 'g':
+      return unaryAction('log')
+    case 'p':
+      return { type: 'constant', name: 'pi' }
+    case 'e':
+      return { type: 'constant', name: 'e' }
+    case 'r':
+      return unaryAction('sqrt')
+    case 'q':
+      return unaryAction('square')
+    default:
+      return null
+  }
+}
+
 export function mapCalculatorKey(
-  event: Pick<KeyboardEvent, 'key' | 'code'>,
+  event: Pick<KeyboardEvent, 'key' | 'code' | 'shiftKey'>,
+  mode: CalculatorMode = 'basic',
 ): CalculatorKeyAction | null {
   switch (event.code) {
     case 'Numpad0':
@@ -95,6 +153,9 @@ export function mapCalculatorKey(
     case 'Escape':
       return { type: 'allClear' }
     default:
+      if (mode === 'scientific') {
+        return mapScientificKey(event)
+      }
       return null
   }
 }
