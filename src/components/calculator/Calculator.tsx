@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { Display } from '@/components/calculator/Display'
 import { Keypad } from '@/components/calculator/Keypad'
-import { ScientificKeypadRow } from '@/components/calculator/ScientificKeypad'
+import { ScientificKeypad } from '@/components/calculator/ScientificKeypad'
 import { Card, CardContent } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useCalculator } from '@/hooks/useCalculator'
@@ -34,6 +34,7 @@ export function Calculator() {
     pressCloseParen,
     pressConstant,
     pressPower,
+    pressUnaryFunction,
   } = useCalculator()
 
   const handleKeyDown = useCallback(
@@ -151,11 +152,12 @@ export function Calculator() {
           />
 
           {mode === 'scientific' ? (
-            <ScientificKeypadRow
+            <ScientificKeypad
               onCloseParen={pressCloseParen}
               onConstant={pressConstant}
               onOpenParen={pressOpenParen}
               onPower={pressPower}
+              onUnary={pressUnaryFunction}
             />
           ) : null}
 

@@ -1,6 +1,6 @@
 import type { Operator } from '@/lib/calculation'
 import { operatorGlyph } from '@/lib/calculation-session'
-import { evaluateExpression, type AngleUnit } from '@/lib/expression'
+import { evaluateExpression, applyImmediateUnary, type AngleUnit, type ImmediateUnaryName } from '@/lib/expression'
 import { formatDisplay } from '@/lib/format-display'
 
 type Phase = 'entry' | 'result' | 'error'
@@ -34,6 +34,7 @@ export type ScientificSessionAction =
   | { type: 'closeParen' }
   | { type: 'constant'; name: 'pi' | 'e' }
   | { type: 'power' }
+  | { type: 'unaryFunction'; name: ImmediateUnaryName }
   | { type: 'setAngleUnit'; angleUnit: AngleUnit }
 
 export const initialScientificState: ScientificSessionState = {
@@ -191,7 +192,8 @@ function isErrorRecoverableAction(action: ScientificSessionAction): boolean {
     action.type === 'openParen' ||
     action.type === 'closeParen' ||
     action.type === 'constant' ||
-    action.type === 'power'
+    action.type === 'power' ||
+    action.type === 'unaryFunction'
   )
 }
 
@@ -242,6 +244,37 @@ function appendOperatorToken(
 
 function constantGlyph(name: 'pi' | 'e'): string {
   return name === 'pi' ? 'π' : 'e'
+}
+
+function applyUnaryFunction(
+  state: ScientificSessionState,
+  name: ImmediateUnaryName,
+): ScientificSessionState {
+  let operand = state.activeNumber
+  let expressionLine = state.expressionLine
+
+  if (state.phase === 'result') {
+    operand = state.activeNumber
+    expressionLine = ''
+  } else if (isActiveEmpty(operand)) {
+    return state
+  }
+
+  const result = applyImmediateUnary(name, Number(operand), state.angleUnit)
+
+  if (!result.ok || !Number.isFinite(result.value)) {
+    return enterErrorState(
+      { ...state, phase: 'entry', expressionLine },
+      expressionLine,
+    )
+  }
+
+  return {
+    ...state,
+    phase: 'entry',
+    expressionLine,
+    activeNumber: formatDisplay(result.value),
+  }
 }
 
 export function transitionScientific(
@@ -361,6 +394,8 @@ export function transitionScientific(
         expressionLine: joinExpression(flushed.expressionLine, '^'),
       }
     }
+    case 'unaryFunction':
+      return applyUnaryFunction(state, action.name)
     case 'equals': {
       const evalExpression = buildEvalExpression(state)
       if (evalExpression === '') {

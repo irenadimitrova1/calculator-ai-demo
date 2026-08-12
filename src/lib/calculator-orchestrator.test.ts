@@ -137,9 +137,25 @@ describe('calculator orchestrator', () => {
       closeParen,
       { type: 'constant', name: 'pi' },
       { type: 'power' },
+      { type: 'unaryFunction', name: 'sin' },
     ])
 
     expect(getExpressionLine(state)).toBe('')
     expect(getActiveNumber(state)).toBe('2')
+  })
+
+  it('evaluates unary then operator expression in scientific mode', () => {
+    const state = runScenario([
+      { type: 'setMode', mode: 'scientific' },
+      digit(3),
+      digit(0),
+      { type: 'unaryFunction', name: 'sin' },
+      operator('add'),
+      digit(3),
+      equals,
+    ])
+
+    expect(getActiveNumber(state)).toBe('3.5')
+    expect(getExpressionLine(state)).toMatch(/=$/)
   })
 })
