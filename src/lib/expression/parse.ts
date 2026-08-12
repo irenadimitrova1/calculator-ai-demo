@@ -12,8 +12,11 @@ function syntaxError(message?: string): ExpressionError {
 
 class Parser {
   private index = 0
+  private readonly tokens: Token[]
 
-  constructor(private readonly tokens: Token[]) {}
+  constructor(tokens: Token[]) {
+    this.tokens = tokens
+  }
 
   parse(): ParseResult {
     if (this.peek().type === 'eof') {

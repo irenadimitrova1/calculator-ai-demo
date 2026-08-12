@@ -64,4 +64,21 @@ describe('App', () => {
 
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
   })
+
+  it('completes a PEMDAS expression in scientific mode via keypad', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('radio', { name: 'Scientific mode' }))
+    await user.click(screen.getByRole('button', { name: 'open parenthesis' }))
+    await user.click(screen.getByRole('button', { name: '2' }))
+    await user.click(screen.getByRole('button', { name: 'add' }))
+    await user.click(screen.getByRole('button', { name: '3' }))
+    await user.click(screen.getByRole('button', { name: 'close parenthesis' }))
+    await user.click(screen.getByRole('button', { name: 'multiply' }))
+    await user.click(screen.getByRole('button', { name: '4' }))
+    await user.click(screen.getByRole('button', { name: 'equals' }))
+
+    expect(screen.getByTestId('display-active-number')).toHaveTextContent('20')
+  })
 })
