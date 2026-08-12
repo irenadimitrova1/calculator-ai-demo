@@ -58,6 +58,10 @@ export function useCalculator() {
     dispatch({ type: 'memorySubtract' })
   }, [])
 
+  const pressBackspace = useCallback(() => {
+    dispatch({ type: 'backspace' })
+  }, [])
+
   return {
     expressionLine: state.expressionLine,
     activeNumber: state.activeNumber,
@@ -74,5 +78,6 @@ export function useCalculator() {
     pressMemoryRecall,
     pressMemoryAdd,
     pressMemorySubtract,
+    pressBackspace,
   }
 }

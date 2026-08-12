@@ -8,6 +8,7 @@ export function Display({ expressionLine, activeNumber, hasMemory }: DisplayProp
   return (
     <div
       aria-label="Calculator display"
+      aria-live="polite"
       className="relative rounded-lg bg-muted/50 px-4 py-3 font-mono tabular-nums"
       role="status"
     >
