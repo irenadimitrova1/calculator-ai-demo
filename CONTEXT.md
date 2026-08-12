@@ -87,3 +87,23 @@ _Avoid_: Order of operations, BODMAS
 **Angle unit**:
 Whether trigonometry uses degrees or radians; toggled in Scientific mode with an on-screen DEG/RAD label. Defaults to degrees.
 _Avoid_: Angle mode, trig unit
+
+**Calculation history**:
+The scrollable log of past **completed** calculations, separate from the in-progress expression line. Survives page refresh via browser-local storage.
+_Avoid_: History panel, log list
+
+**History entry**:
+One row in calculation history — the full expression string and its formatted result (e.g. `5 + 3 × 2 = 16`). Only successful equals presses create entries.
+_Avoid_: History item, log row
+
+**History recall**:
+Selecting a history entry clears the expression line, puts that entry's result into the active number, and starts a fresh entry phase for further math.
+_Avoid_: Replay, re-run
+
+**History cap**:
+The maximum number of stored history entries (25). When exceeded, the oldest entry is removed before appending the newest.
+_Avoid_: Max history, limit
+
+**Local persistence**:
+Browser-local storage (`localStorage`) that restores calculation history and memory after page refresh. Does not persist mode, angle unit, or in-progress session state.
+_Avoid_: Saved state, offline sync
