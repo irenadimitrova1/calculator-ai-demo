@@ -89,10 +89,10 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree — the fiv
 Skills that turn thinking into tracker artifacts and ship code.
 
 - **`/to-spec`** — synthesize the current thread into one spec issue on GitHub (user stories + implementation/testing decisions). No interview — publish what you already know. Applies **`story`** label.
-- **`/to-tickets`** — break a plan, spec, feature doc path, or issue into tracer-bullet tickets with blocking edges. Quiz the user before publishing.
+- **`/to-tickets`** — break a plan, spec, feature doc path, or issue into tracer-bullet tickets with blocking edges. Review via **`AskQuestion`**, confirm, then publish.
 - **`/plan`** — branch from main, claim issue (`in-progress`), Plan mode + grill-me; Cursor plan (**no commit**).
 - **`/verify`** — *(optional)* re-run the verify checklist after post-Build edits (**no commit**).
-- **`/pr`** — commit, confirm, push, open PR, remove `in-progress`, close parent `story` when last child done. Then **`/clear`**.
+- **`/pr`** — commit, confirm, push, open PR, remove `in-progress`, doc **`in-review`**; on merge label **`implemented`** and close parent `story` when last child done. Then **`/clear`**.
 
 ## Standalone
 

@@ -10,17 +10,19 @@ An approved feature doc at `docs/product/features/*.md`. Read the full doc befor
 
 Run in order:
 
-1. **`/grill-with-docs`** — sharpen the idea against the feature doc; append or update `## Engineering specification` in the same file and `CONTEXT.md`. **Do not edit PM/PO sections.** Shorten or skip if the wiki doc is already complete and passes [Definition of Ready](../process/definition-of-ready.md).
+1. **`/grill-with-docs`** — sharpen the idea against the feature doc; append or update `## Engineering specification` and `## Questions` (PM/PO uncertainties via `AskQuestion`); update `CONTEXT.md`. **Do not edit PM sections above.** Shorten or skip if the wiki doc is already complete and passes [Definition of Ready](../process/definition-of-ready.md).
 
-2. **`/to-spec`** — publish one **parent** spec issue on GitHub with the **`story`** label (not `ready-for-agent`). The issue body must link to the feature doc path. Synthesize from `## Engineering specification` only (plus `CONTEXT.md`, ADRs, and codebase) — not the PM sections above it.
+2. **`/to-spec`** — publish **`story`** parent + **`needs-info`** PM question issues. PM replies → **`answered`** → **`/triage #N`** records **Answer** in `## Questions` (spec above unchanged). Parent synthesizes from `## Engineering specification`; body links to the feature doc. **Gate:** `/to-tickets` refuses to publish if the `story` or PM **Issue** column links are missing.
 
-3. **`/to-tickets`** — split into tracer-bullet tickets with blocking edges. Pass the spec issue (`#N`) or the feature doc path (`docs/product/features/<file>.md`). Read `## Engineering specification` only from the feature doc. Quiz the user on granularity and blockers before publishing. Apply **`ready-for-agent`** to child tickets only — do **not** run `/triage` on these tickets.
+3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
 
 4. **Per child ticket** (repeat until all children ship):
    - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
    - **Build** — see [Build](#build) below. **No commit.**
    - **`/verify #N`** *(optional)* — re-run checks after post-Build edits, before `/pr`.
-   - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, **`/clear`**.
+   - **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**, **`/clear`**.
+
+Child ticket label flow: **`ready-for-agent`** → **`in-progress`** (`/plan`) → **`implemented`** (PR merged; issue closed).
 
 Use **`/clear`** after each `/pr` so the next `/plan` starts fresh.
 
@@ -50,7 +52,20 @@ Keep steps 1–3 in **one unbroken context window**. Each `/plan` starts fresh f
 
 ## Parent story closure
 
-When the **last** child issue is merged and closed (`Closes #N` on its PR), close the parent **`story`** issue and set the feature doc **`Status:`** to `done`. `/pr` handles this when all siblings are closed (including after re-invoke post-merge).
+When the **last** child issue is merged (`Closes #N` on its PR), apply label **`implemented`**, set the doc row to **`implemented`**, close the parent **`story`** issue, and set the feature doc **`Status:`** to `done`. `/pr` handles this when all siblings are closed (including after re-invoke post-merge).
+
+## PM/PO question lifecycle
+
+Separate from the spec chain — runs whenever PM/PO replies on a **`needs-info`** issue from `/to-spec`:
+
+| Step | Who | Label | Action |
+|------|-----|-------|--------|
+| 1 | `/to-spec` | **`needs-info`** | Publish PM question issue; doc row **Status:** `open` |
+| 2 | PM/PO (or **`/triage`** on reply) | **`needs-info`** → **`answered`** | `gh issue edit <N> --remove-label needs-info --add-label answered` when a decision comment lands — **before** incorporating into the spec |
+| 3 | **`/triage #N`** | **`answered`** | Record **Answer** in **`## Questions`** only (never edit spec above); **`AskQuestion`**: resolved / new dev ticket / back to **`needs-info`** |
+| 4 | **`/triage`** (resolved) | *(none on close)* | Close PM issue; **`gh issue edit <N> --remove-label answered`**; doc row **Status:** `resolved` |
+
+Do **not** close a PM question issue while it still has **`needs-info`** — swap to **`answered`** first. Do **not** leave **`answered`** on a closed issue.
 
 ## Incoming work (different path)
 

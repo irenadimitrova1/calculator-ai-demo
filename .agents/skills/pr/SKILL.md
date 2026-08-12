@@ -64,6 +64,8 @@ Do **not** commit yet.
 
 ### Labels
 - Remove `in-progress` from #N after PR opened
+- Doc row → **`in-review`**
+- On merge: `gh issue edit <N> --add-label implemented`; doc row → **`implemented`**
 ```
 
 ---
@@ -90,9 +92,18 @@ Use **`AskQuestion`**:
 3. `gh pr create` with agreed title and body
 4. `gh issue comment <N> --body "PR: <url>"`
 5. `gh issue edit <N> --remove-label in-progress`
-6. Update **`### Ticket progress`** row to `shipped`
+6. Update **`### Ticket progress`** row to **`in-review`**
 
 Do **not** manually close `#N` — `Closes #N` closes it on merge.
+
+---
+
+## Phase 4b — After merge
+
+When `#N` is **closed** (PR merged) or re-invoked post-merge:
+
+1. `gh issue edit <N> --add-label implemented`
+2. Update **`### Ticket progress`** row to **`implemented`**
 
 ---
 
@@ -104,7 +115,7 @@ After PR is opened, check **sibling** child issues (same `## Parent` in body):
 
 When **all** child issues are **closed** (after merge — user may re-invoke `/pr #N` or you detect via `gh issue view`):
 
-1. `gh issue close <story> --comment "All child tickets shipped."`
+1. `gh issue close <story> --comment "All child tickets implemented."`
 2. Set feature doc **`Status:`** to `done`
 
 If all siblings closed now (e.g. re-run after merge), close story immediately.

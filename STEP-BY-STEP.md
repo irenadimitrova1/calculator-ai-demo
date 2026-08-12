@@ -15,11 +15,12 @@
     - Multiple iterations of improving the MDs to get the proper questions on
         - How to convert non-tech spec into tech spec?
         - Where to write the tech spec?
-            - It adds a new section called **Engineering specification** that will later be used to generate GitHub issues/tasks
+            - It adds **Engineering specification** (tech decisions) and **Questions** (items for PM/client) below the PM sections
         - Give the tech person a chance to add additional information after each round of questions, which might lead to another round of questions. *E.g. while it was grilling me for the initial setup it asked only whether I want React + Vite or something else. Didn't ask about TypeScript, ESLint, styling library, etc.*
     - Improving to-spec and to-issues to generation.
-        - **to-spec** - creates and publishes a parent issue (story) with description and link to proper feature docs, dev specs, etc. Applies **`story`** label only (not `ready-for-agent`).
-        - **to-tickets** - makes a plan of how many issues it will create and their title & content. Asks multiple questions - should we get more granular or more generic, are blocking edges correct, etc. (might run multiple iterations here) and if all is ok, publishes child tickets with **`ready-for-agent`**.
+        - **grill-with-docs** - sharpens PM spec into **Engineering specification**; captures product uncertainties in **Questions** via `AskQuestion`.
+        - **to-spec** - publishes parent issue (`story`) plus **`needs-info`** issues for open PM/PO questions; links to feature docs.
+        - **to-tickets** - drafts tracer-bullet tickets; reviews via **`AskQuestion`** (granularity, blocking, merge/split), confirms publish, then creates child tickets with **`ready-for-agent`**
         - **plan** - checks if issue has blockers. Creates branch from main, assigns user, swaps `ready-for-agent` → `in-progress`, links branch to issue; plan-mode grill + Cursor plan. **No commit.** Build on same branch — also **no commit**.
         - **Build** - runs verify checklist automatically at end (lint, tests, Storybook, docs). **No commit.** Optional **`/verify`** after post-Build edits.
-        - **pr** - commit, confirm, push, open PR, remove `in-progress`, close parent story when last child done. Then **`/clear`**.
+        - **pr** - commit, confirm, push, open PR, remove `in-progress`, doc **`in-review`**. On merge: label **`implemented`**, doc **`implemented`**, close parent story when last child done. Then **`/clear`**.

@@ -57,7 +57,7 @@ Planning and **Build** both happen on this branch. **Do not commit** during `/pl
 - **Branch exists but not linked** (old workflow): run step 2 again with the same `--name` — `gh` links the existing branch.
 - **Wrong branch / no branch:** run step 2 from a clean `main` fetch.
 
-Create the **`in-progress`** label on GitHub if it does not exist yet.
+Create the **`in-progress`** and **`implemented`** labels on GitHub if they do not exist yet.
 
 ## What to read first
 
@@ -65,7 +65,7 @@ Create the **`in-progress`** label on GitHub if it does not exist yet.
 |----------|------|-----|
 | Target ticket | GitHub issue `#N` | Acceptance criteria |
 | Parent story | `## Parent` in ticket body | Context (read only) |
-| Feature doc | `## Engineering specification` | Stack, behavior, constraints |
+| Feature doc | `## Engineering specification` + `## Questions` | Stack, behavior, constraints; each question is an AskQuestion-shaped block (`Prompt`, `Options` table); resolved **Answer** overrides **Assumption** |
 | `CONTEXT.md`, ADRs, codebase | repo root | Facts and vocabulary |
 
 ## Enter Plan mode
@@ -78,7 +78,7 @@ If `SwitchMode` is unavailable, tell the user to switch to Plan mode manually.
 
 Work the **design tree** in rounds for *this ticket only*.
 
-Present each frontier with `AskQuestion`. **Between-round gate** every round (`round-additions`). Do **not** skip the gate.
+Present each frontier with `AskQuestion` — same shape as `/grill-with-docs`: **`id`**, **`prompt`**, **`options`** (2–5 choices; `(Recommended)` first; **`Other (I'll type it)`** only when needed). **Between-round gate** every round (`round-additions`). Do **not** skip the gate.
 
 Do **not** write code, **commit**, or run checks during grilling.
 

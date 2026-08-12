@@ -8,6 +8,7 @@ How PM-written feature specs become GitHub Issues and shipped code.
 |-------|-----|--------|
 | Product intent | PM / PO | Wiki — `docs/product/features/*.md` (sections above `## Engineering specification`) |
 | Engineering spec | Engineering | Same file — `## Engineering specification` (via `/grill-with-docs`) |
+| PM/PO questions | Engineering → PM/PO | Same file — `## Questions`; `/to-spec` → `needs-info` issues; **`/triage`** fills **Answer** without editing spec above |
 | Spec + tickets | Engineering | GitHub Issues (via agent skills in Cursor) |
 | Code | Engineering | Pull requests linked to issues |
 
@@ -35,29 +36,35 @@ Run in **one Cursor session** through ticket creation, then **plan → build →
 
 ### 1. `/grill-with-docs`
 
-Sharpen the idea against the PM sections of the feature doc. **Do not edit PM/PO content.** Append or update `## Engineering specification` at the bottom of the same file, plus `CONTEXT.md` and ADRs as decisions land. Skip or shorten if the PM doc is already complete.
+Sharpen the idea against the PM sections of the feature doc. **Do not edit PM/PO content.** Append or update `## Engineering specification` and `## Questions` (product uncertainties captured with `AskQuestion` during grilling), plus `CONTEXT.md` and ADRs as decisions land. Skip or shorten if the PM doc is already complete.
 
-`/to-spec` and `/to-tickets` read **only** `## Engineering specification` from the feature doc when generating issues.
+`/to-spec` reads **`## Engineering specification`** for the parent spec and **`## Questions`** for `needs-info` issues. **`/to-tickets`** reads both — open rows inform blocking/assumptions; resolved **Answer** overrides assumption for implementation. **Do not** edit the engineering spec when PM answers — only the **Answer** column changes.
 
 ### 2. `/to-spec`
 
-Publish **one parent spec issue** on GitHub with the **`story`** label (umbrella — not directly implementable). The issue links back to the feature doc and synthesizes from `## Engineering specification` (plus `CONTEXT.md`, ADRs, and codebase exploration):
+Publish **one parent spec issue** on GitHub with the **`story`** label (umbrella — not directly implementable). Also publish **`needs-info`** issues — one per **open** row in `## Questions`. The parent links back to the feature doc and synthesizes from `## Engineering specification` (plus `CONTEXT.md`, ADRs, and codebase exploration):
 
 - User stories
 - Implementation decisions (modules, seams, architecture)
 - Testing decisions
 
-Do **not** apply `ready-for-agent` to the parent issue.
+Do **not** apply `ready-for-agent` to the parent issue or to **`needs-info`** PM question issues.
+
+**PM question label flow:** **`needs-info`** (open) → PM replies → **`answered`** (`gh issue edit <N> --remove-label needs-info --add-label answered`) → **`/triage #N`** incorporates → close and **`--remove-label answered`**. Doc row **resolved** when the issue closes.
+
+When PM/PO answers, apply the **`answered`** swap before **`/triage`** incorporates — do not close while still **`needs-info`**. Choose **resolved** or a new **`ready-for-agent`** implementation ticket via **`/triage`**.
+
+**Before `/to-tickets`:** confirm the feature doc **`## Questions`** table has `#N` in the **Issue** column for every open row, and you know the parent **`story`** issue number.
 
 ### 3. `/to-tickets`
 
-Split into **tracer-bullet tickets** with blocking edges. Pass the spec issue number (`#N`) or the feature doc path:
+Split into **tracer-bullet tickets** with blocking edges. Pass the **`story`** issue number (`#N`) or the feature doc path — if only the doc path is given, **`/to-tickets` stops** when the `story` or PM links are missing and asks you to run `/to-spec` first.
 
 ```
 /to-tickets docs/product/features/calculator-poc.md
 ```
 
-Review the proposed breakdown (granularity, blockers) before approving. Child issues are created on GitHub with **`ready-for-agent`** only.
+Review the proposed breakdown with **`AskQuestion`** (granularity, blocking edges, merge/split), confirm publish, then create child issues on GitHub with **`ready-for-agent`** only.
 
 **Do not** run `/triage` on these tickets — they are already agent-ready.
 
@@ -68,9 +75,11 @@ For each **`ready-for-agent`** child ticket:
 1. **`/plan #N`** — branch from `main`, assign you, `ready-for-agent` → `in-progress`; Plan mode + grill-me; Cursor plan. **No commit.**
 2. **Build** — execute the plan on the feature branch; **automatically run verify checklist** at the end (lint, tests, Storybook, docs). **No commit.**
 3. **`/verify #N`** *(optional)* — re-validate after post-Build edits.
-4. **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`. Then **`/clear`**.
+4. **`/pr #N`** — commit, confirm, push, open PR, remove `in-progress`, doc row **`in-review`**. Then **`/clear`**.
 
-When the last child merges and closes, the parent **`story`** issue closes too.
+On **merge**, the PR's `Closes #N` closes the child issue; apply label **`implemented`** and set the doc row to **`implemented`**.
+
+When the last child is **`implemented`**, close the parent **`story`** and set feature doc **`Status:`** to `done`.
 
 Use `/clear` between tickets.
 

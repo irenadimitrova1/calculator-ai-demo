@@ -32,8 +32,11 @@ GitHub shares one number space across issues and PRs, so a bare `#42` may be eit
 | Label | Source | Implementable? |
 |-------|--------|----------------|
 | `story` | `/to-spec` parent / umbrella | No — context only; close when all children ship |
+| `needs-info` | `/to-spec` from `## Questions` | No — waiting on PM/PO; swap to `answered` when they reply |
+| `answered` | PM/PO decision recorded; awaiting **`/triage`** to fill **Answer** in doc | No — run **`/triage #N`**; on close, `--remove-label answered` |
 | `ready-for-agent` | `/to-tickets` child tracer bullet | Yes — `/plan` claims it |
 | `in-progress` | Applied by `/plan` | Yes — on feature branch |
+| `implemented` | PR merged to `main` | No — work complete; issue closed |
 
 Child issues reference the parent under `## Parent` in the body. `/plan` on a `story` issue runs `/grill-me` to pick the next unblocked child.
 
@@ -46,8 +49,8 @@ Child issues reference the parent under `## Parent` in the body. `/plan` on a `s
    - `gh issue edit <N> --add-assignee @me --remove-label ready-for-agent --add-label in-progress`
 2. **Build** on that branch — at end, automatically run verify checklist — no commit
 3. **`/verify`** *(optional)* — re-run checks after post-Build edits — no commit
-4. **`/pr`** — commit, push, open PR, remove `in-progress`
-5. **Merge** — `Closes #N` closes the child
+4. **`/pr`** — commit, push, open PR, remove `in-progress`, set doc row **`in-review`**
+5. **Merge** — `Closes #N` closes the child; `gh issue edit <N> --add-label implemented`, doc row **`implemented`**
 6. **Last child closed** — close parent `story` and set feature doc `Status: done`
 
 ## PR conventions

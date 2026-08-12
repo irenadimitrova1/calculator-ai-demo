@@ -68,20 +68,20 @@ This is intentionally bare-bones. Everything below waits for a later release.
 
 **Owner:** Engineering  
 **Last updated:** 2026-08-11  
-**Status:** in-progress
+**Status:** done
 
-_Sourced from PM sections above. `/to-spec` and `/to-tickets` read only this section._
+_Sourced from PM sections above. `/to-spec` reads this section for the parent spec. `/to-tickets` reads this section **and** `## Questions` below._
 
 ### Ticket progress
 
 | Issue | Title | Status |
 |-------|-------|--------|
-| [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | shipped |
-| [#4](https://github.com/irenadimitrova1/calculator-ai-demo/issues/4) | Calculation module with tests | shipped |
-| [#5](https://github.com/irenadimitrova1/calculator-ai-demo/issues/5) | Browser calculator (full PoC behavior) | shipped |
-| [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | shipped |
+| [#3](https://github.com/irenadimitrova1/calculator-ai-demo/issues/3) | Greenfield project scaffold | implemented |
+| [#4](https://github.com/irenadimitrova1/calculator-ai-demo/issues/4) | Calculation module with tests | implemented |
+| [#5](https://github.com/irenadimitrova1/calculator-ai-demo/issues/5) | Browser calculator (full PoC behavior) | implemented |
+| [#6](https://github.com/irenadimitrova1/calculator-ai-demo/issues/6) | Storybook preview for design/QA | implemented |
 
-Set **Status:** to `done` when all rows are `shipped`.
+Set **Status:** to `done` when all rows are **`implemented`**.
 
 ### Decisions this ticket
 
@@ -127,4 +127,19 @@ Set **Status:** to `done` when all rows are `shipped`.
 
 ### Open questions
 
+_Engineering-internal only. Product questions belong in **Questions** below._
+
 _None._
+
+## Questions
+
+**Owner:** Engineering  
+**Last updated:** 2026-08-11
+
+_`/to-spec` → **`needs-info`**. PM replies → **`answered`**. **`/triage #N`** fills **Answer** here — never edits **`## Engineering specification`** above._
+
+| ID | Issue | Status |
+|----|-------|--------|
+| _None._ | | |
+
+<!-- When questions exist, add a `### {id}` block per row (see TEMPLATE.md). -->

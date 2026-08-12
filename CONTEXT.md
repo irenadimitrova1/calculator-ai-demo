@@ -23,3 +23,51 @@ _Avoid_: Screen, readout
 **Operator**:
 One of add, subtract, multiply, or divide — the action between two operands.
 _Avoid_: Operation (when meaning the symbol), op
+
+**Expression line**:
+The top display row showing the calculation trail as it builds (e.g. `5 + 3 ×`).
+_Avoid_: Top line, history line
+
+**Active number**:
+The value on the bottom display row — the number currently being typed or the latest committed result.
+_Avoid_: Bottom line, current input, readout
+
+**Immediate execution**:
+Chaining model where each new operator commits the pending operation left-to-right, matching macOS/iOS Calculator (not PEMDAS).
+_Avoid_: Chain mode, sequential evaluation
+
+**Calculation session**:
+The full in-memory state of an in-progress calculation — operands, pending operator, display strings, memory, and error status.
+_Avoid_: Calculator state, reducer state
+
+**All Clear (AC)**:
+Resets the entire calculation session — operands, operator, display lines, and error state — back to empty.
+_Avoid_: Reset, full clear
+
+**Clear (C)**:
+Clears only the active number while a calculation is in progress; after a finished result is shown, behaves like All Clear.
+_Avoid_: CE, clear entry (when meaning the C key)
+
+**Error state**:
+Session status after an invalid operation (e.g. divide by zero). The active-number line shows `Error`; further input is blocked until All Clear or Clear.
+_Avoid_: Error mode, fault state
+
+**Memory**:
+A stored number that persists across calculations until Memory clear. Updated via memory add/subtract using the current display value.
+_Avoid_: Stored value, register
+
+**Memory indicator**:
+The on-screen **M** label shown when memory holds a non-zero value.
+_Avoid_: M badge, memory flag
+
+**Sign toggle (+/−)**:
+Flips the sign of the active number only — while typing or on a finished result; does not change the expression line.
+_Avoid_: Negate, polarity button
+
+**Display formatting**:
+Rules for turning computed values into strings on the expression and active-number lines — strip JS float noise and cap visible digits (~12) while internal math stays full precision.
+_Avoid_: Rounding mode, pretty print
+
+**Repeat equals**:
+After equals completes a calculation, pressing equals again repeats the last operation using the same second operand (macOS/iOS behavior).
+_Avoid_: Repeat operation, re-equals

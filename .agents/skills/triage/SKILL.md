@@ -60,6 +60,7 @@ Query the issue tracker and present three buckets, oldest first:
 1. **Unlabeled** — never triaged.
 2. **`needs-triage`** — evaluation in progress.
 3. **`needs-info` with reporter activity since the last triage notes** — needs re-evaluation.
+4. **`answered`** — PM/PO question issues with a reply; incorporate via triage (see [PM/PO question issues](#pm-po-question-issues-from-to-spec)).
 
 When PRs are in scope, include external PRs in these buckets and tag each line `[PR]` or `[issue]`. Discovery surfaces only *external* PRs (the tracker config defines who counts as external) — a collaborator's in-flight PR is not triage work. This filter is discovery-only; an explicitly named PR is always triaged regardless of author.
 
@@ -110,3 +111,41 @@ Capture everything resolved during grilling under "established so far" so the wo
 ## Resuming a previous session
 
 If prior triage notes exist on the issue or PR, read them, check whether the reporter has answered any outstanding questions, and present an updated picture before continuing. Don't re-ask resolved questions.
+
+## PM/PO question issues (from `/to-spec`)
+
+Issues published from **`## Questions`** with **`needs-info`** — body links to the feature doc `### {id}` block and parent **`story`**.
+
+**When PM/PO answers** (comment on the issue with a decision):
+
+1. Swap labels: `gh issue edit <N> --remove-label needs-info --add-label answered`
+2. Tell the maintainer to run **`/triage #N`** when ready to record the answer (or triage immediately if invoked on that issue)
+
+**When triaging a PM question issue** (label **`answered`**, or **`needs-info`** with a PM/PO decision comment not yet recorded):
+
+0. **Label gate.** If the issue still has **`needs-info`** and a PM/PO answer is present in comments, apply step 1 above **before** recording — do **not** record or close while the label is still **`needs-info`**.
+
+1. Read the PM/PO answer from comments (map to an **Options** `id` when possible; otherwise freeform).
+2. Update the matching `### {id}` block in **`## Questions`** only: fill **Answer** as `` `option-id` — label `` (or freeform), set index **Status:** `resolved`. **Do not** edit PM sections or **`## Engineering specification`** above.
+3. Run **`AskQuestion`** — do **not** close the issue until the user picks an outcome:
+
+- **`id`** — `pm-triage-outcome`
+- **`prompt`** — *"PM answer recorded in ## Questions. What happens next?"*
+- **`options`** —
+  - `Resolved — answer recorded, no new dev ticket (Recommended)` — when the answer is a decision only (existing `/to-tickets` work covers implementation, or no code change needed)
+  - `Ready for agent — create an implementation ticket` — when the answer implies dev work not yet tracked under the parent **`story`**
+  - `Still needs info — answer insufficient` — when PM/PO must clarify further
+
+**After the user picks:**
+
+| Outcome | Issue | Doc row |
+|---------|-------|---------|
+| **Resolved** | `gh issue edit <N> --remove-label answered`, then close with triage comment summarizing the decision. | **Answer** filled; **Status:** `resolved` |
+| **Ready for agent** | Create a **new** child issue under the parent **`story`**: label **`ready-for-agent`**, body includes PM **Answer** from the doc row, and acceptance criteria. `gh issue edit <N> --remove-label answered`, then close PM question with a comment linking the new `#M`. Do **not** relabel the PM question issue as `ready-for-agent`. | **Answer** filled; **Status:** `resolved`; add the new ticket to **`### Ticket progress`** if the table exists |
+| **Still needs info** | Remove **`answered`**, reapply **`needs-info`**; clear **Answer** if partial; post triage notes on what is still missing. | **Status:** stays `open` |
+
+The PM question issue tracks **getting an answer**, not **shipping code**. Implementation always flows through **`ready-for-agent`** child tickets and **`/plan`**.
+
+Do **not** auto-close on incorporate alone.
+
+**Show what needs attention** — also list issues labeled **`answered`** (oldest first), alongside bucket 3 (`needs-info` with reporter activity).
