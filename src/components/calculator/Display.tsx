@@ -1,9 +1,9 @@
 type DisplayProps = {
-  topLine: string
-  bottomLine: string
+  expressionLine: string
+  activeNumber: string
 }
 
-export function Display({ topLine, bottomLine }: DisplayProps) {
+export function Display({ expressionLine, activeNumber }: DisplayProps) {
   return (
     <div
       aria-label="Calculator display"
@@ -11,16 +11,16 @@ export function Display({ topLine, bottomLine }: DisplayProps) {
       role="status"
     >
       <div
-        className="min-h-8 truncate text-right text-2xl font-semibold"
-        data-testid="display-top"
+        className="min-h-6 truncate text-right text-lg text-muted-foreground"
+        data-testid="display-expression"
       >
-        {topLine}
+        {expressionLine}
       </div>
       <div
-        className="min-h-6 truncate text-right text-lg text-muted-foreground"
-        data-testid="display-bottom"
+        className="min-h-8 truncate text-right text-2xl font-semibold"
+        data-testid="display-active-number"
       >
-        {bottomLine}
+        {activeNumber}
       </div>
     </div>
   )

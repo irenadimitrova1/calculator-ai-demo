@@ -24,14 +24,59 @@ function runScenario(actions: CalculationSessionAction[]) {
 describe('calculation session', () => {
   it.each([
     {
-      name: 'digit entry',
+      name: 'digit entry on active number',
       actions: [digit(1), digit(2)],
-      expected: { topLine: '12', bottomLine: '' },
+      expected: { expressionLine: '', activeNumber: '12' },
     },
     {
       name: 'full calculation',
       actions: [digit(2), operator('add'), digit(3), equals],
-      expected: { topLine: '', bottomLine: '5' },
+      expected: { expressionLine: '2 + 3 =', activeNumber: '5' },
+    },
+    {
+      name: 'immediate chaining 5 + 3 × 2 =',
+      actions: [
+        digit(5),
+        operator('add'),
+        digit(3),
+        operator('multiply'),
+        digit(2),
+        equals,
+      ],
+      expected: { expressionLine: '5 + 3 × 2 =', activeNumber: '16' },
+    },
+    {
+      name: 'trail after plus before typing second operand',
+      actions: [digit(5), operator('add'), digit(3)],
+      expected: { expressionLine: '5 +', activeNumber: '3' },
+    },
+    {
+      name: 'trail after multiply commits partial result',
+      actions: [digit(5), operator('add'), digit(3), operator('multiply')],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '8' },
+    },
+    {
+      name: 'repeat equals',
+      actions: [
+        digit(8),
+        operator('add'),
+        digit(2),
+        equals,
+        equals,
+      ],
+      expected: { expressionLine: '8 + 2 + 2', activeNumber: '12' },
+    },
+    {
+      name: 'chained repeat equals',
+      actions: [
+        digit(8),
+        operator('add'),
+        digit(2),
+        equals,
+        equals,
+        equals,
+      ],
+      expected: { expressionLine: '8 + 2 + 2 + 2', activeNumber: '14' },
     },
     {
       name: 'post-result chaining',
@@ -44,52 +89,56 @@ describe('calculation session', () => {
         digit(4),
         equals,
       ],
-      expected: { topLine: '', bottomLine: '9' },
+      expected: { expressionLine: '5 + 4 =', activeNumber: '9' },
     },
     {
       name: 'divide by zero',
       actions: [digit(5), operator('divide'), digit(0), equals],
-      expected: { topLine: '', bottomLine: 'Infinity' },
+      expected: { expressionLine: '5 ÷ 0 =', activeNumber: 'Infinity' },
     },
     {
       name: 'leading zero replacement',
       actions: [digit(0), digit(5)],
-      expected: { topLine: '5', bottomLine: '' },
+      expected: { expressionLine: '', activeNumber: '5' },
     },
     {
-      name: 'operator change in second operand when top line empty',
+      name: 'operator swap without second operand',
+      actions: [digit(5), operator('add'), operator('multiply')],
+      expected: { expressionLine: '5 ×', activeNumber: '' },
+    },
+    {
+      name: 'operator swap subtract',
       actions: [digit(2), operator('add'), operator('subtract')],
-      expected: { topLine: '', bottomLine: '', phase: 'secondOperand' as const },
+      expected: { expressionLine: '2 −', activeNumber: '' },
     },
     {
       name: 'no-op equals when preconditions not met',
       actions: [digit(2), equals],
-      expected: { topLine: '2', bottomLine: '', phase: 'firstOperand' as const },
+      expected: { expressionLine: '', activeNumber: '2', phase: 'entry' as const },
     },
     {
-      name: 'post-result digit clears session',
+      name: 'post-result digit clears trail',
       actions: [digit(2), operator('add'), digit(3), equals, digit(7)],
-      expected: { topLine: '7', bottomLine: '', phase: 'firstOperand' as const },
+      expected: { expressionLine: '', activeNumber: '7', phase: 'entry' as const },
     },
     {
-      name: 'post-result operator chains from bottom line',
+      name: 'post-result operator chains from active number',
       actions: [digit(2), operator('add'), digit(3), equals, operator('add')],
       expected: {
-        topLine: '',
-        bottomLine: '',
-        phase: 'secondOperand' as const,
-        firstOperand: 5,
+        expressionLine: '5 +',
+        activeNumber: '',
+        runningTotal: 5,
       },
     },
   ])('$name', ({ actions, expected }) => {
     const state = runScenario(actions)
-    expect(state.topLine).toBe(expected.topLine)
-    expect(state.bottomLine).toBe(expected.bottomLine)
+    expect(state.expressionLine).toBe(expected.expressionLine)
+    expect(state.activeNumber).toBe(expected.activeNumber)
     if ('phase' in expected) {
       expect(state.phase).toBe(expected.phase)
     }
-    if ('firstOperand' in expected) {
-      expect(state.firstOperand).toBe(expected.firstOperand)
+    if ('runningTotal' in expected) {
+      expect(state.runningTotal).toBe(expected.runningTotal)
     }
   })
 })

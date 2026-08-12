@@ -1,5 +1,5 @@
 interface:
   display_name: "Plan"
-  short_description: "Plan mode required — branch, grill-me, CreatePlan (Build button)"
+  short_description: "AskQuestion grill in Agent mode, then Plan mode CreatePlan (Build)"
 policy:
   allow_implicit_invocation: false
