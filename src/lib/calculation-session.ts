@@ -24,6 +24,7 @@ export type CalculationSessionAction =
   | { type: 'clear' }
   | { type: 'decimal' }
   | { type: 'signToggle' }
+  | { type: 'percent' }
   | { type: 'memoryClear' }
   | { type: 'memoryRecall' }
   | { type: 'memoryAdd' }
@@ -212,6 +213,17 @@ export function transition(
       return {
         ...state,
         activeNumber: toggleSign(state.activeNumber),
+      }
+    }
+    case 'percent': {
+      if (isActiveEmpty(state.activeNumber)) {
+        return state
+      }
+      return {
+        ...state,
+        activeNumber: formatDisplay(Number(state.activeNumber) / 100),
+        lastOperator: null,
+        lastSecondOperand: null,
       }
     }
     case 'digit': {

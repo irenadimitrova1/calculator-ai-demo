@@ -15,6 +15,7 @@ export function Calculator() {
     pressClear,
     pressDecimal,
     pressSignToggle,
+    pressPercent,
     pressMemoryClear,
     pressMemoryRecall,
     pressMemoryAdd,
@@ -40,6 +41,7 @@ export function Calculator() {
           onMemoryRecall={pressMemoryRecall}
           onMemorySubtract={pressMemorySubtract}
           onOperator={pressOperator}
+          onPercent={pressPercent}
           onSignToggle={pressSignToggle}
         />
       </CardContent>

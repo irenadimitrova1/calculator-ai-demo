@@ -133,11 +133,11 @@ _Sourced from PM sections above. `/to-spec` reads this section for the parent sp
 
 | Issue | Title | Status |
 |-------|-------|--------|
-| [#24](https://github.com/irenadimitrova1/calculator-ai-demo/issues/24) | Extract calculation session module (PoC parity) | in-review |
-| [#25](https://github.com/irenadimitrova1/calculator-ai-demo/issues/25) | Immediate-execution chaining, two-line display, and repeat equals | in-review |
-| [#26](https://github.com/irenadimitrova1/calculator-ai-demo/issues/26) | Clear keys, decimal entry, sign toggle, and error state | in-review |
-| [#27](https://github.com/irenadimitrova1/calculator-ai-demo/issues/27) | Memory operations and indicator | in-review |
-| [#28](https://github.com/irenadimitrova1/calculator-ai-demo/issues/28) | Percent key | ready-for-agent |
+| [#24](https://github.com/irenadimitrova1/calculator-ai-demo/issues/24) | Extract calculation session module (PoC parity) | implemented |
+| [#25](https://github.com/irenadimitrova1/calculator-ai-demo/issues/25) | Immediate-execution chaining, two-line display, and repeat equals | implemented |
+| [#26](https://github.com/irenadimitrova1/calculator-ai-demo/issues/26) | Clear keys, decimal entry, sign toggle, and error state | implemented |
+| [#27](https://github.com/irenadimitrova1/calculator-ai-demo/issues/27) | Memory operations and indicator | implemented |
+| [#28](https://github.com/irenadimitrova1/calculator-ai-demo/issues/28) | Percent key | in-review |
 | [#29](https://github.com/irenadimitrova1/calculator-ai-demo/issues/29) | Keyboard input, accessibility, and Storybook v1 states | ready-for-agent |
 
 Set **Status:** to `done` when all rows are **`implemented`**.
