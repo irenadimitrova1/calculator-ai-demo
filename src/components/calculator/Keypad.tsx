@@ -12,6 +12,7 @@ type KeypadProps = {
   onMemoryRecall: () => void
   onMemorySubtract: () => void
   onOperator: (operator: Operator) => void
+  onPercent: () => void
   onSignToggle: () => void
 }
 
@@ -26,6 +27,7 @@ export function Keypad({
   onMemoryRecall,
   onMemorySubtract,
   onOperator,
+  onPercent,
   onSignToggle,
 }: KeypadProps) {
   return (
@@ -101,14 +103,14 @@ export function Keypad({
         +/−
       </Button>
       <Button
-        aria-label="decimal"
+        aria-label="percent"
         className="h-14 text-lg"
-        onClick={onDecimal}
+        onClick={onPercent}
         size="lg"
         type="button"
-        variant="outline"
+        variant="secondary"
       >
-        .
+        %
       </Button>
       <Button
         aria-label="7"
@@ -235,13 +237,23 @@ export function Keypad({
 
       <Button
         aria-label="0"
-        className="col-span-2 h-14 text-lg"
+        className="h-14 text-lg"
         onClick={() => onDigit(0)}
         size="lg"
         type="button"
         variant="outline"
       >
         0
+      </Button>
+      <Button
+        aria-label="decimal"
+        className="h-14 text-lg"
+        onClick={onDecimal}
+        size="lg"
+        type="button"
+        variant="outline"
+      >
+        .
       </Button>
       <Button
         aria-label="equals"

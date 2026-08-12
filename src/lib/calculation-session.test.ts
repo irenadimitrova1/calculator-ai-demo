@@ -21,6 +21,7 @@ const allClear: CalculationSessionAction = { type: 'allClear' }
 const clear: CalculationSessionAction = { type: 'clear' }
 const decimal: CalculationSessionAction = { type: 'decimal' }
 const signToggle: CalculationSessionAction = { type: 'signToggle' }
+const percent: CalculationSessionAction = { type: 'percent' }
 const memoryClear: CalculationSessionAction = { type: 'memoryClear' }
 const memoryRecall: CalculationSessionAction = { type: 'memoryRecall' }
 const memoryAdd: CalculationSessionAction = { type: 'memoryAdd' }
@@ -372,6 +373,93 @@ describe('calculation session', () => {
       expect(state.phase).toBe(expected.phase)
     }
     expect(state.memory).toBe(expected.memory)
+  })
+
+  it.each([
+    {
+      name: '50 → %',
+      actions: [digit(5), digit(0), percent],
+      expected: { expressionLine: '', activeNumber: '0.5' },
+    },
+    {
+      name: 'negative -25 → %',
+      actions: [signToggle, digit(2), digit(5), percent],
+      expected: { expressionLine: '', activeNumber: '-0.25' },
+    },
+    {
+      name: 'partial result 5 + 3 × then %',
+      actions: [
+        digit(5),
+        operator('add'),
+        digit(3),
+        operator('multiply'),
+        percent,
+      ],
+      expected: { expressionLine: '5 + 3 ×', activeNumber: '0.08' },
+    },
+    {
+      name: 'result phase 2 + 3 = then %',
+      actions: [
+        digit(2),
+        operator('add'),
+        digit(3),
+        equals,
+        percent,
+      ],
+      expected: {
+        expressionLine: '2 + 3 =',
+        activeNumber: '0.05',
+        phase: 'result' as const,
+      },
+    },
+    {
+      name: 'empty active mid-chain 5 + then %',
+      actions: [digit(5), operator('add'), percent],
+      expected: { expressionLine: '5 +', activeNumber: '' },
+    },
+    {
+      name: 'repeat equals cleared after %',
+      actions: [
+        digit(8),
+        operator('add'),
+        digit(2),
+        equals,
+        percent,
+        equals,
+      ],
+      expected: {
+        expressionLine: '8 + 2 =',
+        activeNumber: '0.1',
+        phase: 'result' as const,
+      },
+    },
+    {
+      name: '% blocked in error',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        percent,
+      ],
+      expected: {
+        expressionLine: '5 ÷ 0 =',
+        activeNumber: 'Error',
+        phase: 'error' as const,
+      },
+    },
+    {
+      name: '33 → % uses formatDisplay',
+      actions: [digit(3), digit(3), percent],
+      expected: { expressionLine: '', activeNumber: '0.33' },
+    },
+  ])('percent: $name', ({ actions, expected }) => {
+    const state = runScenario(actions)
+    expect(state.expressionLine).toBe(expected.expressionLine)
+    expect(state.activeNumber).toBe(expected.activeNumber)
+    if ('phase' in expected) {
+      expect(state.phase).toBe(expected.phase)
+    }
   })
 })
 

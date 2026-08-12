@@ -38,6 +38,10 @@ export function useCalculator() {
     dispatch({ type: 'signToggle' })
   }, [])
 
+  const pressPercent = useCallback(() => {
+    dispatch({ type: 'percent' })
+  }, [])
+
   const pressMemoryClear = useCallback(() => {
     dispatch({ type: 'memoryClear' })
   }, [])
@@ -65,6 +69,7 @@ export function useCalculator() {
     pressClear,
     pressDecimal,
     pressSignToggle,
+    pressPercent,
     pressMemoryClear,
     pressMemoryRecall,
     pressMemoryAdd,
