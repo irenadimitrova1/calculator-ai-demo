@@ -78,14 +78,47 @@ Create the **`in-progress`** and **`implemented`** labels on GitHub if they do n
 
 Cursor **Plan mode disables `AskQuestion`**. Grill **before** the Plan mode gate so the picker UI works.
 
-Work the **design tree** in rounds for *this ticket only*.
+Work the **design tree** in rounds for *this ticket only* — same frontier model as `/grilling` and `/grill-with-docs`.
 
-Present each frontier with the **`AskQuestion` tool** — same shape as `/grill-with-docs`: **`id`**, **`prompt`**, **`options`** (2–5 choices; `(Recommended)` first; **`Other (I'll type it)`** only when needed). **Between-round gate** every round (`round-additions`). Do **not** skip the gate.
+### Start from what's already settled
+
+Before the first round, treat as **already decided** (do not re-grill):
+
+- Ticket acceptance criteria and parent story scope
+- `## Engineering specification` in the feature doc (behavior, UI, constraints)
+- Resolved **`Answer`** values in `## Questions` (override assumptions)
+
+Grill only **gaps** — ambiguities, implementation seams, or ticket-specific choices not spelled out above. A tracer-bullet ticket like #26 should usually need **one to three** frontier rounds, not dozens.
+
+### One round = the whole frontier (batch questions)
+
+**Never ask one decision per `AskQuestion` call.** That turns every choice into its own round and wastes the user's time.
+
+Each frontier round is **exactly one** `AskQuestion` call whose `questions` array holds **every** decision you can ask *now* — all prerequisites already settled. Typical first round for a child ticket: 4–12 related questions in one picker.
+
+| Belongs in **this** round | Belongs in a **later** round |
+|-----------------------------|------------------------------|
+| Independent choices (error model, keypad layout, test scope, action naming) | Choices that depend on an answer still open in this round |
+| Edge cases you can phrase without guessing a prior pick | e.g. "negative decimal display" only after "+/- on empty → start `-`" is locked |
+
+After the user answers, recompute the frontier. The **next** round contains only newly unlocked questions — often zero (grilling done).
+
+Per-question shape matches `/grill-with-docs`: **`id`**, **`prompt`**, **`options`** (2–5 choices; `(Recommended)` first; **`Record as open question for PM/PO`** last on product uncertainties; **`Other (I'll type it)`** only when needed).
+
+### Between-round gates — after each frontier round only
+
+Run **after** recording answers for a full frontier round — **not** after every single question. Two gates, in order (see `/grill-with-docs`):
+
+1. **`round-additions`** — engineering specs/constraints the frontier missed
+2. **`round-pm-questions`** — product questions for PM/PO that surfaced during the round
+
+Do **not** substitute a custom "Continue / Done grilling" gate. Do **not** skip either gate.
 
 **Hard rules:**
 
 - **Always** call `AskQuestion` for frontier rounds and between-round gates.
 - **Never** dump numbered markdown question lists in chat as a substitute.
+- **Never** chain single-question `AskQuestion` calls when those questions could have been batched.
 - **If `AskQuestion` is unavailable** — stop. Tell the user `AskQuestion` is missing (stay in Agent mode; do not switch to Plan mode). Do **not** grill in markdown. Do **not** call `CreatePlan`.
 
 Do **not** write code, **commit**, or run checks during grilling.
