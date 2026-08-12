@@ -121,7 +121,7 @@ describe('calculation session', () => {
       },
     },
     {
-      name: 'error blocks digit input',
+      name: 'error digit recovery clears trail',
       actions: [
         digit(5),
         operator('divide'),
@@ -130,19 +130,98 @@ describe('calculation session', () => {
         digit(1),
       ],
       expected: {
-        expressionLine: '5 ÷ 0 =',
-        activeNumber: 'Error',
-        phase: 'error' as const,
+        expressionLine: '',
+        activeNumber: '1',
+        phase: 'entry' as const,
       },
     },
     {
-      name: 'error blocks operator input',
+      name: 'error digit recovery preserves memory',
+      actions: [
+        digit(3),
+        memoryAdd,
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        digit(1),
+      ],
+      expected: {
+        expressionLine: '',
+        activeNumber: '1',
+        phase: 'entry' as const,
+        memory: 3,
+      },
+    },
+    {
+      name: 'error decimal recovery',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        decimal,
+      ],
+      expected: {
+        expressionLine: '',
+        activeNumber: '0.',
+        phase: 'entry' as const,
+      },
+    },
+    {
+      name: 'error operator recovery',
       actions: [
         digit(5),
         operator('divide'),
         digit(0),
         equals,
         operator('add'),
+      ],
+      expected: {
+        expressionLine: '',
+        activeNumber: '',
+        phase: 'entry' as const,
+        runningTotal: null,
+      },
+    },
+    {
+      name: 'error sign toggle recovery',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        signToggle,
+      ],
+      expected: {
+        expressionLine: '',
+        activeNumber: '-',
+        phase: 'entry' as const,
+      },
+    },
+    {
+      name: 'error operator commit then digit recovery',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        operator('multiply'),
+        digit(2),
+      ],
+      expected: {
+        expressionLine: '',
+        activeNumber: '2',
+        phase: 'entry' as const,
+      },
+    },
+    {
+      name: 'error blocks equals',
+      actions: [
+        digit(5),
+        operator('divide'),
+        digit(0),
+        equals,
+        equals,
       ],
       expected: {
         expressionLine: '5 ÷ 0 =',

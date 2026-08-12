@@ -52,7 +52,8 @@ export const ErrorState: Story = {
     expect(canvas.getByTestId('display-active-number')).toHaveTextContent('Error')
 
     await userEvent.click(canvas.getByRole('button', { name: '1' }))
-    expect(canvas.getByTestId('display-active-number')).toHaveTextContent('Error')
+    expect(canvas.getByTestId('display-active-number')).toHaveTextContent('1')
+    expect(canvas.getByTestId('display-expression')).toHaveTextContent('')
 
     await userEvent.click(canvas.getByRole('button', { name: 'all clear' }))
     expect(canvas.getByTestId('display-active-number')).toHaveTextContent('')
