@@ -131,6 +131,7 @@ _Sourced from PM sections above. `/to-spec` reads this section. `/to-tickets` re
 
 ### Constraints
 
+- **Depends on v1:** Do not start v2 implementation until the v1 **`story`** ([#21](https://github.com/irenadimitrova1/calculator-ai-demo/issues/21)) is closed — all v1 child tickets **`implemented`**. First v2 ticket ([#39](https://github.com/irenadimitrova1/calculator-ai-demo/issues/39)) blocks on #21.
 - Build on shipped v1 session module; no stack changes
 - PM out-of-scope still applies: no history panel, no themes, no persistence on refresh, no graphing/units/programmer mode
 - **Tests:** Table-driven Vitest on expression parser/evaluator (PEMDAS, parens, trig deg/rad, domain errors); integration tests for mode switching and Basic-mode regression (v1 scenarios unchanged)
@@ -160,7 +161,7 @@ _`/to-spec` → **`needs-info`**. PM replies → **`answered`**. **`/triage #N`*
 
 | ID | Issue | Status |
 |----|-------|--------|
-| pm-q1-unary-apply | [#37](https://github.com/irenadimitrova1/calculator-ai-demo/issues/37) | open |
+| pm-q1-unary-apply | [#37](https://github.com/irenadimitrova1/calculator-ai-demo/issues/37) | resolved |
 
 ### pm-q1-unary-apply {#pm-q1-unary-apply}
 
@@ -176,4 +177,4 @@ _`/to-spec` → **`needs-info`**. PM replies → **`answered`**. **`/triage #N`*
 
 **Assumption (if blocked):** `immediate-unary` — immediate unary apply on press until PM/PO confirms
 
-**Answer:** <!-- /triage: option-id — label -->
+**Answer:** `immediate-unary` — Immediate unary — sin/cos/tan/√/x²/1/x apply to the active number on press (classic scientific keypad)

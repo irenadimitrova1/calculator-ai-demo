@@ -66,6 +66,8 @@ Split into **tracer-bullet tickets** with blocking edges. Pass the **`story`** i
 
 Review the proposed breakdown with **`AskQuestion`** (granularity, blocking edges, merge/split), confirm publish, then create child issues on GitHub with **`ready-for-agent`** only.
 
+When the feature **depends on a prior feature** (e.g. v2 on v1), the first child ticket must block on the prior feature's **`story`** issue via native GitHub dependencies — even if the new feature's own tickets are otherwise ready. `/plan` refuses blocked tickets until the prior `story` closes.
+
 **Do not** run `/triage` on these tickets — they are already agent-ready.
 
 ### 4. `/plan` → Build → `/pr` (per child ticket)

@@ -23,7 +23,7 @@ Support: parentheses; binary `+ − × ÷ ^` (right-associative power); constant
 
 ## Blocked by
 
-None — can start immediately.
+- #21 — [Spec: Calculator v1](https://github.com/irenadimitrova1/calculator-ai-demo/issues/21) — v2 builds on shipped v1; complete all v1 child tickets and close the v1 `story` before starting.
 
 ## PM/PO assumptions
 

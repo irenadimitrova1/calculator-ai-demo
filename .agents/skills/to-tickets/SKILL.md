@@ -66,6 +66,8 @@ Break the work into **tracer bullet** tickets.
 
 Give each ticket its **blocking edges** — the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
 
+**Cross-feature dependencies:** When the feature doc's **`## Engineering specification`** or parent **`story`** body states the work **depends on a prior feature** (e.g. v2 builds on shipped v1 `calculation-session`), block the **first** child ticket of the new feature on the prior feature's **`story`** issue — not on individual prior child tickets. The prior `story` stays open until all its children are **`implemented`** and closed, so this gate means "prior feature shipped." Add the edge in **`## Blocked by`** and as a **native blocking link** on GitHub (see [issue-tracker](../../docs/agents/issue-tracker.md)). Later tickets in the same feature inherit the gate through their in-feature chain — only the frontier ticket needs the cross-feature edge. **Do not** label the first ticket `ready-for-agent` without this edge when the dependency is documented.
+
 **PM/PO open questions:** When a slice touches behaviour covered by an **open** `## Questions` row, either:
 
 - **Block** on the linked PM question issue (`needs-info` / `answered`) in **Blocked by**, or

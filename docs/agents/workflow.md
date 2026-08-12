@@ -14,7 +14,7 @@ Run in order:
 
 2. **`/to-spec`** — publish **`story`** parent + **`needs-info`** PM question issues. PM replies → **`answered`** → **`/triage #N`** records **Answer** in `## Questions` (spec above unchanged). Parent synthesizes from `## Engineering specification`; body links to the feature doc. **Gate:** `/to-tickets` refuses to publish if the `story` or PM **Issue** column links are missing.
 
-3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
+3. **`/to-tickets`** — split into tracer-bullet tickets **after `/to-spec`**. Read **`## Engineering specification`** and **`## Questions`** (open rows → block on linked `#N` or proceed on **Assumption**; resolved **Answer** overrides assumption). When the spec depends on a **prior feature**, block the **first** child on that feature's **`story`** issue (native GitHub dependency + `## Blocked by`). Review via **`AskQuestion`**, confirm, publish **`ready-for-agent`** children only. Each child links **`## Parent`** → the `story` issue.
 
 4. **Per child ticket** (repeat until all children ship):
    - **`/plan #N`** — `gh issue develop` to create/link branch from `main`, assign `@me`, swap `ready-for-agent` → `in-progress`; **AskQuestion grill-me**, then **`CreatePlan`** in the same session (Cursor Plan with **Build** button). **No commit.** A `.scratch/plans/*.md` file is not a substitute.

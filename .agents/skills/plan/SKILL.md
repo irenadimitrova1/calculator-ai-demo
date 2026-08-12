@@ -32,7 +32,7 @@ When the target has the `story` label, stay in **Agent mode** and run `/grilling
 
 ### Blockers
 
-Before planning, verify blockers are satisfied. Stop if `## Blocked by` references open issues.
+Before planning, verify blockers are satisfied. Stop if `## Blocked by` references open issues — including **cross-feature** blockers (a prior feature's **`story`** issue, e.g. v2 blocked on v1 `#21`). Check the ticket body's **`## Blocked by`** section and GitHub's dependency summary (`gh api repos/<owner>/<repo>/issues/<N> --jq .issue_dependencies_summary`). Tell the user which open blocker must close first and which feature doc to finish (e.g. complete v1 tickets before `/plan` on v2).
 
 ## Start — branch and issue (Agent mode)
 
