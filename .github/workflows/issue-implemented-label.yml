@@ -8,7 +8,9 @@ on:
     types: [closed]
 
 permissions:
+  contents: read
   issues: write
+  pull-requests: read
 
 jobs:
   label-implemented:
