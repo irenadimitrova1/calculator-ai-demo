@@ -1,16 +1,21 @@
 name: AI usage cost roll-up
 
-# Post token/cost roll-up on the parent story when all implementation children close.
-# Retries daily for stories missing roll-up (Cursor Admin API hourly lag).
+# Post token/cost roll-up on the parent story when implementation is complete.
+# Triggers: last child PR merges (all children closed), or parent story issue closed.
 
 on:
   pull_request:
     types: [closed]
 
-  schedule:
-    - cron: '0 6 * * *'
+  issues:
+    types: [closed]
 
   workflow_dispatch:
+    inputs:
+      story:
+        description: Parent story issue number (optional — scans closed stories if omitted)
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -77,8 +82,10 @@ jobs:
           CLOSED_ISSUE_NUMBERS: ${{ steps.closing-issues.outputs.issues }}
         run: node scripts/usage/reconcile-on-merge.mjs
 
-  reconcile-scheduled:
-    if: github.event_name == 'schedule'
+  reconcile-on-story-close:
+    if: |
+      github.event_name == 'issues' &&
+      contains(github.event.issue.labels.*.name, 'story')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -87,8 +94,29 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Retry roll-up for completed stories (API lag)
+      - name: Post cost roll-up on story close
         env:
           GH_TOKEN: ${{ github.token }}
           CURSOR_ADMIN_API_KEY: ${{ secrets.CURSOR_ADMIN_API_KEY }}
-        run: node scripts/usage/reconcile-on-merge.mjs --scan-stories
+        run: node scripts/usage/reconcile.mjs --story ${{ github.event.issue.number }} --post
+
+  reconcile-manual:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Post cost roll-up (manual)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURSOR_ADMIN_API_KEY: ${{ secrets.CURSOR_ADMIN_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.story }}" ]; then
+            node scripts/usage/reconcile.mjs --story ${{ github.event.inputs.story }} --post
+          else
+            node scripts/usage/reconcile-on-merge.mjs --scan-stories
+          fi

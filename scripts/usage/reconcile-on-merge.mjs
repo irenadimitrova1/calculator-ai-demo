@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * CI entry — post AI cost roll-up when a story's implementation children are all closed.
- * Invoked by GitHub Actions on PR merge or daily schedule (API lag retry).
+ * Invoked by GitHub Actions on PR merge (last child) or story close.
  */
 import { spawnSync } from 'node:child_process'
 import { parseArgs } from 'node:util'
