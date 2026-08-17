@@ -1,0 +1,20 @@
+{
+  "name": "team-jira-pm",
+  "displayName": "Team Jira PM intake",
+  "owner": {
+    "name": "Your team",
+    "email": "team@example.com"
+  },
+  "metadata": {
+    "description": "Atlassian MCP, Jira site catalog (jira-sites.json), and Jira MCP rule. Backup when dashboard mcp.json cannot be edited. Commands: docs/cursor-team/command-jira-*.md",
+    "version": "1.0.0",
+    "pluginRoot": "docs/cursor-team/marketplace/plugins"
+  },
+  "plugins": [
+    {
+      "name": "jira-pm-intake",
+      "source": "jira-pm-intake",
+      "description": "Atlassian MCP + jira-sites.json workspace catalog + Jira MCP rule. Use with Team Commands /jira-grill, /jira-story, /jira-tasks."
+    }
+  ]
+}

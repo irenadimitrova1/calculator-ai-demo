@@ -1,0 +1,25 @@
+{
+  "sites": [
+    {
+      "id": "peugeot-moto",
+      "name": "Peugeot Motocycles",
+      "url": "https://clienta.atlassian.net",
+      "defaultProjectKey": "PMC",
+      "cloudId": ""
+    },
+    {
+      "id": "euromaster",
+      "name": "EuroMaster",
+      "url": "https://euromaster1.atlassian.net",
+      "defaultProjectKey": "EC",
+      "cloudId": ""
+    },
+    {
+      "id": "talmisone",
+      "name": "Talmisone",
+      "url": "https://talmisone.atlassian.net",
+      "defaultProjectKey": "TO",
+      "cloudId": ""
+    }
+  ]
+}
