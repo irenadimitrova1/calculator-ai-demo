@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import {
+  findChildIssues,
   formatTokenCount,
   formatUsd,
   ghJson,
@@ -12,6 +13,8 @@ import {
   parseSessionMarkers,
   readContext,
   readLedger,
+  resolveParentStory,
+  storyHasCostReport,
   sumTokens,
 } from './lib.mjs'
 
@@ -26,17 +29,6 @@ const { values } = parseArgs({
 })
 
 loadEnvLocal()
-
-function findChildIssues(storyNumber) {
-  const issues = ghJson('issue list --state all --limit 500 --json number,body,labels,state')
-  const parentRef = `#${storyNumber}`
-  return issues.filter((issue) => {
-    const body = issue.body ?? ''
-    const parentSection = body.match(/## Parent\s*\n([\s\S]*?)(?:\n## |\n$|$)/i)
-    if (!parentSection) return false
-    return parentSection[1].includes(parentRef)
-  })
-}
 
 function collectRegistrySessions(storyNumber) {
   const issues = [storyNumber, ...findChildIssues(storyNumber).map((i) => i.number)]
@@ -207,22 +199,10 @@ function buildReport(storyNumber, sessions, usageEvents) {
   }
 }
 
-function storyHasCostReport(storyNumber) {
-  const comments = ghJson(`issue view ${storyNumber} --json comments --jq .comments`)
-  return (comments ?? []).some((c) => (c.body ?? '').includes('## AI implementation cost'))
-}
-
 function resolveStoryNumber() {
   if (values.story) return Number.parseInt(values.story, 10)
   if (!values.issue) return null
-
-  const issueNumber = Number.parseInt(values.issue, 10)
-  const issue = ghJson(`issue view ${issueNumber} --json body,labels`)
-  const labelNames = (issue.labels ?? []).map((l) => (typeof l === 'string' ? l : l.name))
-  if (labelNames.includes('story')) return issueNumber
-
-  const parentMatch = (issue.body ?? '').match(/## Parent[\s\S]*?#(\d+)/i)
-  return parentMatch ? Number.parseInt(parentMatch[1], 10) : issueNumber
+  return resolveParentStory(Number.parseInt(values.issue, 10))
 }
 
 async function main() {

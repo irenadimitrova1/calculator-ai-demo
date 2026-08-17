@@ -31,6 +31,8 @@ Each dev's machine keeps a local ledger (`.scratch/usage/ledger.jsonl`, gitignor
 
 3. **Enable hooks** — Cursor Settings → Hooks. Project hooks load from `.cursor/hooks.json` on clone.
 
+4. **GitHub Actions** — add repo secret `CURSOR_ADMIN_API_KEY` (Settings → Secrets and variables → Actions). The [`usage-reconcile` workflow](../../.github/workflows/usage-reconcile.yml) posts the cost roll-up when the last child PR merges and retries daily until the roll-up is posted (handles API lag).
+
 ## Commands
 
 ```bash
@@ -52,7 +54,11 @@ node scripts/usage/reconcile.mjs --issue 41
 
 ## When roll-up runs
 
-`/pr` runs `reconcile.mjs --story <parent> --post` when all child issues are closed. Adds `cost-reported` label to avoid duplicate comments on re-invoke.
+**Automatic (CI):** When a PR merges and closes an implementation child, GitHub Actions runs `reconcile-on-merge.mjs`. If all implementation children of the parent story are closed, it posts the roll-up on the story issue. A daily scheduled job retries stories that are complete but missing a roll-up (Cursor API hourly lag).
+
+**Manual:** `node scripts/usage/reconcile.mjs --story <N> --post` — still works locally with `.env.local`.
+
+Adds `cost-reported` label to avoid duplicate comments on re-invoke.
 
 ## Limitations
 

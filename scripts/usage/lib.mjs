@@ -140,6 +140,49 @@ export function ghRun(args) {
   execSync(`gh ${args}`, { cwd: REPO_ROOT, stdio: ['ignore', 'inherit', 'inherit'] })
 }
 
+export function findChildIssues(storyNumber) {
+  const issues = ghJson('issue list --state all --limit 500 --json number,body,labels,state')
+  const parentRef = `#${storyNumber}`
+  return issues.filter((issue) => {
+    const body = issue.body ?? ''
+    const parentSection = body.match(/## Parent\s*\n([\s\S]*?)(?:\n## |\n$|$)/i)
+    if (!parentSection) return false
+    return parentSection[1].includes(parentRef)
+  })
+}
+
+/** Implementation children — excludes parent story and resolved PM question issues. */
+export function findImplementationChildren(storyNumber) {
+  return findChildIssues(storyNumber).filter((issue) => {
+    const labels = (issue.labels ?? []).map((l) => (typeof l === 'string' ? l : l.name))
+    if (labels.includes('story')) return false
+    if (labels.includes('answered')) return false
+    return true
+  })
+}
+
+export function allImplementationChildrenClosed(storyNumber) {
+  const children = findImplementationChildren(storyNumber)
+  if (children.length === 0) return false
+  return children.every((issue) => issue.state === 'CLOSED')
+}
+
+export function storyHasCostReport(storyNumber) {
+  const issue = ghJson(`issue view ${storyNumber} --json comments,labels`)
+  const labels = (issue.labels ?? []).map((l) => (typeof l === 'string' ? l : l.name))
+  if (labels.includes('cost-reported')) return true
+  return (issue.comments ?? []).some((c) => (c.body ?? '').includes('## AI implementation cost'))
+}
+
+export function resolveParentStory(issueNumber) {
+  const issue = ghJson(`issue view ${issueNumber} --json body,labels`)
+  const labelNames = (issue.labels ?? []).map((l) => (typeof l === 'string' ? l : l.name))
+  if (labelNames.includes('story')) return issueNumber
+
+  const parentMatch = (issue.body ?? '').match(/## Parent[\s\S]*?#(\d+)/i)
+  return parentMatch ? Number.parseInt(parentMatch[1], 10) : null
+}
+
 export function loadEnvLocal() {
   const envPath = join(REPO_ROOT, '.env.local')
   if (!existsSync(envPath)) return

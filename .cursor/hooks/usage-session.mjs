@@ -3,7 +3,7 @@
  * Cursor hook handler — logs sessions locally and registers on GitHub when context exists.
  */
 import { spawn } from 'node:child_process'
-import { createInterface } from 'node:readline'
+import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
@@ -41,20 +41,19 @@ function fireAndForgetRegister(conversationId, context) {
   child.unref()
 }
 
-async function readStdinJson() {
-  const rl = createInterface({ input: process.stdin })
-  const lines = []
-  for await (const line of rl) lines.push(line)
-  if (lines.length === 0) return {}
+/** Read full stdin as JSON. Prefer fd 0 — readline misses Cursor's Windows pipe. */
+function readStdinJson() {
   try {
-    return JSON.parse(lines.join('\n'))
+    const raw = readFileSync(0, 'utf8').replace(/^\uFEFF/, '').trim()
+    if (!raw) return {}
+    return JSON.parse(raw)
   } catch {
     return {}
   }
 }
 
-async function main() {
-  const input = await readStdinJson()
+function main() {
+  const input = readStdinJson()
   const event = input.hook_event_name ?? 'unknown'
   const conversationId = input.conversation_id ?? input.session_id ?? null
   const branch = getGitBranch()
@@ -88,8 +87,10 @@ async function main() {
   process.stdout.write('{}\n')
 }
 
-main().catch((error) => {
+try {
+  main()
+} catch (error) {
   console.error('[usage-session hook]', error.message)
   process.stdout.write('{}\n')
   process.exit(0)
-})
+}

@@ -126,13 +126,13 @@ When **all** child issues are **closed** (after merge — user may re-invoke `/p
 
 1. `gh issue close <story> --comment "All child tickets implemented."`
 2. Set feature doc **`Status:`** to `done`
-3. **Usage roll-up** — post AI cost totals on the parent **story** issue:
+3. **Usage roll-up** — CI posts AI cost totals on the parent **story** issue when the last child PR merges ([`usage-reconcile` workflow](../../.github/workflows/usage-reconcile.yml)). Requires repo secret `CURSOR_ADMIN_API_KEY`. Manual fallback:
 
    ```bash
    node scripts/usage/reconcile.mjs --story <story> --post
    ```
 
-   Requires `CURSOR_ADMIN_API_KEY` in `.env.local`. Skips if a roll-up comment or `cost-reported` label already exists. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
+   Skips if a roll-up comment or `cost-reported` label already exists. See [usage-tracking.md](../../docs/agents/usage-tracking.md).
 
 If all siblings closed now (e.g. re-run after merge), close story immediately.
 

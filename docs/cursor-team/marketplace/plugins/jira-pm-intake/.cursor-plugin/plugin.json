@@ -1,0 +1,9 @@
+{
+  "name": "jira-pm-intake",
+  "description": "Atlassian MCP, Jira site catalog (jira-sites.json), and Jira MCP rule for PM ticket intake.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your team"
+  },
+  "keywords": ["jira", "atlassian", "pm", "mcp"]
+}

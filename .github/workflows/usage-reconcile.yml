@@ -1,0 +1,90 @@
+name: AI usage cost roll-up
+
+# Post token/cost roll-up on the parent story when all implementation children close.
+# Retries daily for stories missing roll-up (Cursor Admin API hourly lag).
+
+on:
+  pull_request:
+    types: [closed]
+
+  schedule:
+    - cron: '0 6 * * *'
+
+permissions:
+  issues: write
+
+jobs:
+  reconcile-on-merge:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/github-script@v7
+        id: closing-issues
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.pull_request.number;
+
+            const { data } = await github.graphql(
+              `query($owner: String!, $repo: String!, $pr: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  pullRequest(number: $pr) {
+                    closingIssuesReferences(first: 50) {
+                      nodes {
+                        number
+                        state
+                        labels(first: 20) {
+                          nodes { name }
+                        }
+                      }
+                    }
+                  }
+                }
+              }`,
+              { owner, repo, pr: prNumber }
+            );
+
+            const issues = data.repository.pullRequest.closingIssuesReferences.nodes;
+            const closed = issues
+              .filter((issue) => issue.state === 'CLOSED')
+              .filter((issue) => {
+                const labels = issue.labels.nodes.map((l) => l.name);
+                if (labels.includes('story')) return false;
+                if (labels.includes('answered')) return false;
+                return true;
+              })
+              .map((issue) => issue.number);
+
+            core.setOutput('issues', JSON.stringify(closed));
+            core.info(`Closed implementation issues from PR: ${closed.join(', ') || 'none'}`);
+
+      - name: Post cost roll-up when story complete
+        if: steps.closing-issues.outputs.issues != '[]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURSOR_ADMIN_API_KEY: ${{ secrets.CURSOR_ADMIN_API_KEY }}
+          CLOSED_ISSUE_NUMBERS: ${{ steps.closing-issues.outputs.issues }}
+        run: node scripts/usage/reconcile-on-merge.mjs
+
+  reconcile-scheduled:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Retry roll-up for completed stories (API lag)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURSOR_ADMIN_API_KEY: ${{ secrets.CURSOR_ADMIN_API_KEY }}
+        run: node scripts/usage/reconcile-on-merge.mjs --scan-stories
