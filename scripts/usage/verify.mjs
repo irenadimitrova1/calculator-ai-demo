@@ -7,6 +7,7 @@ import { execSync } from 'node:child_process'
 import {
   CONTEXT_PATH,
   LEDGER_PATH,
+  estimateEventCostCents,
   formatSessionComment,
   parseSessionMarkers,
   readContext,
@@ -42,6 +43,20 @@ const comment = formatSessionComment(session)
 const parsed = parseSessionMarkers(comment)
 assert(parsed.length === 1, 'parseSessionMarkers extracts one session')
 assert(parsed[0].conversation_id === session.conversation_id, 'conversation_id round-trips')
+
+// estimateEventCostCents — token-based events use totalCents + cursorTokenFee
+assert(
+  estimateEventCostCents({
+    tokenUsage: { totalCents: 20.18232 },
+    cursorTokenFee: 1.18,
+  }) === 21.36232,
+  'estimateEventCostCents sums totalCents and cursorTokenFee',
+)
+assert(
+  estimateEventCostCents({ chargedCents: 8, isTokenBasedCall: false }) === 8,
+  'estimateEventCostCents falls back to chargedCents without tokenUsage',
+)
+assert(estimateEventCostCents({}) === 0, 'estimateEventCostCents returns 0 when no cost fields')
 
 // set-context CLI
 try {

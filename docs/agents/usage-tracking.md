@@ -6,7 +6,7 @@ Track tokens and dollar cost from `grill-with-docs` through story closure. Roll-
 
 1. **Skills** set phase context (`set-context.mjs`) and register sessions on GitHub (`register-session.mjs`).
 2. **Cursor hooks** (`.cursor/hooks.json`) append to a local ledger and auto-register when context includes a story issue.
-3. **Reconcile** (`reconcile.mjs`) joins GitHub registry comments with the Cursor Team Admin API and posts a cost table.
+3. **Reconcile** (`reconcile.mjs`) joins GitHub registry comments with the Cursor Team Admin API and posts a cost table (estimated model cost + billed amount).
 
 The join key is **`conversation_id`** (hooks) ↔ **`conversationId`** (Admin API).
 
@@ -73,6 +73,7 @@ Adds `cost-reported` label to avoid duplicate comments on re-invoke.
 - **Admin key** — only teammates with `CURSOR_ADMIN_API_KEY` can compute `$`; everyone sees registry comments and the posted roll-up.
 - **Registration** — requires `gh` auth; missed registrations fall back to local ledger on the reconciling machine only.
 - **Tab / Plan-only sessions** — only Agent/Composer sessions with hooks are tracked.
+- **Est. cost** — `tokenUsage.totalCents` + Cursor Token Rate from the Admin API (list model cost, even on included usage). **Cost** — billed `chargedCents` (often $0 while still on included allowance).
 
 ## Related
 
