@@ -1,0 +1,2026 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://irenadimitrova1.github.io/calculator-ai-demo/product/features/calculator-v1/">
+      
+      
+        <link rel="prev" href="../calculator-poc/">
+      
+      
+        <link rel="next" href="../calculator-v2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Calculator v1 - Calculator AI Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#calculator-v1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Calculator AI Demo" class="md-header__button md-logo" aria-label="Calculator AI Demo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Calculator AI Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Calculator v1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/irenadimitrova1/calculator-ai-demo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Calculator AI Demo" class="md-nav__button md-logo" aria-label="Calculator AI Demo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Calculator AI Demo
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/irenadimitrova1/calculator-ai-demo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-poc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator PoC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v1
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI / UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ticket-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ticket progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pm-q1-percent-pm-q1-percent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q1-percent {#pm-q1-percent}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pm-q2-chaining-trail-pm-q2-chaining-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q2-chaining-trail {#pm-q2-chaining-trail}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Process
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Process
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/how-we-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How we plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/definition-of-ready/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Definition of Ready
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/feature-to-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature doc to issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agent configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/issue-tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Issue tracker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/triage-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triage labels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/domain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domain docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI / UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ticket-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ticket progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pm-q1-percent-pm-q1-percent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q1-percent {#pm-q1-percent}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pm-q2-chaining-trail-pm-q2-chaining-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q2-chaining-trail {#pm-q2-chaining-trail}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/irenadimitrova1/calculator-ai-demo/edit/main/docs/product/features/calculator-v1.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="calculator-v1">Calculator v1<a class="headerlink" href="#calculator-v1" title="Permanent link">&para;</a></h1>
+<p><strong>Owner:</strong> PM / PO<br />
+<strong>Last updated:</strong> 2026-08-11</p>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>Turn the proof-of-concept into an everyday calculator — the kind people already know from their phone or desktop — with clear buttons, memory, and the basics done right.</p>
+<h2 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h2>
+<p>The PoC shows that math works, but it doesn't feel like a real calculator yet. If you mistype a digit, you can't fix it easily. You can't store a number and come back to it. There's no decimal point, no percent button, no way to flip a number to negative. People will get frustrated and won't trust the app for daily use.</p>
+<h2 id="users">Users<a class="headerlink" href="#users" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Anyone who wants quick math without opening another app</li>
+<li>People comparing us to the built-in calculator on their phone — v1 should feel familiar, not surprising</li>
+<li>Demo audiences deciding whether we're ready to call this a "real" product baseline</li>
+</ul>
+<h2 id="success-metrics">Success metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A new user can add, subtract, multiply, and divide — including decimals — without instructions</li>
+<li>Clear and memory buttons work the way users expect from other calculators</li>
+<li>Mistakes (like dividing by zero) show a friendly message instead of breaking the app</li>
+<li>Internal QA signs off that behavior matches a standard pocket calculator (including the built-in macOS/iOS calculator display and keyboard shortcuts)</li>
+<li>Users can complete a calculation using only the keyboard, without clicking buttons</li>
+<li>We're ready to discuss <a href="../calculator-v2/">Calculator v2</a> without redoing the basics</li>
+</ul>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<h3 id="in-scope">In scope<a class="headerlink" href="#in-scope" title="Permanent link">&para;</a></h3>
+<p><strong>Fixing mistakes</strong></p>
+<ul>
+<li><strong>Clear / All Clear</strong> — start over or wipe what's on screen</li>
+<li><strong>Clear entry</strong> — fix the number you're currently typing without losing the rest of the calculation</li>
+</ul>
+<p><strong>Memory</strong></p>
+<ul>
+<li><strong>Memory clear</strong> — forget what's stored</li>
+<li><strong>Memory recall</strong> — bring back what you stored</li>
+<li><strong>Memory add / subtract</strong> — add or subtract the current number to/from memory</li>
+<li>Some visible sign that memory has something in it (e.g. a small "M" on screen)</li>
+</ul>
+<p><strong>Everyday math</strong></p>
+<ul>
+<li>Plus, minus, multiply, divide (same as PoC, but polished)</li>
+<li>Decimal point — so amounts like <code>3.14</code> work</li>
+<li>Equals</li>
+<li><strong>+/-</strong> — flip between positive and negative</li>
+<li><strong>%</strong> — percentage, like on a normal calculator</li>
+<li>Chain several operations in a row (e.g. <code>5 + 3 × 2</code>) in a predictable way</li>
+</ul>
+<p><strong>What users see</strong></p>
+<ul>
+<li><strong>Two-line display (macOS/iOS calculator behavior)</strong> — top line shows the current expression as it builds (e.g. <code>5 + 3</code>); bottom line shows the number being typed or the running result; both lines stay visible and update as the user works</li>
+<li>When something isn't allowed (like dividing by zero), show a clear error instead of a blank screen or crash</li>
+</ul>
+<p><strong>Keyboard input</strong></p>
+<ul>
+<li>Number keys (<code>0</code>–<code>9</code>), decimal point, operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>), Enter (=), Escape (clear), and Backspace (clear entry or delete last digit) — same behavior as clicking the on-screen buttons</li>
+<li>Keyboard shortcuts work when the calculator has focus; no separate "keyboard mode" toggle</li>
+</ul>
+<h3 id="out-of-scope">Out of scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Scientific functions (sine, cosine, logarithms, etc.) — <a href="../calculator-v2/">Calculator v2</a></li>
+<li>A scrollable log of <strong>past</strong> completed calculations (the live expression on the top display line is in scope; a separate history panel is not) — <a href="../calculator-v3/">Calculator v3</a></li>
+<li>Different color themes or skins — <a href="../calculator-v4/">Calculator v4</a></li>
+<li>Memory still clears when you refresh the page — <a href="../calculator-v3/">Calculator v3</a></li>
+</ul>
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../process/feature-to-issues/">Feature doc → issues</a></li>
+<li><a href="../calculator-poc/">Calculator PoC</a></li>
+<li><a href="../calculator-v2/">Calculator v2</a></li>
+<li><a href="../calculator-v3/">Calculator v3</a></li>
+<li><a href="../calculator-v4/">Calculator v4</a></li>
+<li><a href="../../vision/">Vision</a></li>
+<li><a href="../../roadmap/">Roadmap</a></li>
+<li><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues">GitHub Issues</a></li>
+</ul>
+<h2 id="engineering-specification">Engineering specification<a class="headerlink" href="#engineering-specification" title="Permanent link">&para;</a></h2>
+<p><strong>Owner:</strong> Engineering<br />
+<strong>Last updated:</strong> 2026-08-11</p>
+<p><em>Sourced from PM sections above. <code>/to-spec</code> reads this section for the parent spec. <code>/to-tickets</code> reads this section <strong>and</strong> <code>## Questions</code> below. <strong>Do not edit</strong> stack, behavior, UI, or constraints after <code>/grill-with-docs</code> — only <strong><code>### Ticket progress</code></strong> updates during delivery. PM answers go in <strong><code>## Questions</code></strong> only.</em></p>
+<h3 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Same as PoC</strong> — React + Vite + TypeScript, Tailwind + shadcn/ui, Storybook, Vitest + RTL</li>
+<li><strong>Calculation session module</strong> — new pure TypeScript module (<code>src/lib/calculation-session/</code> or similar) holding session state and transitions; <code>useCalculator</code> becomes a thin React adapter</li>
+<li><strong>Existing <code>calculate()</code></strong> — keep as the primitive for applying one operator to two numbers; session module orchestrates when to call it</li>
+</ul>
+<h3 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Chaining model:</strong> Immediate execution, left-to-right — macOS/iOS Calculator semantics. Example: <code>5 + 3 × 2 =</code> → <code>16</code>, not <code>11</code> (no PEMDAS until v2 expressions)</li>
+<li><strong>Repeat equals:</strong> After <code>=</code>, pressing <code>=</code> again repeats the last operation with the same second operand (e.g. <code>8 + 2 = 10</code>, then <code>=</code> → <code>12</code>)</li>
+<li><strong>Display:</strong> Expression line (top) shows the building trail; active number (bottom) shows the value being typed or the latest committed result — replaces PoC layout (top = typing, bottom = result-only)</li>
+<li><strong>Display formatting:</strong> Format values for display — strip JS float noise (e.g. <code>0.1 + 0.2</code> → <code>0.3</code>), cap visible digits at ~12 with CSS ellipsis; internal math stays full IEEE double</li>
+<li><strong>Expression symbols:</strong> Expression line and keypad labels use <strong>×</strong> and <strong>÷</strong>; keyboard still accepts <code>*</code> and <code>/</code></li>
+<li><strong>Architecture:</strong> Extract session logic from the PoC reducer into a testable pure module; hook dispatches actions and maps session snapshot to UI props</li>
+<li><strong>All Clear (AC):</strong> Resets the entire session — operands, operator, both display lines, memory indicator context, and error state</li>
+<li><strong>Clear (C):</strong> While building a calculation, clears only the active number; when a finished result is on screen, behaves like All Clear</li>
+<li><strong>Decimal input:</strong> One decimal point per active-number entry; a leading <code>.</code> displays as <code>0.</code>; long values truncate visually per display formatting</li>
+<li><strong>Divide by zero / errors:</strong> Enter error state — active-number line shows <code>Error</code>; digit, decimal, operator, and sign-toggle clear the session (memory preserved) and start fresh (macOS/iOS recovery); equals, memory keys, percent, and backspace stay blocked until All Clear or Clear</li>
+<li><strong>Memory (macOS/iOS):</strong> <code>MC</code> clears stored memory; <code>MR</code> recalls memory into the active number; <code>M+</code> / <code>M−</code> add or subtract the current display value to/from memory; memory persists across calculations until <code>MC</code>; show <strong>M</strong> indicator when memory ≠ 0</li>
+<li><strong>Sign toggle (+/−):</strong> Flip the sign of the active number only — while typing or on a finished result; expression line unchanged</li>
+<li><strong>Keyboard (focused calculator root):</strong> Digits <code>0</code>–<code>9</code>, <code>.</code>, <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> mirror keypad; <code>Enter</code> or <code>=</code> → equals; <code>Backspace</code> → delete last digit of active number (behaves like <strong>C</strong> when active number is empty); <code>Escape</code> → <strong>AC</strong>; no keyboard-mode toggle</li>
+<li><strong>Percent (%):</strong> <em>Pending PM/PO (<code>pm-q1-percent</code>). Assumption until answered:</em> macOS/iOS operation-relative percent</li>
+<li><strong>Chaining expression trail:</strong> <em>Pending PM/PO (<code>pm-q2-chaining-trail</code>). Assumption until answered:</em> macOS/iOS rewired trail (e.g. <code>5 + 3 ×</code> → expression <code>8 ×</code>, bottom empty)</li>
+</ul>
+<h3 id="ui-ux">UI / UX<a class="headerlink" href="#ui-ux" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Two-line display aligned with macOS/iOS Calculator (expression line + active number)</li>
+<li>Expression line uses <strong>×</strong> / <strong>÷</strong> glyphs; active number and trail values use display formatting (~12 visible digits, float-noise cleanup)</li>
+<li>PoC phone-calculator layout and shadcn theme carry forward; new buttons added for clear, memory, decimal, %, +/-</li>
+<li><strong>AC</strong> and <strong>C</strong> keys on keypad — both always visible (fixed labels, not a dynamic C/AC toggle)</li>
+<li>Error state: <code>Error</code> on the active-number line (bottom); expression line may retain the error trail until digit/decimal/operator/sign-toggle recovery or All Clear/Clear</li>
+<li>Memory indicator: <strong>M</strong> visible when memory holds a non-zero value (macOS/iOS style)</li>
+<li>Keypad adds <strong>AC</strong>, <strong>C</strong>, memory row, decimal, <strong>%</strong>, <strong>+/−</strong>; carry forward PoC phone layout</li>
+<li>Auto-focus the calculator root on load so keyboard input works immediately</li>
+<li><code>aria-live="polite"</code> on display region; expose memory <strong>M</strong> indicator to assistive tech</li>
+</ul>
+<h3 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Build on shipped PoC (#3–#6); no stack changes</li>
+<li>PM out-of-scope still applies: no scientific functions, no calculation history panel, no themes, no persistence on refresh</li>
+<li><strong>Tests:</strong> Table-driven Vitest suites on the pure session module with named macOS/iOS reference scenarios (chaining, memory, percent, repeat equals, errors)</li>
+<li><strong>Storybook:</strong> Extend Calculator stories/interactions for v1 states — memory, error, chaining, keyboard focus</li>
+</ul>
+<h3 id="ticket-progress">Ticket progress<a class="headerlink" href="#ticket-progress" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Title</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/24">#24</a></td>
+<td>Extract calculation session module (PoC parity)</td>
+<td>implemented</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/25">#25</a></td>
+<td>Immediate-execution chaining, two-line display, and repeat equals</td>
+<td>implemented</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/26">#26</a></td>
+<td>Clear keys, decimal entry, sign toggle, and error state</td>
+<td>implemented</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/27">#27</a></td>
+<td>Memory operations and indicator</td>
+<td>implemented</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/28">#28</a></td>
+<td>Percent key</td>
+<td>in-review</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/29">#29</a></td>
+<td>Keyboard input, accessibility, and Storybook v1 states</td>
+<td>in-review</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/34">#34</a></td>
+<td>Typing after error result</td>
+<td>in-review</td>
+</tr>
+</tbody>
+</table>
+<p>Set <strong>Status:</strong> to <code>done</code> when all rows are <strong><code>implemented</code></strong>.</p>
+<h3 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h3>
+<p><em>None — product uncertainties tracked in <code>## Questions</code> below.</em></p>
+<h2 id="questions">Questions<a class="headerlink" href="#questions" title="Permanent link">&para;</a></h2>
+<p><strong>Owner:</strong> Engineering (from <code>/grill-with-docs</code>)<br />
+<strong>Last updated:</strong> 2026-08-12</p>
+<p><em><code>/to-spec</code> → <strong><code>needs-info</code></strong>. PM replies → <strong><code>answered</code></strong>. <strong><code>/triage #N</code></strong> records the <strong>Answer</strong> here (does <strong>not</strong> edit <code>## Engineering specification</code> above). <strong><code>/to-tickets</code></strong> uses open rows for blocking/assumptions; resolved <strong>Answer</strong> overrides assumption for implementation.</em></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Issue</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pm-q1-percent</td>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/23">#23</a></td>
+<td>resolved</td>
+</tr>
+<tr>
+<td>pm-q2-chaining-trail</td>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/22">#22</a></td>
+<td>resolved</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pm-q1-percent-pm-q1-percent">pm-q1-percent {#pm-q1-percent}<a class="headerlink" href="#pm-q1-percent-pm-q1-percent" title="Permanent link">&para;</a></h3>
+<p><strong>Prompt:</strong> What should the <strong>%</strong> key do? macOS/iOS uses operation-relative percent (e.g. <code>200 + 10%</code> → <code>220</code>; <code>200 × 10%</code> → <code>20</code>), while other calculators divide the active number by 100 (<code>50</code> → <code>0.5</code>). QA will compare to “a normal calculator” — which reference wins?</p>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>macos-ios-relative</code></td>
+<td>macOS/iOS operation-relative percent (e.g. <code>200 + 10%</code> → <code>220</code>) <em>(Recommended)</em></td>
+</tr>
+<tr>
+<td><code>divide-by-100</code></td>
+<td>Divide the active number by 100 (e.g. <code>50</code> → <code>0.5</code>)</td>
+</tr>
+<tr>
+<td><code>record-open</code></td>
+<td>Record as open question for PM/PO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assumption (if blocked):</strong> <code>macos-ios-relative</code> — macOS/iOS operation-relative percent until PM/PO confirms</p>
+<p><strong>Answer:</strong> <code>divide-by-100</code> — Divide the active number by 100 (e.g. <code>50</code> → <code>0.5</code>)</p>
+<h3 id="pm-q2-chaining-trail-pm-q2-chaining-trail">pm-q2-chaining-trail {#pm-q2-chaining-trail}<a class="headerlink" href="#pm-q2-chaining-trail-pm-q2-chaining-trail" title="Permanent link">&para;</a></h3>
+<p><strong>Prompt:</strong> After immediate execution on operator press, should the <strong>expression line</strong> show the macOS/iOS rewired trail (e.g. <code>5 + 3 ×</code> → top line <code>8 ×</code>, bottom empty) or keep the full typed history (<code>5 + 3 ×</code>) with the partial result on the bottom line?</p>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>macos-ios-rewired</code></td>
+<td>macOS/iOS rewired trail (e.g. <code>5 + 3 ×</code> → expression <code>8 ×</code>, bottom empty) <em>(Recommended)</em></td>
+</tr>
+<tr>
+<td><code>full-typed-history</code></td>
+<td>Keep full typed history on the expression line; partial result on the active-number line</td>
+</tr>
+<tr>
+<td><code>record-open</code></td>
+<td>Record as open question for PM/PO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assumption (if blocked):</strong> <code>macos-ios-rewired</code> — macOS/iOS rewired trail until PM/PO confirms</p>
+<p><strong>Answer:</strong> <code>full-typed-history</code> — Keep full typed history on the expression line; partial result on the active-number line (e.g. <code>5 + 3 ×</code> on top)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "search.suggest", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

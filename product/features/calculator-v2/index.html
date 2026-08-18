@@ -1,0 +1,1966 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://irenadimitrova1.github.io/calculator-ai-demo/product/features/calculator-v2/">
+      
+      
+        <link rel="prev" href="../calculator-v1/">
+      
+      
+        <link rel="next" href="../calculator-v3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Calculator v2 - Calculator AI Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#calculator-v2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Calculator AI Demo" class="md-header__button md-logo" aria-label="Calculator AI Demo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Calculator AI Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Calculator v2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/irenadimitrova1/calculator-ai-demo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Calculator AI Demo" class="md-nav__button md-logo" aria-label="Calculator AI Demo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Calculator AI Demo
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/irenadimitrova1/calculator-ai-demo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-poc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator PoC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v2
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI / UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ticket-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ticket progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pm-q1-unary-apply-pm-q1-unary-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q1-unary-apply {#pm-q1-unary-apply}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculator-v10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculator v10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Process
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Process
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/how-we-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How we plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/definition-of-ready/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Definition of Ready
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/feature-to-issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature doc to issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agent configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/issue-tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Issue tracker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/triage-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triage labels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/domain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domain docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ui-ux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI / UX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ticket-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ticket progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pm-q1-unary-apply-pm-q1-unary-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pm-q1-unary-apply {#pm-q1-unary-apply}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/irenadimitrova1/calculator-ai-demo/edit/main/docs/product/features/calculator-v2.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="calculator-v2">Calculator v2<a class="headerlink" href="#calculator-v2" title="Permanent link">&para;</a></h1>
+<p><strong>Owner:</strong> PM / PO<br />
+<strong>Last updated:</strong> 2026-08-12</p>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>Add a scientific mode for users who need more than everyday arithmetic — schoolwork, homework, light engineering — without making casual users wade through buttons they don't need.</p>
+<h2 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h2>
+<p>v1 is great for grocery math and quick totals, but students and technical users still reach for another app when they need sine, cosine, powers, or parentheses. We lose those users and we can't honestly say we cover "calculator" use cases end to end. v2 should feel like the scientific calculator they already carry in their backpack or phone case.</p>
+<h2 id="users">Users<a class="headerlink" href="#users" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Students</strong> — high school and college math, science, and engineering classes</li>
+<li><strong>Professionals</strong> — occasional advanced math without installing a separate tool</li>
+<li><strong>Anyone evaluating us</strong> — wants to see that we can grow from "basic" to "serious" calculator</li>
+</ul>
+<h2 id="success-metrics">Success metrics<a class="headerlink" href="#success-metrics" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A student can complete typical homework problems (trig, powers, logs, grouped expressions) using only our app</li>
+<li>Switching between degrees and radians is obvious and changes answers correctly</li>
+<li>Bad inputs (like the log of zero) show a helpful message, not a broken screen</li>
+<li>The extra buttons still fit on a normal laptop or tablet screen without feeling cramped</li>
+<li>v1 users who only need basic math aren't forced into a confusing layout</li>
+</ul>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<h3 id="in-scope">In scope<a class="headerlink" href="#in-scope" title="Permanent link">&para;</a></h3>
+<p><strong>Trigonometry</strong></p>
+<ul>
+<li>Sine, cosine, tangent — and the inverse versions where we have room on the keypad</li>
+<li>A clear way to choose <strong>degrees vs radians</strong>, with a label on screen so users know which mode they're in</li>
+</ul>
+<p><strong>Powers and roots</strong></p>
+<ul>
+<li>Square a number</li>
+<li>Square root</li>
+<li>Raise one number to the power of another</li>
+<li><strong>1/x</strong> (reciprocal)</li>
+</ul>
+<p><strong>Logs and useful constants</strong></p>
+<ul>
+<li>Natural log and base-10 log</li>
+<li>Quick buttons for <strong>π</strong> and <strong>e</strong></li>
+</ul>
+<p><strong>Longer expressions</strong></p>
+<ul>
+<li>Parentheses so users can group parts of a calculation, e.g. <code>(2 + 3) × 4</code></li>
+<li>Math should follow the usual order of operations people learn in school</li>
+</ul>
+<p><strong>Everything from v1</strong></p>
+<ul>
+<li>Basic arithmetic, memory, clear buttons, decimals, percent, +/-, and error messages — unless we need to rearrange the layout for scientific mode</li>
+</ul>
+<p><strong>Layout</strong></p>
+<ul>
+<li>Either more rows of buttons or a switch between "standard" and "scientific" view — whichever keeps both modes easy to use</li>
+<li>Long expressions should still be readable (scroll or shorten gracefully on small screens)</li>
+</ul>
+<h3 id="out-of-scope">Out of scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Graphing equations or drawing charts — <a href="../calculator-v7/">Calculator v7</a></li>
+<li>Converting units (miles to km, °F to °C, currency, etc.) — <a href="../calculator-v5/">Calculator v5</a></li>
+<li>Letting users save their own formulas or macros — <a href="../calculator-v8/">Calculator v8</a></li>
+<li>Advanced math (complex numbers, matrices) — <a href="../calculator-v9/">Calculator v9</a></li>
+<li>Downloading or emailing a history of calculations — <a href="../calculator-v10/">Calculator v10</a></li>
+<li>Programmer mode (hex, binary, bitwise) — <a href="../calculator-v6/">Calculator v6</a></li>
+<li>Calculation history panel and refresh persistence — <a href="../calculator-v3/">Calculator v3</a></li>
+<li>Themes and skins — <a href="../calculator-v4/">Calculator v4</a></li>
+</ul>
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../process/feature-to-issues/">Feature doc → issues</a></li>
+<li><a href="../calculator-poc/">Calculator PoC</a></li>
+<li><a href="../calculator-v1/">Calculator v1</a></li>
+<li><a href="../calculator-v3/">Calculator v3</a></li>
+<li><a href="../calculator-v4/">Calculator v4</a></li>
+<li><a href="../calculator-v5/">Calculator v5</a></li>
+<li><a href="../calculator-v6/">Calculator v6</a></li>
+<li><a href="../calculator-v7/">Calculator v7</a></li>
+<li><a href="../calculator-v8/">Calculator v8</a></li>
+<li><a href="../calculator-v9/">Calculator v9</a></li>
+<li><a href="../calculator-v10/">Calculator v10</a></li>
+<li><a href="../../vision/">Vision</a></li>
+<li><a href="../../roadmap/">Roadmap</a></li>
+<li><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues">GitHub Issues</a></li>
+</ul>
+<h2 id="engineering-specification">Engineering specification<a class="headerlink" href="#engineering-specification" title="Permanent link">&para;</a></h2>
+<p><strong>Owner:</strong> Engineering<br />
+<strong>Last updated:</strong> 2026-08-12</p>
+<p><em>Sourced from PM sections above. <code>/to-spec</code> reads this section. <code>/to-tickets</code> reads this section and <code>## Questions</code>.</em></p>
+<blockquote>
+<p><strong>Frozen after grill:</strong> Do not edit stack, behavior, UI, or constraints when PM answers — only <strong><code>### Ticket progress</code></strong> updates during delivery. PM <strong>Answer</strong> values go in <strong><code>## Questions</code></strong>.</p>
+</blockquote>
+<h3 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Same as v1</strong> — React + Vite + TypeScript, Tailwind + shadcn/ui, Storybook, Vitest + RTL</li>
+<li><strong>Dual evaluation engines</strong> — v1 <code>calculation-session</code> immediate-execution path unchanged for <strong>Basic mode</strong>; new pure expression module (parse + PEMDAS evaluate) for <strong>Scientific mode</strong></li>
+<li><strong>Scientific expression module</strong> — custom pure TypeScript parser/evaluator in <code>src/lib/expression/</code> (no new dependencies): tokenize/parse infix expressions with parentheses, unary/binary ops, constants; PEMDAS + right-associative <code>^</code>; evaluate with degree/radian awareness for trig</li>
+<li><strong><code>useCalculator</code> / session</strong> — gains <code>mode: 'basic' | 'scientific'</code> and <code>angleUnit: 'deg' | 'rad'</code>; dispatches to the correct engine per mode</li>
+</ul>
+<h3 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Dual engines:</strong> <strong>Basic mode</strong> keeps all v1 behavior (immediate execution, full-typed-history expression trail, repeat equals, memory, percent, etc.). <strong>Scientific mode</strong> builds a parenthesized expression and evaluates with PEMDAS on equals.</li>
+<li><strong>Mode toggle:</strong> User switches <strong>Basic</strong> ↔ <strong>Scientific</strong>; Basic shows the v1 keypad only; Scientific reveals additional function/operator rows. Mode choice is session-only (no refresh persistence until v3). <strong>Switching modes clears the session</strong> (AC-equivalent reset) because the engines are incompatible.</li>
+<li><strong>Angle unit:</strong> Default <strong>degrees</strong> in Scientific mode; toggle to radians; on-screen <strong>DEG</strong> / <strong>RAD</strong> label always visible in Scientific mode.</li>
+<li><strong>Unary functions:</strong> <em>Pending PM/PO (<code>pm-q1-unary-apply</code>). Assumption until answered:</em> immediate unary on press — applies to the active number and <strong>inserts the computed numeric result</strong> into the building expression (not <code>sin(30)</code> syntax).</li>
+<li><strong>Scientific expression:</strong> Parentheses <code>(</code> <code>)</code> supported; PEMDAS for <code>+</code> <code>−</code> <code>×</code> <code>÷</code> and power; <strong>π</strong> and <strong>e</strong> insert as expression tokens; binary power <code>x^y</code> supported.</li>
+<li><strong>Trig:</strong> sin, cos, tan plus <strong>sin⁻¹, cos⁻¹, tan⁻¹</strong> keys on the scientific keypad.</li>
+<li><strong>Repeat equals:</strong> Basic mode only (v1 behavior). Scientific mode evaluates the expression once per equals press — no repeat-equals.</li>
+<li><strong>Memory:</strong> Shared <strong>M</strong> register across Basic and Scientific modes; memory keys work in both. Mode switch clears the calculation session but <strong>does not</strong> clear memory.</li>
+<li><strong>Percent:</strong> Same v1 divide-by-100 semantics in both modes (per resolved v1 PM answer).</li>
+<li><strong>Power:</strong> <code>^</code> is right-associative (<code>2^3^2</code> → <code>512</code>).</li>
+<li><strong>Errors:</strong> Invalid scientific input (e.g. log of zero, √(negative), divide by zero) enters the same <strong>error state</strong> as v1 — active number shows <code>Error</code>, input blocked until AC/C.</li>
+<li><strong>Keyboard (Scientific mode):</strong> Extend v1 keyboard — digits, <code>.</code>, <code>+</code>, <code>−</code>, <code>*</code>, <code>/</code>, <code>Enter</code>/<code>=</code>, <code>Escape</code> → AC, <code>Backspace</code>; add <code>(</code>, <code>)</code>, <code>^</code> for power, and letter shortcuts for trig/logs where practical (e.g. <code>s</code> sin, <code>c</code> cos, <code>t</code> tan — exact map in implementation).</li>
+<li><strong>v1 carry-forward:</strong> Memory, clear keys, decimals, percent, sign toggle, keyboard (basic keys), and two-line display behavior unchanged in Basic mode.</li>
+</ul>
+<h3 id="ui-ux">UI / UX<a class="headerlink" href="#ui-ux" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Mode toggle</strong> control (e.g. segmented <strong>Basic</strong> / <strong>Scientific</strong>) above or beside the display — obvious which mode is active.</li>
+<li><strong>Scientific keypad</strong> — extra rows for sin/cos/tan, sin⁻¹/cos⁻¹/tan⁻¹, <strong>ln</strong> / <strong>log</strong>, powers (√, x², x^y, 1/x), parentheses, π, e.</li>
+<li><strong>DEG/RAD indicator</strong> on the display region in Scientific mode.</li>
+<li><strong>Expression display</strong> in Scientific mode shows the building expression (including functions and parentheses); overflow uses <strong>horizontal scroll</strong> to the tail. After equals, <strong>two-line layout</strong> — full expression on top, result on active-number line (v1 pattern). Basic mode keeps v1 two-line behavior.</li>
+<li><strong>Card width:</strong> Scientific mode uses a wider card (e.g. <code>max-w-sm</code> / <code>max-w-md</code>) than Basic (<code>max-w-xs</code>) to fit extra keys without unusably small buttons.</li>
+<li>Carry forward v1 display formatting (~12 visible digits, float-noise cleanup) and error presentation.</li>
+</ul>
+<h3 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Depends on v1:</strong> Do not start v2 implementation until the v1 <strong><code>story</code></strong> (<a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/21">#21</a>) is closed — all v1 child tickets <strong><code>implemented</code></strong>. First v2 ticket (<a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/39">#39</a>) blocks on #21.</li>
+<li>Build on shipped v1 session module; no stack changes</li>
+<li>PM out-of-scope still applies: no history panel, no themes, no persistence on refresh, no graphing/units/programmer mode</li>
+<li><strong>Tests:</strong> Table-driven Vitest on expression parser/evaluator (PEMDAS, parens, trig deg/rad, domain errors); integration tests for mode switching and Basic-mode regression (v1 scenarios unchanged)</li>
+<li><strong>Storybook:</strong> Calculator stories for Basic vs Scientific layouts, DEG/RAD toggle, scientific errors, long-expression scroll</li>
+</ul>
+<h3 id="ticket-progress">Ticket progress<a class="headerlink" href="#ticket-progress" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Title</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/39">#39</a></td>
+<td>Scientific expression evaluator module</td>
+<td>in-review</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/40">#40</a></td>
+<td>Mode toggle, dual-engine orchestrator, and scientific arithmetic UI</td>
+<td>in-review</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/41">#41</a></td>
+<td>Scientific unary functions and full keypad</td>
+<td>in-review</td>
+</tr>
+<tr>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/42">#42</a></td>
+<td>Scientific keyboard, Storybook v2, and App smoke tests</td>
+<td>in-review</td>
+</tr>
+</tbody>
+</table>
+<p>Set <strong>Status:</strong> to <code>done</code> when all rows are <strong><code>implemented</code></strong>.</p>
+<h3 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h3>
+<p><em>None — product uncertainties tracked in <code>## Questions</code> below.</em></p>
+<h2 id="questions">Questions<a class="headerlink" href="#questions" title="Permanent link">&para;</a></h2>
+<p><strong>Owner:</strong> Engineering (from <code>/grill-with-docs</code>)<br />
+<strong>Last updated:</strong> 2026-08-12</p>
+<p><em><code>/to-spec</code> → <strong><code>needs-info</code></strong>. PM replies → <strong><code>answered</code></strong>. <strong><code>/triage #N</code></strong> fills <strong>Answer</strong> here — never edits spec above.</em></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Issue</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pm-q1-unary-apply</td>
+<td><a href="https://github.com/irenadimitrova1/calculator-ai-demo/issues/37">#37</a></td>
+<td>resolved</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pm-q1-unary-apply-pm-q1-unary-apply">pm-q1-unary-apply {#pm-q1-unary-apply}<a class="headerlink" href="#pm-q1-unary-apply-pm-q1-unary-apply" title="Permanent link">&para;</a></h3>
+<p><strong>Prompt:</strong> Unary functions — how should sin, √, x², 1/x, and log keys behave? This couples to the evaluation model but is a separate UX choice.</p>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>immediate-unary</code></td>
+<td>Immediate unary — sin/cos/tan/√/x²/1/x apply to the active number on press (classic scientific keypad) <em>(Recommended)</em></td>
+</tr>
+<tr>
+<td><code>expression-token</code></td>
+<td>Expression token — functions build the expression string; everything evaluates on equals</td>
+</tr>
+<tr>
+<td><code>record-open</code></td>
+<td>Record as open question for PM/PO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assumption (if blocked):</strong> <code>immediate-unary</code> — immediate unary apply on press until PM/PO confirms</p>
+<p><strong>Answer:</strong> <code>immediate-unary</code> — Immediate unary — sin/cos/tan/√/x²/1/x apply to the active number on press (classic scientific keypad)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "search.suggest", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

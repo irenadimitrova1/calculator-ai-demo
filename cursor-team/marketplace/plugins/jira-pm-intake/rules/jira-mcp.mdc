@@ -1,0 +1,18 @@
+---
+description: Jira MCP for PMs — pick site first, suggest epics and labels, confirm before create. Use when creating or editing Jira stories, tasks, epics, labels, or status.
+alwaysApply: false
+---
+
+Primary audience: **non-technical PMs**. Use plain language.
+
+When the user wants Jira work (epics, stories, tasks, tickets, labels, status):
+
+1. Discover Jira MCP tools (`jira|atlassian`). Auth if needed. Load schemas before CallMcpTool.
+
+2. **Site first.** Read `jira-sites.json` in this plugin. Resolve site from catalog, pasted `https://…atlassian.net` URL, or issue URL. Pass `cloudId` on every MCP call when supported. Do not mix sites in one session.
+
+3. On the chosen site, fetch **all** open epics and **all** labels for the project. Suggest matches **(Recommended)** with a one-line reason.
+
+4. Grill with `/jira-grill`, then `/jira-story`, then `/jira-tasks`. Confirm in AskQuestion before create.
+
+5. Full preview + Revise menu before create. Return keys and URLs after create.
