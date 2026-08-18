@@ -3,4 +3,10 @@ export {
   PERSISTED_VERSION,
   type PersistedStateV1,
 } from './types'
-export { loadPersistedState, savePersistedState, STORAGE_KEY } from './storage'
+export {
+  isStorageDegraded,
+  loadPersistedState,
+  resetStorageDegradedForTests,
+  savePersistedState,
+  STORAGE_KEY,
+} from './storage'

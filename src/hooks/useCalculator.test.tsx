@@ -2,7 +2,11 @@ import { renderHook, act } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { HISTORY_CAP } from '@/lib/calculation-history'
-import { loadPersistedState, STORAGE_KEY } from '@/lib/calculator-persistence'
+import {
+  loadPersistedState,
+  resetStorageDegradedForTests,
+  STORAGE_KEY,
+} from '@/lib/calculator-persistence'
 import { useCalculator } from '@/hooks/useCalculator'
 
 function createLocalStorageMock(): Storage {
@@ -42,6 +46,7 @@ describe('useCalculator history and persistence', () => {
   let storage: Storage
 
   beforeEach(() => {
+    resetStorageDegradedForTests()
     storage = createLocalStorageMock()
     vi.stubGlobal('localStorage', storage)
   })
@@ -238,5 +243,59 @@ describe('useCalculator history and persistence', () => {
     expect(result.current.history).toHaveLength(HISTORY_CAP)
     expect(result.current.history[0]?.id).toBe(String(HISTORY_CAP + 2))
     expect(loadPersistedState().history).toHaveLength(HISTORY_CAP)
+  })
+
+  it('shows storage notice when localStorage throws on save', () => {
+    vi.stubGlobal('localStorage', {
+      getItem: () => null,
+      setItem: () => {
+        throw new Error('storage blocked')
+      },
+      removeItem: () => {},
+      clear: () => {},
+      key: () => null,
+      length: 0,
+    })
+
+    const { result } = renderHook(() => useCalculator())
+
+    expect(result.current.showStorageNotice).toBe(false)
+
+    basicEquals(result.current, 2, 'add', 3)
+
+    expect(result.current.showStorageNotice).toBe(true)
+  })
+
+  it('hides storage notice after dismiss', () => {
+    vi.stubGlobal('localStorage', {
+      getItem: () => null,
+      setItem: () => {
+        throw new Error('storage blocked')
+      },
+      removeItem: () => {},
+      clear: () => {},
+      key: () => null,
+      length: 0,
+    })
+
+    const { result } = renderHook(() => useCalculator())
+
+    basicEquals(result.current, 2, 'add', 3)
+    expect(result.current.showStorageNotice).toBe(true)
+
+    act(() => {
+      result.current.dismissStorageNotice()
+    })
+
+    expect(result.current.showStorageNotice).toBe(false)
+
+    act(() => {
+      result.current.pressDigit(1)
+      result.current.pressOperator('add')
+      result.current.pressDigit(1)
+      result.current.pressEquals()
+    })
+
+    expect(result.current.showStorageNotice).toBe(false)
   })
 })
