@@ -16,7 +16,8 @@ function isHistoryEntry(value: unknown): value is HistoryEntry {
   return (
     typeof entry.id === 'string' &&
     typeof entry.expression === 'string' &&
-    typeof entry.result === 'string'
+    typeof entry.result === 'string' &&
+    (entry.completedAt === undefined || typeof entry.completedAt === 'number')
   )
 }
 

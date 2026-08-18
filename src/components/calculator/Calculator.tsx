@@ -1,11 +1,17 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { Display } from '@/components/calculator/Display'
+import { HistoryPanel } from '@/components/calculator/HistoryPanel'
 import { Keypad } from '@/components/calculator/Keypad'
 import { ScientificKeypad } from '@/components/calculator/ScientificKeypad'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useCalculator } from '@/hooks/useCalculator'
+import {
+  loadHistoryPanelVisible,
+  saveHistoryPanelVisible,
+} from '@/lib/history-panel-preference'
 import { mapCalculatorKey } from '@/lib/map-calculator-key'
 
 export function Calculator() {
@@ -35,7 +41,20 @@ export function Calculator() {
     pressConstant,
     pressPower,
     pressUnaryFunction,
+    history,
+    recallHistory,
+    clearHistory,
   } = useCalculator()
+
+  const [historyPanelVisible, setHistoryPanelVisible] = useState(loadHistoryPanelVisible)
+
+  const handleToggleHistoryPanel = useCallback(() => {
+    setHistoryPanelVisible((current) => {
+      const next = !current
+      saveHistoryPanelVisible(next)
+      return next
+    })
+  }, [])
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -104,18 +123,31 @@ export function Calculator() {
   )
 
   return (
-    // Calculator keyboard surface — v1 spec requires auto-focus and key capture on load
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- role application + tabIndex is the standard calculator widget pattern
-    <div
-      aria-label="Calculator"
-      autoFocus // eslint-disable-line jsx-a11y/no-autofocus -- v1 spec: keyboard works immediately on load
-      className="outline-none"
-      onKeyDown={handleKeyDown}
-      role="application"
-      tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- focus target for keyboard input
-    >
-      <Card className={mode === 'scientific' ? 'w-full max-w-md' : 'w-full max-w-xs'}>
-        <CardContent className="flex flex-col gap-4">
+    <div className="flex w-full flex-col items-center gap-4 md:flex-row md:items-start md:justify-center md:gap-6">
+      {/* Calculator keyboard surface — v1 spec requires auto-focus and key capture on load */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- role application + tabIndex is the standard calculator widget pattern */}
+      <div
+        aria-label="Calculator"
+        autoFocus // eslint-disable-line jsx-a11y/no-autofocus -- v1 spec: keyboard works immediately on load
+        className={`shrink-0 outline-none ${mode === 'scientific' ? 'w-[28rem]' : 'w-80'}`}
+        onKeyDown={handleKeyDown}
+        role="application"
+        tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- focus target for keyboard input
+      >
+        <div className="mb-2 flex justify-end">
+          <Button
+            aria-label={historyPanelVisible ? 'Hide history' : 'Show history'}
+            aria-pressed={historyPanelVisible}
+            onClick={handleToggleHistoryPanel}
+            size="sm"
+            type="button"
+            variant="outline"
+          >
+            {historyPanelVisible ? 'Hide history' : 'Show history'}
+          </Button>
+        </div>
+        <Card className="w-full">
+          <CardContent className="flex flex-col gap-4">
           <ToggleGroup
             aria-label="Calculator mode"
             className="w-full"
@@ -198,6 +230,15 @@ export function Calculator() {
           />
         </CardContent>
       </Card>
+      </div>
+
+      {historyPanelVisible ? (
+        <HistoryPanel
+          entries={history}
+          onClear={clearHistory}
+          onRecall={recallHistory}
+        />
+      ) : null}
     </div>
   )
 }

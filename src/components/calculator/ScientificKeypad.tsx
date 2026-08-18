@@ -23,7 +23,7 @@ function UnaryButton({
   return (
     <Button
       aria-label={ariaLabel}
-      className="h-14 text-lg"
+      className="h-14 min-w-0 px-1 text-sm sm:text-base"
       onClick={() => onUnary(name)}
       size="lg"
       type="button"
@@ -63,7 +63,7 @@ export function ScientificKeypad({
         <UnaryButton ariaLabel="reciprocal" label="1/x" name="reciprocal" onUnary={onUnary} />
         <Button
           aria-label="x to the power y"
-          className="h-14 text-lg"
+          className="h-14 min-w-0 px-1 text-sm sm:text-base"
           onClick={onPower}
           size="lg"
           type="button"
@@ -73,7 +73,7 @@ export function ScientificKeypad({
         </Button>
         <Button
           aria-label="open parenthesis"
-          className="h-14 text-lg"
+          className="h-14 min-w-0 px-1 text-sm sm:text-base"
           onClick={onOpenParen}
           size="lg"
           type="button"
@@ -83,7 +83,7 @@ export function ScientificKeypad({
         </Button>
         <Button
           aria-label="close parenthesis"
-          className="h-14 text-lg"
+          className="h-14 min-w-0 px-1 text-sm sm:text-base"
           onClick={onCloseParen}
           size="lg"
           type="button"
@@ -93,7 +93,7 @@ export function ScientificKeypad({
         </Button>
         <Button
           aria-label="pi"
-          className="h-14 text-lg"
+          className="h-14 min-w-0 px-1 text-sm sm:text-base"
           onClick={() => onConstant('pi')}
           size="lg"
           type="button"
@@ -103,7 +103,7 @@ export function ScientificKeypad({
         </Button>
         <Button
           aria-label="e"
-          className="h-14 text-lg"
+          className="h-14 min-w-0 px-1 text-sm sm:text-base"
           onClick={() => onConstant('e')}
           size="lg"
           type="button"

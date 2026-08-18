@@ -36,24 +36,22 @@ export function Display({
     <div
       aria-label="Calculator display"
       aria-live="polite"
-      className="relative rounded-lg bg-muted/50 px-4 py-3 font-mono tabular-nums"
+      className="rounded-lg bg-muted/50 px-4 py-3 font-mono tabular-nums"
       role="status"
     >
-      {hasMemory ? (
-        <span
-          aria-label="Memory stored"
-          className="absolute left-4 top-3 text-sm font-semibold text-muted-foreground"
-        >
-          M
-        </span>
-      ) : null}
-      {mode === 'scientific' ? (
-        <span
-          aria-label={`Angle unit: ${angleUnit === 'deg' ? 'degrees' : 'radians'}`}
-          className="absolute right-4 top-3 text-sm font-semibold text-muted-foreground"
-        >
-          {angleUnit === 'deg' ? 'DEG' : 'RAD'}
-        </span>
+      {hasMemory || mode === 'scientific' ? (
+        <div className="mb-1 flex min-h-5 items-center justify-between text-sm font-semibold text-muted-foreground">
+          {hasMemory ? (
+            <span aria-label="Memory stored">M</span>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          {mode === 'scientific' ? (
+            <span aria-label={`Angle unit: ${angleUnit === 'deg' ? 'degrees' : 'radians'}`}>
+              {angleUnit === 'deg' ? 'DEG' : 'RAD'}
+            </span>
+          ) : null}
+        </div>
       ) : null}
       <div
         ref={expressionRef}
