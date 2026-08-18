@@ -615,6 +615,22 @@ describe('calculation session', () => {
       expect(state.phase).toBe(expected.phase)
     }
   })
+
+  it('recallHistoryResult clears expression and sets entry phase', () => {
+    const state = runScenario([
+      digit(2),
+      operator('add'),
+      digit(3),
+      equals,
+      { type: 'recallHistoryResult', result: '16' },
+    ])
+
+    expect(state.expressionLine).toBe('')
+    expect(state.activeNumber).toBe('16')
+    expect(state.phase).toBe('entry')
+    expect(state.runningTotal).toBeNull()
+    expect(state.pendingOperator).toBeNull()
+  })
 })
 
 describe('hasStoredMemory', () => {

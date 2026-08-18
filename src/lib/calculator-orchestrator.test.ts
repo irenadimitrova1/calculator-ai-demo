@@ -158,4 +158,33 @@ describe('calculator orchestrator', () => {
     expect(getActiveNumber(state)).toBe('3.5')
     expect(getExpressionLine(state)).toMatch(/=$/)
   })
+
+  it('recalls history result into basic session', () => {
+    const state = runScenario([
+      digit(2),
+      operator('add'),
+      digit(3),
+      equals,
+      { type: 'recallHistoryResult', result: '16' },
+    ])
+
+    expect(getExpressionLine(state)).toBe('')
+    expect(getActiveNumber(state)).toBe('16')
+    expect(state.basic.phase).toBe('entry')
+  })
+
+  it('recalls history result into scientific session', () => {
+    const state = runScenario([
+      { type: 'setMode', mode: 'scientific' },
+      digit(2),
+      operator('add'),
+      digit(3),
+      equals,
+      { type: 'recallHistoryResult', result: '99' },
+    ])
+
+    expect(getExpressionLine(state)).toBe('')
+    expect(getActiveNumber(state)).toBe('99')
+    expect(state.scientific.phase).toBe('entry')
+  })
 })

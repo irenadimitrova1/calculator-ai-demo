@@ -30,6 +30,7 @@ export type CalculationSessionAction =
   | { type: 'memoryAdd' }
   | { type: 'memorySubtract' }
   | { type: 'backspace' }
+  | { type: 'recallHistoryResult'; result: string }
 
 export const initialState: CalculationSessionState = {
   phase: 'entry',
@@ -430,6 +431,17 @@ export function transition(
         activeNumber: state.activeNumber.slice(0, -1),
       }
     }
+    case 'recallHistoryResult':
+      return {
+        phase: 'entry',
+        expressionLine: '',
+        activeNumber: action.result,
+        runningTotal: null,
+        pendingOperator: null,
+        lastOperator: null,
+        lastSecondOperand: null,
+        memory: state.memory,
+      }
     default:
       return state
   }
