@@ -14,6 +14,7 @@ import {
   readContext,
   readLedger,
   resolveParentStory,
+  estimateEventCostCents,
   storyHasCostReport,
   sumTokens,
 } from './lib.mjs'
@@ -126,19 +127,22 @@ function buildReport(storyNumber, sessions, usageEvents) {
         sessions: new Set(),
         tokens: 0,
         cents: 0,
+        estCents: 0,
       })
     }
     const group = byGroup.get(groupKey)
     group.sessions.add(event.conversationId)
     group.tokens += sumTokens(event.tokenUsage)
     group.cents += event.chargedCents ?? 0
+    group.estCents += estimateEventCostCents(event)
 
     if (!byContributor.has(contributor)) {
-      byContributor.set(contributor, { tokens: 0, cents: 0 })
+      byContributor.set(contributor, { tokens: 0, cents: 0, estCents: 0 })
     }
     const contrib = byContributor.get(contributor)
     contrib.tokens += sumTokens(event.tokenUsage)
     contrib.cents += event.chargedCents ?? 0
+    contrib.estCents += estimateEventCostCents(event)
   }
 
   const rows = [...byGroup.values()].sort((a, b) => {
@@ -149,6 +153,7 @@ function buildReport(storyNumber, sessions, usageEvents) {
   const totalSessions = new Set(matchedEvents.map((e) => e.conversationId)).size
   const totalTokens = rows.reduce((sum, r) => sum + r.tokens, 0)
   const totalCents = rows.reduce((sum, r) => sum + r.cents, 0)
+  const totalEstCents = rows.reduce((sum, r) => sum + r.estCents, 0)
 
   const childNumbers = findChildIssues(storyNumber)
     .map((i) => i.number)
@@ -159,27 +164,27 @@ function buildReport(storyNumber, sessions, usageEvents) {
       : 'none'
 
   let markdown = '## AI implementation cost\n\n'
-  markdown += '| Phase | Issue | Contributor | Sessions | Tokens | Cost (USD) |\n'
-  markdown += '|-------|-------|-------------|----------|--------|------------|\n'
+  markdown += '| Phase | Issue | Contributor | Sessions | Tokens | Est. cost (USD) | Cost (USD) |\n'
+  markdown += '|-------|-------|-------------|----------|--------|-----------------|------------|\n'
 
   for (const row of rows) {
     const issueLabel = row.child ? `#${row.child}` : '—'
-    markdown += `| ${row.phase} | ${issueLabel} | ${row.contributor} | ${row.sessions.size} | ${formatTokenCount(row.tokens)} | ${formatUsd(row.cents)} |\n`
+    markdown += `| ${row.phase} | ${issueLabel} | ${row.contributor} | ${row.sessions.size} | ${formatTokenCount(row.tokens)} | ${formatUsd(row.estCents)} | ${formatUsd(row.cents)} |\n`
   }
 
-  markdown += `| **Story total** | **#${storyNumber}** | | **${totalSessions}** | **${formatTokenCount(totalTokens)}** | **${formatUsd(totalCents)}** |\n\n`
+  markdown += `| **Story total** | **#${storyNumber}** | | **${totalSessions}** | **${formatTokenCount(totalTokens)}** | **${formatUsd(totalEstCents)}** | **${formatUsd(totalCents)}** |\n\n`
   markdown += '### Per-contributor subtotals\n\n'
-  markdown += '| Contributor | Tokens | Cost (USD) |\n'
-  markdown += '|-------------|--------|------------|\n'
+  markdown += '| Contributor | Tokens | Est. cost (USD) | Cost (USD) |\n'
+  markdown += '|-------------|--------|-----------------|------------|\n'
 
   for (const [contributor, totals] of [...byContributor.entries()].sort((a, b) =>
     a[0].localeCompare(b[0]),
   )) {
-    markdown += `| ${contributor} | ${formatTokenCount(totals.tokens)} | ${formatUsd(totals.cents)} |\n`
+    markdown += `| ${contributor} | ${formatTokenCount(totals.tokens)} | ${formatUsd(totals.estCents)} | ${formatUsd(totals.cents)} |\n`
   }
 
   const reconciledAt = new Date().toISOString()
-  markdown += `\n_Reconciled from Cursor Admin API at ${reconciledAt}. Registry: story #${storyNumber} + children ${childRange}. Subagent tokens included._\n`
+  markdown += `\n_Reconciled from Cursor Admin API at ${reconciledAt}. Registry: story #${storyNumber} + children ${childRange}. Subagent tokens included. Est. cost = tokenUsage.totalCents + Cursor Token Rate; Cost = billed chargedCents._\n`
 
   const latestSessionTs = sessions.reduce((max, s) => {
     const ts = Date.parse(s.ts ?? '')
@@ -194,6 +199,7 @@ function buildReport(storyNumber, sessions, usageEvents) {
     sessionsMatched: totalSessions,
     totalTokens,
     totalCents,
+    totalEstCents,
     incomplete,
     markdown,
   }

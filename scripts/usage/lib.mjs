@@ -112,6 +112,24 @@ export function sumTokens(tokenUsage) {
   )
 }
 
+/**
+ * Estimated model cost from Cursor Admin API fields (list price, not billed amount).
+ * Uses tokenUsage.totalCents (per-type model pricing) + cursorTokenFee when present.
+ * Falls back to chargedCents for non-token events with no tokenUsage breakdown.
+ */
+export function estimateEventCostCents(event) {
+  const tokenUsage = event?.tokenUsage
+  if (tokenUsage != null && typeof tokenUsage.totalCents === 'number') {
+    const modelCents = tokenUsage.totalCents
+    const fee = typeof event.cursorTokenFee === 'number' ? event.cursorTokenFee : 0
+    return modelCents + fee
+  }
+  if (typeof event?.chargedCents === 'number') {
+    return event.chargedCents
+  }
+  return 0
+}
+
 export function formatTokenCount(n) {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
   if (n >= 1_000) return `${Math.round(n / 1_000)}k`
