@@ -7,6 +7,64 @@
     <title>Calculator PoC</title>
   </head>
   <body>
+    <!-- Keep STORAGE_KEY, VERSION, and skin ids in sync with src/lib/calculator-appearance/constants.ts -->
+    <script>
+      (function () {
+        var STORAGE_KEY = 'calculator-appearance';
+        var VERSION = 1;
+        var DEFAULT_SKIN = 'classic';
+        var VALID_SKINS = ['classic', 'baby-pink', 'console', 'retro'];
+
+        function resolveSystemColorScheme() {
+          return window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+        }
+
+        function normalizeSkin(skin) {
+          return VALID_SKINS.indexOf(skin) !== -1 ? skin : DEFAULT_SKIN;
+        }
+
+        function parseAppearance(raw) {
+          try {
+            var data = JSON.parse(raw);
+            if (!data || data.version !== VERSION) return null;
+            if (data.colorScheme !== 'light' && data.colorScheme !== 'dark') return null;
+            if (typeof data.skin !== 'string') return null;
+            return {
+              colorScheme: data.colorScheme,
+              skin: normalizeSkin(data.skin),
+            };
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function applyAppearance(preference) {
+          var root = document.documentElement;
+          root.classList.toggle('dark', preference.colorScheme === 'dark');
+          root.dataset.skin = preference.skin;
+        }
+
+        var preference = {
+          colorScheme: resolveSystemColorScheme(),
+          skin: DEFAULT_SKIN,
+        };
+
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (raw !== null) {
+            var parsed = parseAppearance(raw);
+            if (parsed) preference = parsed;
+          }
+        } catch (e) {
+          // Session-only degrade
+        }
+
+        applyAppearance(preference);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

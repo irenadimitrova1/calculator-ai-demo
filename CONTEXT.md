@@ -107,3 +107,15 @@ _Avoid_: Max history, limit
 **Local persistence**:
 Browser-local storage (`localStorage`) that restores calculation history and memory after page refresh. Does not persist mode, angle unit, or in-progress session state.
 _Avoid_: Saved state, offline sync
+
+**Appearance preference**:
+The user's chosen light/dark mode and color skin. Persisted in a dedicated browser-local key, separate from calculation history and memory.
+_Avoid_: Theme settings, user theme
+
+**Color skin**:
+A predefined accent palette (e.g. neutral default, blue, green) applied via CSS token overrides. Independent of the light/dark toggle — each skin defines both light and dark variants.
+_Avoid_: Theme pack, color theme
+
+**Light/dark mode**:
+Whether the calculator uses light or dark surface colors. On first visit follows `prefers-color-scheme`; after the user picks, the choice sticks across refresh.
+_Avoid_: Dark mode toggle, theme mode
