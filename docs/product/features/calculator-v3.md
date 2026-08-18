@@ -118,7 +118,7 @@ _Sourced from PM sections above. `/to-spec` reads this section. `/to-tickets` re
 |-------|-------|--------|
 | [#51](https://github.com/irenadimitrova1/calculator-ai-demo/issues/51) | Calculation history module | in-review |
 | [#52](https://github.com/irenadimitrova1/calculator-ai-demo/issues/52) | Persistence adapter and session history integration | in-review |
-| [#53](https://github.com/irenadimitrova1/calculator-ai-demo/issues/53) | History panel UI and responsive layout | ready-for-agent |
+| [#53](https://github.com/irenadimitrova1/calculator-ai-demo/issues/53) | History panel UI and responsive layout | in-review |
 | [#54](https://github.com/irenadimitrova1/calculator-ai-demo/issues/54) | Storybook v3, storage degrade notice, and App smoke tests | ready-for-agent |
 
 Set **Status:** to `done` when all rows are **`implemented`**.

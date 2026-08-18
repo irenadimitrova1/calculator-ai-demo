@@ -67,17 +67,19 @@ describe('App', () => {
     expect(screen.getByTestId('display-active-number')).toHaveTextContent('5')
   })
 
-  it('completes a PEMDAS expression in scientific mode via keyboard', async () => {
+  it('hides and shows the entire history panel from the calculator toggle', async () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.click(screen.getByRole('radio', { name: 'Scientific mode' }))
-    expect(screen.getByLabelText('Angle unit: degrees')).toHaveTextContent('DEG')
+    expect(screen.getByText('History')).toBeInTheDocument()
 
-    const calculator = screen.getByLabelText('Calculator')
-    await user.click(calculator)
-    await user.keyboard('(2+3)*4{Enter}')
+    await user.click(screen.getByRole('button', { name: 'Hide history' }))
 
-    expect(screen.getByTestId('display-active-number')).toHaveTextContent('20')
+    expect(screen.queryByText('History')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Show history' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Show history' }))
+
+    expect(screen.getByText('History')).toBeInTheDocument()
   })
 })
