@@ -22,7 +22,6 @@ function unary(name: ImmediateUnaryName): ScientificSessionAction {
 }
 
 const equals: ScientificSessionAction = { type: 'equals' }
-const allClear: ScientificSessionAction = { type: 'allClear' }
 const percent: ScientificSessionAction = { type: 'percent' }
 
 function runScenario(actions: ScientificSessionAction[]) {
@@ -122,5 +121,21 @@ describe('scientific session unary functions — direct negative sqrt', () => {
 
     expect(state.activeNumber).toBe('Error')
     expect(state.phase).toBe('error')
+  })
+})
+
+describe('scientific session history recall', () => {
+  it('recallHistoryResult clears expression and sets entry phase', () => {
+    const state = runScenario([
+      digit(2),
+      operator('add'),
+      digit(3),
+      equals,
+      { type: 'recallHistoryResult', result: '16' },
+    ])
+
+    expect(state.expressionLine).toBe('')
+    expect(state.activeNumber).toBe('16')
+    expect(state.phase).toBe('entry')
   })
 })

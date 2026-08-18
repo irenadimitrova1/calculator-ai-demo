@@ -30,6 +30,7 @@ export type CalculatorOrchestratorAction =
   | ScientificSessionAction
   | { type: 'setMode'; mode: CalculatorMode }
   | { type: 'setAngleUnit'; angleUnit: AngleUnit }
+  | { type: 'recallHistoryResult'; result: string }
 
 export const initialOrchestratorState: CalculatorOrchestratorState = {
   mode: 'basic',

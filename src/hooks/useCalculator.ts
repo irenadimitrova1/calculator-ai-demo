@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { CalculatorMode } from '@/lib/calculator-orchestrator'
 import {
@@ -8,92 +8,233 @@ import {
   initialOrchestratorState,
   transition,
   type AngleUnit,
+  type CalculatorOrchestratorAction,
+  type CalculatorOrchestratorState,
 } from '@/lib/calculator-orchestrator'
 import type { Operator } from '@/lib/calculation'
+import {
+  appendEntry,
+  clearHistory as clearHistoryEntries,
+  getRecallResult,
+  type HistoryEntry,
+} from '@/lib/calculation-history'
+import { loadPersistedState, savePersistedState } from '@/lib/calculator-persistence'
 import type { ImmediateUnaryName } from '@/lib/expression'
 
+type SessionPhase = 'entry' | 'result' | 'error'
+
+function getSessionPhase(state: CalculatorOrchestratorState): SessionPhase {
+  return state.mode === 'basic' ? state.basic.phase : state.scientific.phase
+}
+
+function stripTrailingEquals(expressionLine: string): string {
+  if (expressionLine.endsWith(' =')) {
+    return expressionLine.slice(0, -2)
+  }
+  if (expressionLine.endsWith('=')) {
+    return expressionLine.slice(0, -1).trimEnd()
+  }
+  return expressionLine
+}
+
+function shouldAppendHistory(
+  prevState: CalculatorOrchestratorState,
+  nextState: CalculatorOrchestratorState,
+): boolean {
+  const nextPhase = getSessionPhase(nextState)
+  if (nextPhase === 'error' || nextPhase !== 'result') {
+    return false
+  }
+
+  const prevPhase = getSessionPhase(prevState)
+  if (nextState.mode === 'basic' && prevPhase === 'result') {
+    return false
+  }
+
+  return true
+}
+
+function createInitialOrchestratorState(memory: number): CalculatorOrchestratorState {
+  return {
+    ...initialOrchestratorState,
+    memory,
+    basic: { ...initialOrchestratorState.basic, memory },
+    scientific: { ...initialOrchestratorState.scientific, memory },
+  }
+}
+
+function isMemoryMutationAction(action: CalculatorOrchestratorAction): boolean {
+  return (
+    action.type === 'memoryClear' ||
+    action.type === 'memoryRecall' ||
+    action.type === 'memoryAdd' ||
+    action.type === 'memorySubtract'
+  )
+}
+
 export function useCalculator() {
-  const [state, dispatch] = useReducer(transition, initialOrchestratorState)
+  const [initialPersisted] = useState(() => loadPersistedState())
 
-  const pressDigit = useCallback((digit: number) => {
-    dispatch({ type: 'digit', digit })
+  const [state, setState] = useState<CalculatorOrchestratorState>(() =>
+    createInitialOrchestratorState(initialPersisted.memory),
+  )
+
+  const [history, setHistory] = useState<HistoryEntry[]>(() => initialPersisted.history)
+
+  const historyRef = useRef(history)
+
+  useEffect(() => {
+    historyRef.current = history
+  }, [history])
+
+  const persist = useCallback(
+    (historyEntries: HistoryEntry[], memory: number) => {
+      savePersistedState({
+        version: 1,
+        history: historyEntries,
+        memory,
+      })
+    },
+    [],
+  )
+
+  const dispatchAction = useCallback((action: CalculatorOrchestratorAction) => {
+    setState((prev) => transition(prev, action))
   }, [])
 
-  const pressOperator = useCallback((operator: Operator) => {
-    dispatch({ type: 'operator', operator })
-  }, [])
+  const dispatchWithPersist = useCallback(
+    (action: CalculatorOrchestratorAction) => {
+      setState((prev) => {
+        const nextState = transition(prev, action)
+        if (isMemoryMutationAction(action)) {
+          persist(historyRef.current, nextState.memory)
+        }
+        return nextState
+      })
+    },
+    [persist],
+  )
+
+  const pressDigit = useCallback(
+    (digit: number) => {
+      dispatchAction({ type: 'digit', digit })
+    },
+    [dispatchAction],
+  )
+
+  const pressOperator = useCallback(
+    (operator: Operator) => {
+      dispatchAction({ type: 'operator', operator })
+    },
+    [dispatchAction],
+  )
 
   const pressEquals = useCallback(() => {
-    dispatch({ type: 'equals' })
-  }, [])
+    setState((prev) => {
+      const nextState = transition(prev, { type: 'equals' })
+      if (shouldAppendHistory(prev, nextState)) {
+        const nextHistory = appendEntry(historyRef.current, {
+          expression: stripTrailingEquals(getExpressionLine(nextState)),
+          result: getActiveNumber(nextState),
+        })
+        historyRef.current = nextHistory
+        setHistory(nextHistory)
+        persist(nextHistory, nextState.memory)
+      }
+      return nextState
+    })
+  }, [persist])
 
   const pressAllClear = useCallback(() => {
-    dispatch({ type: 'allClear' })
-  }, [])
+    dispatchAction({ type: 'allClear' })
+  }, [dispatchAction])
 
   const pressClear = useCallback(() => {
-    dispatch({ type: 'clear' })
-  }, [])
+    dispatchAction({ type: 'clear' })
+  }, [dispatchAction])
 
   const pressDecimal = useCallback(() => {
-    dispatch({ type: 'decimal' })
-  }, [])
+    dispatchAction({ type: 'decimal' })
+  }, [dispatchAction])
 
   const pressSignToggle = useCallback(() => {
-    dispatch({ type: 'signToggle' })
-  }, [])
+    dispatchAction({ type: 'signToggle' })
+  }, [dispatchAction])
 
   const pressPercent = useCallback(() => {
-    dispatch({ type: 'percent' })
-  }, [])
+    dispatchAction({ type: 'percent' })
+  }, [dispatchAction])
 
   const pressMemoryClear = useCallback(() => {
-    dispatch({ type: 'memoryClear' })
-  }, [])
+    dispatchWithPersist({ type: 'memoryClear' })
+  }, [dispatchWithPersist])
 
   const pressMemoryRecall = useCallback(() => {
-    dispatch({ type: 'memoryRecall' })
-  }, [])
+    dispatchWithPersist({ type: 'memoryRecall' })
+  }, [dispatchWithPersist])
 
   const pressMemoryAdd = useCallback(() => {
-    dispatch({ type: 'memoryAdd' })
-  }, [])
+    dispatchWithPersist({ type: 'memoryAdd' })
+  }, [dispatchWithPersist])
 
   const pressMemorySubtract = useCallback(() => {
-    dispatch({ type: 'memorySubtract' })
-  }, [])
+    dispatchWithPersist({ type: 'memorySubtract' })
+  }, [dispatchWithPersist])
 
   const pressBackspace = useCallback(() => {
-    dispatch({ type: 'backspace' })
-  }, [])
+    dispatchAction({ type: 'backspace' })
+  }, [dispatchAction])
 
   const pressOpenParen = useCallback(() => {
-    dispatch({ type: 'openParen' })
-  }, [])
+    dispatchAction({ type: 'openParen' })
+  }, [dispatchAction])
 
   const pressCloseParen = useCallback(() => {
-    dispatch({ type: 'closeParen' })
-  }, [])
+    dispatchAction({ type: 'closeParen' })
+  }, [dispatchAction])
 
   const pressConstant = useCallback((name: 'pi' | 'e') => {
-    dispatch({ type: 'constant', name })
-  }, [])
+    dispatchAction({ type: 'constant', name })
+  }, [dispatchAction])
 
   const pressPower = useCallback(() => {
-    dispatch({ type: 'power' })
-  }, [])
+    dispatchAction({ type: 'power' })
+  }, [dispatchAction])
 
   const pressUnaryFunction = useCallback((name: ImmediateUnaryName) => {
-    dispatch({ type: 'unaryFunction', name })
-  }, [])
+    dispatchAction({ type: 'unaryFunction', name })
+  }, [dispatchAction])
 
-  const setMode = useCallback((mode: CalculatorMode) => {
-    dispatch({ type: 'setMode', mode })
-  }, [])
+  const setMode = useCallback(
+    (mode: CalculatorMode) => {
+      dispatchAction({ type: 'setMode', mode })
+    },
+    [dispatchAction],
+  )
 
-  const setAngleUnit = useCallback((angleUnit: AngleUnit) => {
-    dispatch({ type: 'setAngleUnit', angleUnit })
-  }, [])
+  const setAngleUnit = useCallback(
+    (angleUnit: AngleUnit) => {
+      dispatchAction({ type: 'setAngleUnit', angleUnit })
+    },
+    [dispatchAction],
+  )
+
+  const recallHistory = useCallback(
+    (entry: HistoryEntry) => {
+      dispatchAction({ type: 'recallHistoryResult', result: getRecallResult(entry) })
+    },
+    [dispatchAction],
+  )
+
+  const clearHistory = useCallback(() => {
+    const nextHistory = clearHistoryEntries()
+    historyRef.current = nextHistory
+    setHistory(nextHistory)
+    setState((prev) => {
+      persist(nextHistory, prev.memory)
+      return prev
+    })
+  }, [persist])
 
   return {
     mode: state.mode,
@@ -101,6 +242,7 @@ export function useCalculator() {
     expressionLine: getExpressionLine(state),
     activeNumber: getActiveNumber(state),
     hasMemory: hasStoredMemory(state.memory),
+    history,
     setMode,
     setAngleUnit,
     pressDigit,
@@ -121,5 +263,7 @@ export function useCalculator() {
     pressConstant,
     pressPower,
     pressUnaryFunction,
+    recallHistory,
+    clearHistory,
   }
 }

@@ -36,6 +36,7 @@ export type ScientificSessionAction =
   | { type: 'power' }
   | { type: 'unaryFunction'; name: ImmediateUnaryName }
   | { type: 'setAngleUnit'; angleUnit: AngleUnit }
+  | { type: 'recallHistoryResult'; result: string }
 
 export const initialScientificState: ScientificSessionState = {
   phase: 'entry',
@@ -449,6 +450,11 @@ export function transitionScientific(
         expressionLine: peelLastToken(state.expressionLine),
       }
     }
+    case 'recallHistoryResult':
+      return {
+        ...clearedSession(state.memory, state.angleUnit),
+        activeNumber: action.result,
+      }
     default:
       return state
   }
