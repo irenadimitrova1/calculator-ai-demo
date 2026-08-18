@@ -1,13 +1,15 @@
 import { useCallback, useState } from 'react'
 
+import { AppearanceSettings } from '@/components/calculator/AppearanceSettings'
 import { Display } from '@/components/calculator/Display'
 import { HistoryPanel } from '@/components/calculator/HistoryPanel'
 import { Keypad } from '@/components/calculator/Keypad'
 import { ScientificKeypad } from '@/components/calculator/ScientificKeypad'
 import { StorageDegradeNotice } from '@/components/calculator/StorageDegradeNotice'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useAppearancePreferences } from '@/hooks/useAppearancePreferences'
 import { useCalculator } from '@/hooks/useCalculator'
 import {
   loadHistoryPanelVisible,
@@ -48,6 +50,13 @@ export function Calculator() {
     showStorageNotice,
     dismissStorageNotice,
   } = useCalculator()
+
+  const {
+    colorScheme,
+    skin,
+    setColorScheme,
+    setSkin,
+  } = useAppearancePreferences()
 
   const [historyPanelVisible, setHistoryPanelVisible] = useState(loadHistoryPanelVisible)
 
@@ -153,32 +162,41 @@ export function Calculator() {
           </Button>
         </div>
         <Card className="w-full">
-          <CardContent className="flex flex-col gap-4">
-          <ToggleGroup
-            aria-label="Calculator mode"
-            className="w-full"
-            onValueChange={(value) => {
-              if (value === 'basic' || value === 'scientific') {
-                setMode(value)
-              }
-            }}
-            spacing={0}
-            type="single"
-            value={mode}
-            variant="outline"
-          >
-            <ToggleGroupItem aria-label="Basic mode" className="flex-1" value="basic">
-              Basic
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              aria-label="Scientific mode"
-              className="flex-1"
-              value="scientific"
+          <CardHeader className="items-center gap-3">
+            <ToggleGroup
+              aria-label="Calculator mode"
+              className="w-full"
+              onValueChange={(value) => {
+                if (value === 'basic' || value === 'scientific') {
+                  setMode(value)
+                }
+              }}
+              spacing={0}
+              type="single"
+              value={mode}
+              variant="outline"
             >
-              Scientific
-            </ToggleGroupItem>
-          </ToggleGroup>
-
+              <ToggleGroupItem aria-label="Basic mode" className="flex-1" value="basic">
+                Basic
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                aria-label="Scientific mode"
+                className="flex-1"
+                value="scientific"
+              >
+                Scientific
+              </ToggleGroupItem>
+            </ToggleGroup>
+            <CardAction>
+              <AppearanceSettings
+                colorScheme={colorScheme}
+                onColorSchemeChange={setColorScheme}
+                onSkinChange={setSkin}
+                skin={skin}
+              />
+            </CardAction>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
           {mode === 'scientific' ? (
             <ToggleGroup
               aria-label="Angle unit"
