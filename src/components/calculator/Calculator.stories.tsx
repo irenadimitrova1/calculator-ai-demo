@@ -1,7 +1,64 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 
+import { HISTORY_CAP } from '@/lib/calculation-history'
+import type { HistoryEntry } from '@/lib/calculation-history'
+import { PERSISTED_VERSION } from '@/lib/calculator-persistence'
+
 import { Calculator } from './Calculator'
+import { withPersistedState } from './storybook-helpers'
+
+const TODAY = new Date('2026-08-18T14:34:00').getTime()
+const YESTERDAY = new Date('2026-08-17T09:15:00').getTime()
+
+const sampleHistory: HistoryEntry[] = [
+  {
+    id: 'entry-5',
+    expression: '10 − 4',
+    result: '6',
+    completedAt: TODAY,
+  },
+  {
+    id: 'entry-4',
+    expression: '4 × 2',
+    result: '8',
+    completedAt: TODAY,
+  },
+  {
+    id: 'entry-3',
+    expression: '9 ÷ 3',
+    result: '3',
+    completedAt: YESTERDAY,
+  },
+  {
+    id: 'entry-2',
+    expression: '2 + 3',
+    result: '5',
+    completedAt: YESTERDAY,
+  },
+  {
+    id: 'entry-1',
+    expression: '7 − 1',
+    result: '6',
+    completedAt: YESTERDAY,
+  },
+]
+
+const atCapHistory: HistoryEntry[] = Array.from({ length: HISTORY_CAP }, (_, index) => ({
+  id: `cap-${index + 1}`,
+  expression: `${index + 1} + 1`,
+  result: `${index + 2}`,
+  completedAt: TODAY - index * 60_000,
+}))
+
+const postRecallSeed: HistoryEntry[] = [
+  {
+    id: 'recall-entry',
+    expression: '2 + 3',
+    result: '5',
+    completedAt: TODAY,
+  },
+]
 
 const meta = {
   title: 'Calculator',
@@ -133,5 +190,68 @@ export const LongExpressionScroll: Story = {
     const expression = canvas.getByTestId('display-expression')
     expect(expression.className).toContain('overflow-x-auto')
     expect(expression.scrollWidth).toBeGreaterThan(expression.clientWidth)
+  },
+}
+
+export const HistoryEmpty: Story = {
+  decorators: [withPersistedState()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    expect(canvas.getByText('No calculations yet')).toBeInTheDocument()
+  },
+}
+
+export const HistoryPopulated: Story = {
+  decorators: [
+    withPersistedState({
+      version: PERSISTED_VERSION,
+      history: sampleHistory,
+      memory: 0,
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const listbox = canvas.getByRole('listbox', { name: 'Calculation history' })
+    const options = within(listbox).getAllByRole('option')
+
+    expect(options).toHaveLength(5)
+    expect(options[0]).toHaveTextContent('10 − 4 = 6')
+    expect(options[1]).toHaveTextContent('4 × 2 = 8')
+  },
+}
+
+export const HistoryAtCap: Story = {
+  decorators: [
+    withPersistedState({
+      version: PERSISTED_VERSION,
+      history: atCapHistory,
+      memory: 0,
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const listbox = canvas.getByRole('listbox', { name: 'Calculation history' })
+    const options = within(listbox).getAllByRole('option')
+
+    expect(options).toHaveLength(HISTORY_CAP)
+  },
+}
+
+export const HistoryPostRecall: Story = {
+  decorators: [
+    withPersistedState({
+      version: PERSISTED_VERSION,
+      history: postRecallSeed,
+      memory: 0,
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    await userEvent.click(canvas.getByRole('option', { name: /2 \+ 3 = 5/ }))
+
+    expect(canvas.getByTestId('display-expression')).toHaveTextContent('')
+    expect(canvas.getByTestId('display-active-number')).toHaveTextContent('5')
   },
 }

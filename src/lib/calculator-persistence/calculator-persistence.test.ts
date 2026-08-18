@@ -2,7 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   DEFAULT_PERSISTED_STATE,
+  isStorageDegraded,
   loadPersistedState,
+  resetStorageDegradedForTests,
   savePersistedState,
   STORAGE_KEY,
 } from '@/lib/calculator-persistence'
@@ -35,6 +37,7 @@ describe('calculator persistence', () => {
   let storage: Storage
 
   beforeEach(() => {
+    resetStorageDegradedForTests()
     storage = createLocalStorageMock()
     vi.stubGlobal('localStorage', storage)
   })
@@ -56,6 +59,7 @@ describe('calculator persistence', () => {
   ])('returns defaults for corrupt data: $name', ({ value }) => {
     storage.setItem(STORAGE_KEY, value)
     expect(loadPersistedState()).toEqual(DEFAULT_PERSISTED_STATE)
+    expect(isStorageDegraded()).toBe(false)
   })
 
   it('round-trips history and memory', () => {
@@ -85,6 +89,7 @@ describe('calculator persistence', () => {
     })
 
     expect(loadPersistedState()).toEqual(DEFAULT_PERSISTED_STATE)
+    expect(isStorageDegraded()).toBe(true)
   })
 
   it('does not throw when localStorage throws on save', () => {
@@ -106,5 +111,6 @@ describe('calculator persistence', () => {
         memory: 0,
       }),
     ).not.toThrow()
+    expect(isStorageDegraded()).toBe(true)
   })
 })

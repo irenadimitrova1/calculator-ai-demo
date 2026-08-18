@@ -18,7 +18,7 @@ import {
   getRecallResult,
   type HistoryEntry,
 } from '@/lib/calculation-history'
-import { loadPersistedState, savePersistedState } from '@/lib/calculator-persistence'
+import { loadPersistedState, isStorageDegraded, savePersistedState } from '@/lib/calculator-persistence'
 import type { ImmediateUnaryName } from '@/lib/expression'
 
 type SessionPhase = 'entry' | 'result' | 'error'
@@ -81,11 +81,20 @@ export function useCalculator() {
 
   const [history, setHistory] = useState<HistoryEntry[]>(() => initialPersisted.history)
 
+  const [noticeDismissed, setNoticeDismissed] = useState(false)
+  const [showStorageNotice, setShowStorageNotice] = useState(() => isStorageDegraded())
+
   const historyRef = useRef(history)
 
   useEffect(() => {
     historyRef.current = history
   }, [history])
+
+  const updateStorageNotice = useCallback(() => {
+    if (!noticeDismissed && isStorageDegraded()) {
+      setShowStorageNotice(true)
+    }
+  }, [noticeDismissed])
 
   const persist = useCallback(
     (historyEntries: HistoryEntry[], memory: number) => {
@@ -94,9 +103,15 @@ export function useCalculator() {
         history: historyEntries,
         memory,
       })
+      updateStorageNotice()
     },
-    [],
+    [updateStorageNotice],
   )
+
+  const dismissStorageNotice = useCallback(() => {
+    setNoticeDismissed(true)
+    setShowStorageNotice(false)
+  }, [])
 
   const dispatchAction = useCallback((action: CalculatorOrchestratorAction) => {
     setState((prev) => transition(prev, action))
@@ -243,6 +258,8 @@ export function useCalculator() {
     activeNumber: getActiveNumber(state),
     hasMemory: hasStoredMemory(state.memory),
     history,
+    showStorageNotice,
+    dismissStorageNotice,
     setMode,
     setAngleUnit,
     pressDigit,

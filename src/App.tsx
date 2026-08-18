@@ -2,7 +2,7 @@ import { Calculator } from '@/components/calculator/Calculator'
 
 function App() {
   return (
-    <main className="flex min-h-svh items-center justify-center p-4">
+    <main className="flex min-h-svh items-start justify-center p-4">
       <Calculator />
     </main>
   )

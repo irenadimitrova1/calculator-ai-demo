@@ -4,6 +4,7 @@ import { Display } from '@/components/calculator/Display'
 import { HistoryPanel } from '@/components/calculator/HistoryPanel'
 import { Keypad } from '@/components/calculator/Keypad'
 import { ScientificKeypad } from '@/components/calculator/ScientificKeypad'
+import { StorageDegradeNotice } from '@/components/calculator/StorageDegradeNotice'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
@@ -44,6 +45,8 @@ export function Calculator() {
     history,
     recallHistory,
     clearHistory,
+    showStorageNotice,
+    dismissStorageNotice,
   } = useCalculator()
 
   const [historyPanelVisible, setHistoryPanelVisible] = useState(loadHistoryPanelVisible)
@@ -134,6 +137,9 @@ export function Calculator() {
         role="application"
         tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- focus target for keyboard input
       >
+        {showStorageNotice ? (
+          <StorageDegradeNotice onDismiss={dismissStorageNotice} />
+        ) : null}
         <div className="mb-2 flex justify-end">
           <Button
             aria-label={historyPanelVisible ? 'Hide history' : 'Show history'}
